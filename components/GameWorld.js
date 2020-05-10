@@ -41,7 +41,7 @@ class GameWorld extends Component {
         style_counter =0;
         for(y=0; y<myMap.length;y++){
             for(x=0; x< myMap[y].length;x++){
-               tiles.push( <Image style={style[TILE_STYLE+style_counter]} source={background[myMap[y][x]]} key={style_counter/> );
+               tiles.push( <Image style={style[TILE_STYLE+style_counter]} source={background[myMap[y][x]]} key={style_counter}/> );
                style_counter++;
             }
         }

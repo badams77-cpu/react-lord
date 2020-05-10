@@ -5,7 +5,9 @@ import GameWorld from './components/GameWorld';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text style={{justifyContent: 'center'}}>Chess Board</Text>
+      <View style={{textAlign: 'center'}}>
+        <Text>________________Chess Board_______________</Text>
+      </View>
       <GameWorld/>
     </View>
   );
