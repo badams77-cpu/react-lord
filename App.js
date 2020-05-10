@@ -1,10 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import GameWorld from './components/GameWorld';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text style={{justifyContent: 'center'}}>Chess Board</Text>
+      <GameWorld/>
     </View>
   );
 }
@@ -12,8 +14,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    position: 'absolute',
+    backgroundColor: '#777'
   },
 });
