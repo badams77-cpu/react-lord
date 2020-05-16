@@ -20,7 +20,10 @@ class GameWorld extends Component {
         } else {
           window_width = window_height;
         }
-        const myMap = map[this.state.room];
+        const room = map[this.state.room];
+        const myMap = room['map'];
+        const base = room['base'];
+        const myBackground = background[base];
         const TILES_HEIGHT = Math.floor(window_height/myMap.length);
         const TILES_WIDTH = Math.floor(window_width/myMap[0].length);
         let styles = {};
@@ -41,7 +44,7 @@ class GameWorld extends Component {
         style_counter =0;
         for(y=0; y<myMap.length;y++){
             for(x=0; x< myMap[y].length;x++){
-               tiles.push( <Image style={style[TILE_STYLE+style_counter]} source={background[myMap[y][x]]} key={style_counter}/> );
+               tiles.push( <Image style={style[TILE_STYLE+style_counter]} source={myBackground[myMap[y][x]]} key={style_counter}/> );
                style_counter++;
             }
         }

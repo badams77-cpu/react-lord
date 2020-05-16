@@ -1,7 +1,59 @@
 
-let background = [
+let background = {
+checker: [
     require("../assets/background/black.png"),
     require("../assets/background/white.png")
-];
+],
+desert: [
+    require("../assets/background/desert_1.png"),
+    require("../assets/background/desert_2.png"),
+    require("../assets/background/desert_3.png"),
+    require("../assets/background/desert_4.png"),
+    require("../assets/background/desert_5.png"),
+    require("../assets/background/desert_6.png"),
+    require("../assets/background/desert_7.png"),
+    require("../assets/background/desert_8.png"),
+    require("../assets/background/desert_9.png"),
+    require("../assets/background/desert_10.png"),
+    require("../assets/background/desert_11.png"),
+    require("../assets/background/desert_12.png"),
+    require("../assets/background/desert_13.png"),
+    require("../assets/background/desert_14.png"),
+    require("../assets/background/desert_15.png"),
+    require("../assets/background/desert_16.png"),
+    require("../assets/background/desert_17.png"),
+    require("../assets/background/desert_18.png"),
+    require("../assets/background/desert_19.png"),
+    require("../assets/background/desert_20.png"),
+    require("../assets/background/desert_21.png"),
+    require("../assets/background/desert_22.png"),
+    require("../assets/background/desert_23.png"),
+    require("../assets/background/desert_24.png"),
+    require("../assets/background/desert_25.png"),
+    require("../assets/background/desert_26.png"),
+    require("../assets/background/desert_27.png"),
+    require("../assets/background/desert_28.png"),
+    require("../assets/background/desert_29.png"),
+    require("../assets/background/desert_30.png"),
+    require("../assets/background/desert_31.png"),
+    require("../assets/background/desert_32.png"),
+    require("../assets/background/desert_33.png"),
+    require("../assets/background/desert_34.png"),
+    require("../assets/background/desert_35.png"),
+    require("../assets/background/desert_36.png"),
+    require("../assets/background/desert_37.png"),
+    require("../assets/background/desert_38.png"),
+    require("../assets/background/desert_39.png"),
+    require("../assets/background/desert_40.png"),
+    require("../assets/background/desert_41.png"),
+    require("../assets/background/desert_42.png"),
+    require("../assets/background/desert_43.png"),
+    require("../assets/background/desert_44.png"),
+    require("../assets/background/desert_45.png"),
+    require("../assets/background/desert_46.png"),
+    require("../assets/background/desert_47.png"),
+    require("../assets/background/desert_48.png")
+]
+};
 
 export default background;
