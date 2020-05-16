@@ -6,7 +6,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={{textAlign: 'center'}}>
-        <Text>________________Chess Board_______________</Text>
+        <Text>________________________________________Viriphobia______________________________________</Text>
       </View>
       <GameWorld/>
     </View>
