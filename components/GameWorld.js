@@ -2,6 +2,7 @@ import React, {Component } from 'react';
 import {StyleSheet, Image, View, Dimensions } from 'react-native';
 import background from './Background.js';
 import map from './Maps.js';
+import SpriteEngine from './SpriteEngine.js'
 
 class GameWorld extends Component {
 
@@ -29,6 +30,7 @@ class GameWorld extends Component {
         let styles = {};
         let tiles = [];
         let style_counter = 0;
+        let initialSprites = room['sprites'];
         for(y=0; y<myMap.length;y++){
             for(x=0; x< myMap[y].length;x++){
                 styles[TILE_STYLE+style_counter++] = {
@@ -36,7 +38,10 @@ class GameWorld extends Component {
                   width: TILES_WIDTH,
                   height: TILES_HEIGHT,
                   left: x*TILES_WIDTH,
-                  top: y*TILES_HEIGHT
+                  top: y*TILES_HEIGHT,
+                  opacity: 1,
+                  backgroundColor: '#000000',
+                  zIndex: 0,
                 };
             }
         }
@@ -51,6 +56,13 @@ class GameWorld extends Component {
         return (
            <View>
              {tiles}
+                          <SpriteEngine
+                            window_width={window_width}
+                            window_height={window_height}
+                            tile_width={TILES_WIDTH}
+                            tile_height={TILES_HEIGHT}
+                            initial_sprites={initialSprites}
+                          />
            </View>
         );
     }

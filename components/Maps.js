@@ -16,6 +16,13 @@ checkerboard: {
 
 room0: {
   base: 'desert',
+  sprites: [
+    {
+      spriteName: 'virus',
+      xpos: 16,
+      ypos: 16
+    }
+  ],
   map:
 [[5,6,6,6,7,29,29,29,29,29,29,29,29,29,29,29],
 
