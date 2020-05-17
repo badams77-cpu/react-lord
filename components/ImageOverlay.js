@@ -23,7 +23,7 @@ export default class ImageOverlay extends Component {
       ...props
     } = this.props;
 
-    console.log(top, left, width, height);
+//    console.log(top, left, width, height);
     return (
       <ImageBackground
         source={source}
