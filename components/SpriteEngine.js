@@ -1,8 +1,10 @@
 import React, {Component } from 'react';
 import {StyleSheet, Image, ImageBackground, View, Dimensions } from 'react-native';
-import spriteData from './SpriteData.js';
-import ImageOverlay from './ImageOverlay.js';
-import spriteGraphics from './SpriteGraphics.js';
+import spriteData from './SpriteData';
+import ImageOverlay from './ImageOverlay';
+import spriteGraphics from './SpriteGraphics';
+import constants from './Constants';
+
 
 class SpriteEngine extends Component {
 
@@ -15,7 +17,7 @@ class SpriteEngine extends Component {
             spriteName: initial_sprites[i]['spriteName'],
             x: initial_sprites[i].xpos*props.tile_width,
             y: initial_sprites[i].ypos*props.tile_height,
-            dx: -2,
+            dx: -4,
             dy: 0,
             anim_counter: 0,
             direction: 'left',
@@ -27,9 +29,35 @@ class SpriteEngine extends Component {
          window_height: props.window_height,
          tile_width: props.tile_width,
          tile_height: props.tile_height,
-         sprites: sprites
+         sprites: sprites,
+         interval: null
        };
     }
+
+    componentDidMount(){
+        this.state.interval = setInterval( ()=>this.moveSprites(), constants.INTERVAL);
+    }
+
+    componentWillUnmount(){
+      if (this.state.interval!=null){ clearInterval(this.state.interval); }
+    }
+
+
+    moveSprites(){
+//      console.log(constants.INTERVAL);
+      let newSprites = this.state.sprites;
+      for(i=0;i<newSprites.length; i++){
+        let mySprite = newSprites[i];
+        mySprite.x += mySprite.dx;
+        mySprite.y += mySprite.dy;
+        if (mySprite.x<0){ mySprite.dx = 2;}
+        if (mySprite.y<0){ mySprite.dy = 2;}
+        if (mySprite.x + this.state.tile_width> this.state.window_width ){ mySprite.dx = -2; }
+        if (mySprite.y + this.state.tile_height > this.state.window_height){ mySprite.dy = -2; }
+      }
+      this.setState({ sprites: newSprites});
+    }
+
 
     render(){
               const SPRITE_STYLE="sprites_";
@@ -68,9 +96,9 @@ class SpriteEngine extends Component {
                          top={sprites[i].y}
                         key={style_counter}
                       /> );
-                      console.log(sourceName);
-                     console.log(source);
-                     console.log(myStyle);
+//                      console.log(sourceName);
+//                     console.log(source);
+//                     console.log(myStyle);
                      style_counter++;
               }
               return (
