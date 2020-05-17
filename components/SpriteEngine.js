@@ -46,7 +46,6 @@ class SpriteEngine extends Component {
                         height: TILES_HEIGHT,
                         left: sprites[i].x,
                         top: sprites[i].y,
-                        overflow: "hidden",
                         zIndex: 2,
                       };
               }

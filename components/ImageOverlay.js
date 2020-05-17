@@ -14,74 +14,36 @@ import {
 export default class ImageOverlay extends Component {
   render() {
     const {
-      blurRadius,
-      children,
-      containerStyle,
-      contentPosition,
       height,
       width,
       top,
       left,
       overlayAlpha,
-      overlayColor,
-      rounded,
       source,
-      title,
-      titleStyle,
       ...props
     } = this.props;
 
-    let justifyContent;
-    if (contentPosition == "top") {
-      justifyContent = "flex-start";
-    } else if (contentPosition == "bottom") {
-      justifyContent = "flex-end";
-    } else if (contentPosition == "center") {
-      justifyContent = "center";
-    }
-
+    console.log(top, left, width, height);
     return (
       <ImageBackground
         source={source}
-        style={[
-          styles.image,
+        style={
           {
-            borderRadius: rounded,
+            alignItems: 'center',
             height: height,
             width: width,
-            justifyContent: justifyContent
-          },
-          containerStyle
-        ]}
-        blurRadius={blurRadius}
+            left: left,
+            top: top,
+            position: 'absolute',
+            justifyContent: 'center'
+          }
+        }
       >
-        <View
-          style={{
-            ...StyleSheet.absoluteFillObject,
-            backgroundColor: overlayColor,
-            opacity: overlayAlpha
-          }}
-        />
-        {!children &&
-          title && <Text style={[styles.title, titleStyle]}>{title}</Text>}
-        {children}
       </ImageBackground>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  image: {
-    overflow: "hidden",
-    alignItems: "center"
-  },
-  title: {
-    margin: 20,
-    color: "white",
-    textAlign: "center",
-    fontSize: 16
-  }
-});
 
 ImageOverlay.propTypes = {
   rounded: PropTypes.number,
@@ -90,13 +52,6 @@ ImageOverlay.propTypes = {
   width: PropTypes.number,
   top: PropTypes.number,
   left: PropTypes.number,
-  title: PropTypes.string,
-  titleStyle: Text.propTypes.style,
-  overlayColor: PropTypes.string,
-  overlayAlpha: PropTypes.number,
-  contentPosition: PropTypes.oneOf(["top", "center", "bottom"]),
-  containerStyle: ViewPropTypes.style,
-  blurRadius: PropTypes.number,
   children: PropTypes.element
 };
 
@@ -105,7 +60,4 @@ ImageOverlay.defaultProps = {
   width: 300,
   top: 200,
   left: 200,
-  overlayColor: "#000000",
-  overlayAlpha: 0.5,
-  contentPosition: "center"
 };

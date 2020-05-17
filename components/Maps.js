@@ -19,8 +19,8 @@ room0: {
   sprites: [
     {
       spriteName: 'virus',
-      xpos: 16,
-      ypos: 16
+      xpos: 8,
+      ypos: 9
     }
   ],
   map:
