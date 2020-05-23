@@ -12,6 +12,18 @@ class SpriteEngine extends Component {
 
     constructor(props){
        super(props);
+       let handlers = {
+          onStartShouldSetPanResponder: this._handleStartShouldSetPanResponder,
+          onStartShouldSetPanResponderCapture: (e, gs) => {return false;},
+          onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,
+          onMoveShouldSetPanResponderCapture: (e, gs) => {return false; },
+          onPanResponderGrant: this._handlePanResponderGrant,
+          onPanResponderMove: this._handlePanResponderMove,
+          onPanResponderRelease: this._handlePanResponderEnd,
+          onPanResponderTerminate: this._handlePanResponderEnd
+        };
+        console.log(handlers);
+       this._panResponder = PanResponder.create(handlers);
        let sprites = [];
        let initial_sprites = props['initial_sprites'];
        // Start player
@@ -28,12 +40,16 @@ class SpriteEngine extends Component {
        })
 
        for(let i=0; i<initial_sprites.length; i++){
+          let speed = spriteData['player'].speed;
+          let angle = Math.random()*2.0*Math.PI;
+          let dx = speed*Math.sin(angle);
+          let dy = speed*Math.cos(angle);
           sprites.push({
             spriteName: initial_sprites[i]['spriteName'],
             x: initial_sprites[i].xpos*props.tile_width,
             y: initial_sprites[i].ypos*props.tile_height,
-            dx: -4,
-            dy: 0,
+            dx: dx,
+            dy: dy,
             anim_counter: 0,
             direction: 'left',
             anim_delay_frames: 1,
@@ -50,37 +66,41 @@ class SpriteEngine extends Component {
        };
     }
 
-   UNSAFE_componentWillMount(){
-     this._panResponder = PanResponder.create({
-       onStartShouldSetPanResponder: this._handleStartShouldSetPanResponder,
-       onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,
-       onPanResponderGrant: this._handlePanResponderGrant,
-       onPanResponderMove: this._handlePanResponderMove,
-       onPanResponderRelease: this._handlePanResponderEnd,
-       onPanResponderTerminate: this._handlePanResponderEnd
-     });
-   }
+
 
    _handleStartShouldSetPanResponder = (event, gestureState) => {
-     if (!onPlayer(gestureState.x0, gestureState.y0)){
+     if (!isOnPlayer(gestureState.x0, gestureState.y0)){
+       console.log("Fire ",gestureState.x0, gestureState.y0);
        // this.fire(gestureState.x0, gestureState,y0); // Not implemented fire weapon
        return false;
      } else {
+       console.log("Start Pan Responder");
        return true;
      }
    };
 
-   onPlayer = (x,y)=> {
+   _handleMoveShouldSetPanResponder = (event, gestureState) => {
+        if (!isOnPlayer(gestureState.x0, gestureState.y0)){
+          console.log("Move not on player ",gestureState.x0, gestureState.y0);
+          return false;
+        } else {
+          console.log("Start Pan Move Responder");
+          return true;
+        }
+   }
+
+
+   isOnPlayer = (x,y)=> {
      return (x>this.state.sprites[0].x && x<this.state.sprites[0].x+this.state.tile_width)
        && (y>this.state.sprites[0].y && y<this.state.sprites[1].y+this.state.tile_height);
    }
 
    _handlePanResponderGrant = (event, gestureState)=>{ };
 
-   _handleMoveShouldSetPanResponder = (event, gestureState)=> {
-     if (gestureState.dx==0 || gestureState.dy==0){ return; }
+   _handlePanResponderMove = (event, gestureState)=> {
+     if (gestureState.dx==0 || gestureState.dy==0){ console.log("No move"); return; }
      let newSprites = [... this.state.sprites];
-     speed = spriteData['player'].speed
+     let speed = spriteData['player'].speed;
      if (Math.abs(gestureState.dx) > Math.abs(gestureState.dy)){
        if (gestureState.dx<0){
          newSprites[0].dx = -speed;
@@ -106,8 +126,11 @@ class SpriteEngine extends Component {
          newSprites[0].delay_counter= 0;
        }
      }
+     console.log(newSprites[0]);
      this.setState({ sprites: newSprites})
    };
+
+   _handlePanResponderEnd = (event, guestState) => {};
 
     componentDidMount(){
         this.state.interval = setInterval( ()=>this.moveSprites(), constants.INTERVAL);
@@ -120,7 +143,7 @@ class SpriteEngine extends Component {
 
     moveSprites(){
 //      console.log(constants.INTERVAL);
-      let newSprites = this.state.sprites;
+      let newSprites = [... this.state.sprites];
       for(i=0;i<newSprites.length; i++){
         let mySprite = newSprites[i];
         let mySpriteData = spriteData[mySprite.spriteName];
@@ -141,7 +164,7 @@ class SpriteEngine extends Component {
               mySprite.anim_counter++;
               mySprite.delay_counter=0;
               if (mySprite.anim_counter>=mySpriteData[mySprite.direction].length){
-                anim_counter= 0;
+                mySprite.anim_counter= 0;
               }
             }
           }
@@ -188,13 +211,13 @@ class SpriteEngine extends Component {
                          top={sprites[i].y}
                         key={style_counter}
                       /> );
-//                      console.log(sourceName);
-//                     console.log(source);
-//                     console.log(myStyle);
+ //                     console.log(sourceName);
+ //                   console.log(source);
+ //                    console.log(myStyle);
                      style_counter++;
               }
               return (
-                 <View style={ { opacity: 0.5, backgroundColor: '#000000' }}>
+                 <View style={ { opacity: 0.5, backgroundColor: '#000000', flex: 1 }} {...this._panResponder.panHandlers}>
                     {spriteRender}
                  </View>
               );

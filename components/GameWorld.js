@@ -54,7 +54,7 @@ class GameWorld extends Component {
             }
         }
         return (
-           <View>
+           <View style={{flex:1 }}>
              {tiles}
                           <SpriteEngine
                             window_width={window_width}
