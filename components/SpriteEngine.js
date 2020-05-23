@@ -1,5 +1,5 @@
 import React, {Component } from 'react';
-import {StyleSheet, Image, ImageBackground, View, Dimensions } from 'react-native';
+import {StyleSheet, PanResponder, View, Dimensions } from 'react-native';
 import spriteData from './SpriteData';
 import ImageOverlay from './ImageOverlay';
 import spriteGraphics from './SpriteGraphics';
@@ -8,10 +8,25 @@ import constants from './Constants';
 
 class SpriteEngine extends Component {
 
+    _panResponder = {};
+
     constructor(props){
        super(props);
        let sprites = [];
        let initial_sprites = props['initial_sprites'];
+       // Start player
+       sprites.push({
+         spriteName: 'player',
+         x: props.player_start.x*props.tile_width,
+         y: props.player_start.y*props.tile_height,
+         dx: 0,
+         dy: 0,
+         anim_counter: 0,
+         direction: 'right',
+         anim_delay_frames: 1,
+         delay_counter: 0
+       })
+
        for(let i=0; i<initial_sprites.length; i++){
           sprites.push({
             spriteName: initial_sprites[i]['spriteName'],
@@ -21,7 +36,8 @@ class SpriteEngine extends Component {
             dy: 0,
             anim_counter: 0,
             direction: 'left',
-            anim_delay_frames: 1
+            anim_delay_frames: 1,
+            delay_counter: 0
           });
        }
        this.state = {
@@ -33,6 +49,65 @@ class SpriteEngine extends Component {
          interval: null
        };
     }
+
+   UNSAFE_componentWillMount(){
+     this._panResponder = PanResponder.create({
+       onStartShouldSetPanResponder: this._handleStartShouldSetPanResponder,
+       onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,
+       onPanResponderGrant: this._handlePanResponderGrant,
+       onPanResponderMove: this._handlePanResponderMove,
+       onPanResponderRelease: this._handlePanResponderEnd,
+       onPanResponderTerminate: this._handlePanResponderEnd
+     });
+   }
+
+   _handleStartShouldSetPanResponder = (event, gestureState) => {
+     if (!onPlayer(gestureState.x0, gestureState.y0)){
+       // this.fire(gestureState.x0, gestureState,y0); // Not implemented fire weapon
+       return false;
+     } else {
+       return true;
+     }
+   };
+
+   onPlayer = (x,y)=> {
+     return (x>this.state.sprites[0].x && x<this.state.sprites[0].x+this.state.tile_width)
+       && (y>this.state.sprites[0].y && y<this.state.sprites[1].y+this.state.tile_height);
+   }
+
+   _handlePanResponderGrant = (event, gestureState)=>{ };
+
+   _handleMoveShouldSetPanResponder = (event, gestureState)=> {
+     if (gestureState.dx==0 || gestureState.dy==0){ return; }
+     let newSprites = [... this.state.sprites];
+     speed = spriteData['player'].speed
+     if (Math.abs(gestureState.dx) > Math.abs(gestureState.dy)){
+       if (gestureState.dx<0){
+         newSprites[0].dx = -speed;
+         newSprites[0].direction='left';
+         newSprites[0].anim_counter = 0;
+         newSprites[0].delay_counter = 0;
+       } else if (gestureState.dx>0){
+         newSprites[0].dx = speed;
+         newSprites[0].direction='right';
+         newSprites[0].anim_counter = 0;
+         newSprites[0].delay_counter = 0;
+       }
+     } else {
+       if (gestureState.dy<0){
+         newSprites[0].dy = -speed;
+         newSprites[0].direction = 'up';
+         newSprites[0].anim_counter = 0;
+         newSprites[0].delay_counter= 0;
+       } else if (gestureState.dy>0){
+         newSprites[0].dy = speed;
+         newSprites[0].direction = 'down';
+         newSprites[0].anim_counter = 0;
+         newSprites[0].delay_counter= 0;
+       }
+     }
+     this.setState({ sprites: newSprites})
+   };
 
     componentDidMount(){
         this.state.interval = setInterval( ()=>this.moveSprites(), constants.INTERVAL);
@@ -48,12 +123,29 @@ class SpriteEngine extends Component {
       let newSprites = this.state.sprites;
       for(i=0;i<newSprites.length; i++){
         let mySprite = newSprites[i];
+        let mySpriteData = spriteData[mySprite.spriteName];
         mySprite.x += mySprite.dx;
         mySprite.y += mySprite.dy;
-        if (mySprite.x<0){ mySprite.dx = 2;}
-        if (mySprite.y<0){ mySprite.dy = 2;}
-        if (mySprite.x + this.state.tile_width> this.state.window_width ){ mySprite.dx = -2; }
-        if (mySprite.y + this.state.tile_height > this.state.window_height){ mySprite.dy = -2; }
+        let newDirection =false;
+        if (mySprite.x<0){ mySprite.dx = 2; mySprite.direction='left'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true; }
+        if (mySprite.y<0){ mySprite.dy = 2; mySprite.direction='right'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true; }
+        if (mySprite.x + this.state.tile_width> this.state.window_width ){
+          mySprite.dx = -2; mySprite.direction='up'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true;
+        }
+        if (mySprite.y + this.state.tile_height > this.state.window_height){
+         mySprite.dy = -2; mySprite.direction='down'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true;
+        }
+        if (mySprite.dx!=0 || mySprite.dy!=0){
+          if (!newDirection){
+            if (mySprite.delay_counter++ >=mySprite.anim_delay_frames){
+              mySprite.anim_counter++;
+              mySprite.delay_counter=0;
+              if (mySprite.anim_counter>=mySpriteData[mySprite.direction].length){
+                anim_counter= 0;
+              }
+            }
+          }
+        }
       }
       this.setState({ sprites: newSprites});
     }

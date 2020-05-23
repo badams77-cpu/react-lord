@@ -8,7 +8,7 @@ class GameWorld extends Component {
 
     constructor(props){
        super(props);
-       this.state = { room: 'room0'};
+       this.state = { room: 'room0', playerStart: { x: 8, y: 8}};
     }
 
     render(){
@@ -62,6 +62,7 @@ class GameWorld extends Component {
                             tile_width={TILES_WIDTH}
                             tile_height={TILES_HEIGHT}
                             initial_sprites={initialSprites}
+                            player_start={this.state.playerStart}
                           />
            </View>
         );
