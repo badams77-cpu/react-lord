@@ -62,10 +62,11 @@ class SpriteEngine extends Component {
    }
 
     onPressInHandler = (event) => {
-      if (!this.isOnPlayer(event.nativeEvent.locationX, event.nativeEvent.locationY)){
-         this.fire(event.nativeEvent.locationX, event.nativeEvent.locationY);
+      if (!this.isOnPlayer(event.nativeEvent.pageX, event.nativeEvent.pageY)){
+         this.fire(event.nativeEvent.pageX, event.nativeEvent.pageY);
+                 this.setState({pressStartX: 0, pressStartY: 0});
       } else {
-        this.setState({pressStartX: event.nativeEvent.locationX, pressStartY: event.nativeEvent.locationY});
+        this.setState({pressStartX: event.nativeEvent.pageX, pressStartY: event.nativeEvent.pageY});
       }
     }
 
@@ -73,15 +74,17 @@ class SpriteEngine extends Component {
 
 
    isOnPlayer = (x,y)=> {
-     return (x>this.state.sprites[0].x && x<this.state.sprites[0].x+this.state.tile_width)
-       && (y>this.state.sprites[0].y && y<this.state.sprites[1].y+this.state.tile_height);
+     return (x>this.state.sprites[0].x-this.state.tile_width && x<this.state.sprites[0].x+2*this.state.tile_width)
+       && (y>this.state.sprites[0].y-this.state.tile_height && y<this.state.sprites[1].y+2*this.state.tile_height);
    }
 
    onPressOutHandler = (event)=>{
-      let x= event.nativeEvent.locationX;
-      let y = event.nativeEvent.locationY;
+      if (this.state.pressStartX==0 && this.state.pressStartY==0){ return; }
+      let x= event.nativeEvent.pageX;
+      let y = event.nativeEvent.pageY;
       let dx=x-this.state.pressStartX;
       let dy=y-this.state.pressStartY;
+      console.log("Move x: ",x," y: ",y," dx: ",dx, "dy: ",dy);
       let newSprites = [... this.state.sprites];
            let speed = spriteData['player'].speed;
            if (Math.abs(dx) > Math.abs(dy)){
@@ -93,7 +96,7 @@ class SpriteEngine extends Component {
                newSprites[0].delay_counter = 0;
              } else if (dx>0){
                newSprites[0].dx = speed;
-               newSprites[1].dy = 0;
+               newSprites[0].dy = 0;
                newSprites[0].direction='right';
                newSprites[0].anim_counter = 0;
                newSprites[0].delay_counter = 0;
@@ -107,7 +110,7 @@ class SpriteEngine extends Component {
                newSprites[0].delay_counter= 0;
              } else if (dy>0){
                newSprites[0].dy = speed;
-               newSprites[1].dx=0;
+               newSprites[0].dx=0;
                newSprites[0].direction = 'down';
                newSprites[0].anim_counter = 0;
                newSprites[0].delay_counter= 0;
