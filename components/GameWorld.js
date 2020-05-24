@@ -1,5 +1,5 @@
 import React, {Component } from 'react';
-import {StyleSheet, Image, View, Dimensions, PanResponder } from 'react-native';
+import {StyleSheet, Image, View, Dimensions, PanResponder, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import background from './Background.js';
 import map from './Maps.js';
 import SpriteEngine from './SpriteEngine.js'
@@ -8,11 +8,22 @@ class GameWorld extends Component {
 
     constructor(props){
        super(props);
-       this.state = { room: 'room0', playerStart: { x: 8, y: 8}, panHandlers: {}};
+       this.state = { room: 'room0', playerStart: { x: 8, y: 8}, onPressInHandler: null, onPressOutHandler: null};
     }
 
-    setPanHandlers( handlers){
-      this.setState({panHanders: handlers });
+    setHandlers( handlers){
+      this.setState({onPressInHandler: handlers.onPressIn, onPressOutHandler: handlers.onPressOut});
+    }
+
+    onPressOut = (event) =>{
+      if (this.state.onPressOutHandler){ this.state.onPressOutHandler(event); } else { console.log("No press out handler")}
+//     console.log("Move ", {dx: this.state.startX-event.nativeEvent.locationX, dy: this.state.startY-event.nativeEvent.locationY})
+    }
+
+    onPressIn = (event)=>{
+//      console.log("PressIn event",event);
+//      this.setState({ startX: event.nativeEvent.locationX, startY : event.nativeEvent.locationY })
+      if (this.state.onPressInHandler){ this.state.onPressInHandler(event);} else { console.log("No press in handler")}
     }
 
     render(){
@@ -57,12 +68,12 @@ class GameWorld extends Component {
                style_counter++;
             }
         }
-        console.log( "Pan handlers ", this.state.panHanders);
         return (
-           <View style={{flex:1, backgroundColor: '#0000000' }} {...this.state.panHanders}>
+           <TouchableOpacity onPressOut={this.onPressOut} onPressIn={this.onPressIn} style={{width: window_width, height: window_width}}>
+           <View style={{flex:1, backgroundColor: '#0000000' }} >
              {tiles}
                           <SpriteEngine
-                            setHandlersCallback={this.setPanHandlers.bind(this)}
+                            setHandlersCallback={this.setHandlers.bind(this)}
                             window_width={window_width}
                             window_height={window_height}
                             tile_width={TILES_WIDTH}
@@ -71,7 +82,9 @@ class GameWorld extends Component {
                             player_start={this.state.playerStart}
                           />
            </View>
+           </TouchableOpacity>
         );
+        this.refs.touch.setOpacityTo( 100, 0);
     }
 
 }

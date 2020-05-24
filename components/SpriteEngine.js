@@ -1,5 +1,5 @@
 import React, {Component } from 'react';
-import {StyleSheet, PanResponder, View, Dimensions } from 'react-native';
+import {StyleSheet, View, Dimensions } from 'react-native';
 import spriteData from './SpriteData';
 import ImageOverlay from './ImageOverlay';
 import spriteGraphics from './SpriteGraphics';
@@ -12,18 +12,7 @@ class SpriteEngine extends Component {
 
     constructor(props){
        super(props);
-       let handlers = {
-          onStartShouldSetPanResponder: this._handleStartShouldSetPanResponder,
-          onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,
-          onPanResponderGrant: this._handlePanResponderGrant,
-          onPanResponderMove: this._handlePanResponderMove,
-          onPanResponderRelease: this._handlePanResponderEnd,
-          onPanResponderTerminate: this._handlePanResponderEnd,
-          onShouldBlockNativeResponder: (e, gs) => { return true; }
-        };
-        console.log(handlers);
-       this._panResponder = PanResponder.create(handlers);
-       props.setHandlersCallback(this._panResponder);
+       props.setHandlersCallback({ onPressIn: this.onPressInHandler, onPressOut: this.onPressOutHandler});
        let sprites = [];
        let initial_sprites = props['initial_sprites'];
        // Start player
@@ -62,32 +51,25 @@ class SpriteEngine extends Component {
          tile_width: props.tile_width,
          tile_height: props.tile_height,
          sprites: sprites,
-         interval: null
+         interval: null,
+         pressStartX: 0,
+         pressStartY: 0,
        };
     }
 
-
-
-   _handleStartShouldSetPanResponder = (event, gestureState) => {
-     if (!isOnPlayer(gestureState.x0, gestureState.y0)){
-       console.log("Fire ",gestureState.x0, gestureState.y0);
-       // this.fire(gestureState.x0, gestureState,y0); // Not implemented fire weapon
-       return false;
-     } else {
-       console.log("Start Pan Responder");
-       return true;
-     }
-   };
-
-   _handleMoveShouldSetPanResponder = (event, gestureState) => {
-        if (!isOnPlayer(gestureState.x0, gestureState.y0)){
-          console.log("Move not on player ",gestureState.x0, gestureState.y0);
-          return false;
-        } else {
-          console.log("Start Pan Move Responder");
-          return true;
-        }
+   fire = (x,y)=>{
+     console.log("Fire ",x ,y);
    }
+
+    onPressInHandler = (event) => {
+      if (!this.isOnPlayer(event.nativeEvent.locationX, event.nativeEvent.locationY)){
+         this.fire(event.nativeEvent.locationX, event.nativeEvent.locationY);
+      } else {
+        this.setState({pressStartX: event.nativeEvent.locationX, pressStartY: event.nativeEvent.locationY});
+      }
+    }
+
+
 
 
    isOnPlayer = (x,y)=> {
@@ -95,43 +77,48 @@ class SpriteEngine extends Component {
        && (y>this.state.sprites[0].y && y<this.state.sprites[1].y+this.state.tile_height);
    }
 
-   _handlePanResponderGrant = (event, gestureState)=>{ return true;};
+   onPressOutHandler = (event)=>{
+      let x= event.nativeEvent.locationX;
+      let y = event.nativeEvent.locationY;
+      let dx=x-this.state.pressStartX;
+      let dy=y-this.state.pressStartY;
+      let newSprites = [... this.state.sprites];
+           let speed = spriteData['player'].speed;
+           if (Math.abs(dx) > Math.abs(dy)){
+             if (dx<0){
+               newSprites[0].dx = -speed;
+               newSprites[0].dy= 0;
+               newSprites[0].direction='left';
+               newSprites[0].anim_counter = 0;
+               newSprites[0].delay_counter = 0;
+             } else if (dx>0){
+               newSprites[0].dx = speed;
+               newSprites[1].dy = 0;
+               newSprites[0].direction='right';
+               newSprites[0].anim_counter = 0;
+               newSprites[0].delay_counter = 0;
+             }
+           } else {
+             if (dy<0){
+               newSprites[0].dy = -speed;
+               newSprites[0].dx=0;
+               newSprites[0].direction = 'up';
+               newSprites[0].anim_counter = 0;
+               newSprites[0].delay_counter= 0;
+             } else if (dy>0){
+               newSprites[0].dy = speed;
+               newSprites[1].dx=0;
+               newSprites[0].direction = 'down';
+               newSprites[0].anim_counter = 0;
+               newSprites[0].delay_counter= 0;
+             }
+           }
+           console.log(newSprites[0]);
+           this.setState({ sprites: newSprites});
+           return true;
+   }
 
-   _handlePanResponderMove = (event, gestureState)=> {
-     if (gestureState.dx==0 || gestureState.dy==0){ console.log("No move"); return; }
-     let newSprites = [... this.state.sprites];
-     let speed = spriteData['player'].speed;
-     if (Math.abs(gestureState.dx) > Math.abs(gestureState.dy)){
-       if (gestureState.dx<0){
-         newSprites[0].dx = -speed;
-         newSprites[0].direction='left';
-         newSprites[0].anim_counter = 0;
-         newSprites[0].delay_counter = 0;
-       } else if (gestureState.dx>0){
-         newSprites[0].dx = speed;
-         newSprites[0].direction='right';
-         newSprites[0].anim_counter = 0;
-         newSprites[0].delay_counter = 0;
-       }
-     } else {
-       if (gestureState.dy<0){
-         newSprites[0].dy = -speed;
-         newSprites[0].direction = 'up';
-         newSprites[0].anim_counter = 0;
-         newSprites[0].delay_counter= 0;
-       } else if (gestureState.dy>0){
-         newSprites[0].dy = speed;
-         newSprites[0].direction = 'down';
-         newSprites[0].anim_counter = 0;
-         newSprites[0].delay_counter= 0;
-       }
-     }
-     console.log(newSprites[0]);
-     this.setState({ sprites: newSprites});
-     return true;
-   };
 
-   _handlePanResponderEnd = (event, guestState) => { return  true;};
 
     componentDidMount(){
         this.state.interval = setInterval( ()=>this.moveSprites(), constants.INTERVAL);
@@ -151,13 +138,13 @@ class SpriteEngine extends Component {
         mySprite.x += mySprite.dx;
         mySprite.y += mySprite.dy;
         let newDirection =false;
-        if (mySprite.x<0){ mySprite.dx = 2; mySprite.direction='left'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true; }
-        if (mySprite.y<0){ mySprite.dy = 2; mySprite.direction='right'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true; }
+        if (mySprite.x<0){ mySprite.dx = 2; mySprite.direction='right'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true; }
+        if (mySprite.y<0){ mySprite.dy = 2; mySprite.direction='down'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true; }
         if (mySprite.x + this.state.tile_width> this.state.window_width ){
-          mySprite.dx = -2; mySprite.direction='up'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true;
+          mySprite.dx = -2; mySprite.direction='left'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true;
         }
         if (mySprite.y + this.state.tile_height > this.state.window_height){
-         mySprite.dy = -2; mySprite.direction='down'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true;
+         mySprite.dy = -2; mySprite.direction='up'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true;
         }
         if (mySprite.dx!=0 || mySprite.dy!=0){
           if (!newDirection){
