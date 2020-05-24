@@ -1,5 +1,7 @@
 import React, {Component } from 'react';
 import {StyleSheet, PanResponder, View, Dimensions } from 'react-native';
+
+
 import spriteData from './SpriteData';
 import ImageOverlay from './ImageOverlay';
 import spriteGraphics from './SpriteGraphics';
@@ -12,7 +14,7 @@ class SpriteEngine extends Component {
 
     constructor(props){
        super(props);
-       let handlers = {
+/*       let handlers = {
           onStartShouldSetPanResponder: this._handleStartShouldSetPanResponder,
           onStartShouldSetPanResponderCapture: (e, gs) => {return false;},
           onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,
@@ -24,6 +26,8 @@ class SpriteEngine extends Component {
         };
         console.log(handlers);
        this._panResponder = PanResponder.create(handlers);
+       */
+       props.setGestureEventHandler( this.handleGestureEvent);
        let sprites = [];
        let initial_sprites = props['initial_sprites'];
        // Start player
@@ -87,13 +91,52 @@ class SpriteEngine extends Component {
           console.log("Start Pan Move Responder");
           return true;
         }
-   }
+   };
 
+   handleGestureEvent(event){
+     console.log(event);
+     if (!isOnPlayer(event.x, event.y)){
+               console.log("Move not on player ",gestureState.x0, gestureState.y0);
+               return false;
+     } else {
+     if (event.translationX==0 || gestureState.translationY==0){ console.log("No move"); return; }
+          console.log("on player",event);
+          let newSprites = [... this.state.sprites];
+          let speed = spriteData['player'].speed;
+          if (Math.abs(event.translationX) > Math.abs(event.translationY)){
+            if (event.translationX<0){
+              newSprites[0].dx = -speed;
+              newSprites[0].direction='left';
+              newSprites[0].anim_counter = 0;
+              newSprites[0].delay_counter = 0;
+            } else if (event.translationX>0){
+              newSprites[0].dx = speed;
+              newSprites[0].direction='right';
+              newSprites[0].anim_counter = 0;
+              newSprites[0].delay_counter = 0;
+            }
+          } else {
+            if (event.translationY<0){
+              newSprites[0].dy = -speed;
+              newSprites[0].direction = 'up';
+              newSprites[0].anim_counter = 0;
+              newSprites[0].delay_counter= 0;
+            } else if (event.translationY>0){
+              newSprites[0].dy = speed;
+              newSprites[0].direction = 'down';
+              newSprites[0].anim_counter = 0;
+              newSprites[0].delay_counter= 0;
+            }
+          }
+          console.log(newSprites[0]);
+          this.setState({ sprites: newSprites})
+     }
+   }
 
    isOnPlayer = (x,y)=> {
      return (x>this.state.sprites[0].x && x<this.state.sprites[0].x+this.state.tile_width)
        && (y>this.state.sprites[0].y && y<this.state.sprites[1].y+this.state.tile_height);
-   }
+   };
 
    _handlePanResponderGrant = (event, gestureState)=>{ };
 
@@ -216,10 +259,13 @@ class SpriteEngine extends Component {
  //                    console.log(myStyle);
                      style_counter++;
               }
+
               return (
+
                  <View style={ { opacity: 0.5, backgroundColor: '#000000', flex: 1 }} {...this._panResponder.panHandlers}>
                     {spriteRender}
                  </View>
+
               );
     }
 

@@ -1,14 +1,24 @@
 import React, {Component } from 'react';
-import {StyleSheet, Image, View, Dimensions } from 'react-native';
+import {StyleSheet, Image, View, Dimensions, Animated } from 'react-native';
 import background from './Background.js';
 import map from './Maps.js';
-import SpriteEngine from './SpriteEngine.js'
+import SpriteEngine from './SpriteEngine.js';
+import  {PanGestureHandler} from 'react-native-gesture-handler'
 
 class GameWorld extends Component {
 
     constructor(props){
        super(props);
-       this.state = { room: 'room0', playerStart: { x: 8, y: 8}};
+       this.state = { room: 'room0', playerStart: { x: 8, y: 8}, onGestureEvent: ()=>{return; }};
+    }
+
+    setGestureEventHandler =  (handler) => {
+      console.log("Adding gesture handler", handler);
+      this.setState({ onGestureEvent: handler });
+    }
+
+    onHandlerStateChange(event){
+      console.log(event);
     }
 
     render(){
@@ -53,10 +63,17 @@ class GameWorld extends Component {
                style_counter++;
             }
         }
+        console.log("onGuestEvent: ",this.state.onGestureEvent);
         return (
-           <View style={{flex:1 }}>
-             {tiles}
+           <View style={{flex: 1, backgroundColor: '#000000'}}>
+             <PanGestureHandler onGestureEvent={this.state.onGestureEvent}
+             onHandlerStateChange={ this.onHandlerStateChange}>
+               <View style={{flex:1, backgroundColor: '#000000' }}>
+                 {tiles}
+               </View>
+             </PanGestureHandler>
                           <SpriteEngine
+                            setGestureEventHandler = {this.setGestureEventHandler}
                             window_width={window_width}
                             window_height={window_height}
                             tile_width={TILES_WIDTH}
@@ -64,6 +81,7 @@ class GameWorld extends Component {
                             initial_sprites={initialSprites}
                             player_start={this.state.playerStart}
                           />
+
            </View>
         );
     }
