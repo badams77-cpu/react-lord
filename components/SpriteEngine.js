@@ -62,7 +62,9 @@ class SpriteEngine extends Component {
          tile_width: props.tile_width,
          tile_height: props.tile_height,
          sprites: sprites,
-         interval: null
+         interval: null,
+         responderX: 0,
+         responderY: 0
        };
     }
 
@@ -89,6 +91,52 @@ class SpriteEngine extends Component {
         }
    }
 
+   shouldSetResponder = (event)=>{
+     if (!isOnPlayer(event.locationX, event.locationY)){
+        console.log("Touch not on player ",gestureState.x0, gestureState.y0);
+        return false;
+     } else {
+       console.log("start responder");
+                 this.setState({responderX: event.locationX, responderY: event.locationY})
+       return  true;
+     }
+   }
+
+   onResponderMove = (event)=>{
+       let dx= event.locationX - this.state.responderX;
+       let dy = event.locationY - this.state.responderY;
+        if (dx==0 && dy==0){ console.log("No move"); return; }
+        let newSprites = [... this.state.sprites];
+        let speed = spriteData['player'].speed;
+        if (Math.abs(dx) > Math.abs(dy)){
+          if (dx<0){
+            newSprites[0].dx = -speed;
+            newSprites[0].direction='left';
+            newSprites[0].anim_counter = 0;
+            newSprites[0].delay_counter = 0;
+          } else if (dx>0){
+            newSprites[0].dx = speed;
+            newSprites[0].direction='right';
+            newSprites[0].anim_counter = 0;
+            newSprites[0].delay_counter = 0;
+          }
+        } else {
+          if (dy<0){
+            newSprites[0].dy = -speed;
+            newSprites[0].direction = 'up';
+            newSprites[0].anim_counter = 0;
+            newSprites[0].delay_counter= 0;
+          } else if (dy>0){
+            newSprites[0].dy = speed;
+            newSprites[0].direction = 'down';
+            newSprites[0].anim_counter = 0;
+            newSprites[0].delay_counter= 0;
+          }
+        }
+        console.log(newSprites[0]);
+        this.setState({ sprites: newSprites})
+   };
+
 
    isOnPlayer = (x,y)=> {
      return (x>this.state.sprites[0].x && x<this.state.sprites[0].x+this.state.tile_width)
@@ -96,6 +144,8 @@ class SpriteEngine extends Component {
    }
 
    _handlePanResponderGrant = (event, gestureState)=>{ };
+
+
 
    _handlePanResponderMove = (event, gestureState)=> {
      if (gestureState.dx==0 || gestureState.dy==0){ console.log("No move"); return; }
@@ -217,9 +267,10 @@ class SpriteEngine extends Component {
                      style_counter++;
               }
               return (
-                 <View style={ { opacity: 0.5, backgroundColor: '#000000', flex: 1 }} {...this._panResponder.panHandlers}>
-                    {spriteRender}
-                 </View>
+                 <View style={ { opacity: 0.5, backgroundColor: '#000000', flex: 1 }}
+                   onStartShouldSetResponder={ this.shouldSetResponder}
+                   onResponderMove={this.onResponderMove}
+                 >{spriteRender}</View>
               );
     }
 
