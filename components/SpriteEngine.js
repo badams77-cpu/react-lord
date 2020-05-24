@@ -17,6 +17,7 @@ class SpriteEngine extends Component {
           onStartShouldSetPanResponderCapture: (e, gs) => {return false;},
           onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,
           onMoveShouldSetPanResponderCapture: (e, gs) => {return false; },
+          onPanResponderStart: (e,gs )=> { console.log("Start start"); return true;},
           onPanResponderGrant: this._handlePanResponderGrant,
           onPanResponderMove: this._handlePanResponderMove,
           onPanResponderRelease: this._handlePanResponderEnd,
