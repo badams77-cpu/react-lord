@@ -14,16 +14,16 @@ class SpriteEngine extends Component {
        super(props);
        let handlers = {
           onStartShouldSetPanResponder: this._handleStartShouldSetPanResponder,
-          onStartShouldSetPanResponderCapture: (e, gs) => {return false;},
           onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,
-          onMoveShouldSetPanResponderCapture: (e, gs) => {return false; },
           onPanResponderGrant: this._handlePanResponderGrant,
           onPanResponderMove: this._handlePanResponderMove,
           onPanResponderRelease: this._handlePanResponderEnd,
-          onPanResponderTerminate: this._handlePanResponderEnd
+          onPanResponderTerminate: this._handlePanResponderEnd,
+          onShouldBlockNativeResponder: (e, gs) => { return true; }
         };
         console.log(handlers);
        this._panResponder = PanResponder.create(handlers);
+       props.setHandlersCallback(this._panResponder);
        let sprites = [];
        let initial_sprites = props['initial_sprites'];
        // Start player
@@ -38,7 +38,7 @@ class SpriteEngine extends Component {
          anim_delay_frames: 1,
          delay_counter: 0
        })
-
+        // Start Sprites
        for(let i=0; i<initial_sprites.length; i++){
           let speed = spriteData['player'].speed;
           let angle = Math.random()*2.0*Math.PI;
@@ -95,7 +95,7 @@ class SpriteEngine extends Component {
        && (y>this.state.sprites[0].y && y<this.state.sprites[1].y+this.state.tile_height);
    }
 
-   _handlePanResponderGrant = (event, gestureState)=>{ };
+   _handlePanResponderGrant = (event, gestureState)=>{ return true;};
 
    _handlePanResponderMove = (event, gestureState)=> {
      if (gestureState.dx==0 || gestureState.dy==0){ console.log("No move"); return; }
@@ -127,10 +127,11 @@ class SpriteEngine extends Component {
        }
      }
      console.log(newSprites[0]);
-     this.setState({ sprites: newSprites})
+     this.setState({ sprites: newSprites});
+     return true;
    };
 
-   _handlePanResponderEnd = (event, guestState) => {};
+   _handlePanResponderEnd = (event, guestState) => { return  true;};
 
     componentDidMount(){
         this.state.interval = setInterval( ()=>this.moveSprites(), constants.INTERVAL);
@@ -211,15 +212,10 @@ class SpriteEngine extends Component {
                          top={sprites[i].y}
                         key={style_counter}
                       /> );
- //                     console.log(sourceName);
- //                   console.log(source);
- //                    console.log(myStyle);
                      style_counter++;
               }
               return (
-                 <View style={ { opacity: 0.5, backgroundColor: '#000000', flex: 1 }} {...this._panResponder.panHandlers}>
-                    {spriteRender}
-                 </View>
+                 <View style={ { opacity: 0.5, backgroundColor: '#000000', flex: 1 }} >{spriteRender}</View>
               );
     }
 

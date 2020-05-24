@@ -1,5 +1,5 @@
 import React, {Component } from 'react';
-import {StyleSheet, Image, View, Dimensions } from 'react-native';
+import {StyleSheet, Image, View, Dimensions, PanResponder } from 'react-native';
 import background from './Background.js';
 import map from './Maps.js';
 import SpriteEngine from './SpriteEngine.js'
@@ -8,7 +8,11 @@ class GameWorld extends Component {
 
     constructor(props){
        super(props);
-       this.state = { room: 'room0', playerStart: { x: 8, y: 8}};
+       this.state = { room: 'room0', playerStart: { x: 8, y: 8}, panHandlers: {}};
+    }
+
+    setPanHandlers( handlers){
+      this.setState({panHanders: handlers });
     }
 
     render(){
@@ -53,10 +57,12 @@ class GameWorld extends Component {
                style_counter++;
             }
         }
+        console.log( "Pan handlers ", this.state.panHanders);
         return (
-           <View style={{flex:1 }}>
+           <View style={{flex:1, backgroundColor: '#0000000' }} {...this.state.panHanders}>
              {tiles}
                           <SpriteEngine
+                            setHandlersCallback={this.setPanHandlers.bind(this)}
                             window_width={window_width}
                             window_height={window_height}
                             tile_width={TILES_WIDTH}
