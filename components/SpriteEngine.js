@@ -9,6 +9,7 @@ import constants from './Constants';
 class SpriteEngine extends Component {
 
     _panResponder = {};
+    weapon = 'syringe';
 
     constructor(props){
        super(props);
@@ -59,7 +60,38 @@ class SpriteEngine extends Component {
 
    fire = (x,y)=>{
      console.log("Fire ",x ,y);
-   }
+     let deltaX = x-this.state.sprites[0].x;
+     let deltaY = y-this.state.sprites[0].y;
+     let weaponCount = 0;
+     this.state.sprites.forEach( (sprite) => {
+       let mySpriteData = spriteData[sprite.spriteName];
+//       console.log(sprite.spriteName, mySpriteData);
+       if (mySpriteData && mySpriteData.weapon){ weaponCount++;}});
+     if (weaponCount>=constants.MAX_SHOTS){ return; }
+     let speed = spriteData[this.weapon].speed;
+     let dx=0;
+     let dy=0;
+     let direction='left';
+     if (Math.abs(deltaX)>Math.abs(deltaY)){
+       if (deltaX<0){ dx=-speed; } else { dx=speed; direction ='right';}
+     } else {
+       if (deltaY<0){ dy=-speed; direction='up'} else {dy=speed; direction='down';}
+     }
+     let newSprites = [...this.state.sprites];
+     newSprites.push({
+              spriteName: this.weapon,
+              x: this.state.sprites[0].x + Math.sign(dx)*this.state.tile_width,
+              y: this.state.sprites[0].y + Math.sign(dy)*this.state.tile_height,
+              dx: dx,
+              dy: dy,
+              anim_counter: 0,
+              direction: direction,
+              anim_delay_frames: 1,
+              delay_counter: 0
+      });
+      this.setState( {sprites: newSprites});
+    }
+
 
     onPressInHandler = (event) => {
       if (!this.isOnPlayer(event.nativeEvent.pageX, event.nativeEvent.pageY)){
@@ -132,7 +164,7 @@ class SpriteEngine extends Component {
     }
 
 
-    moveSprites(){
+    moveSprites = ()=>{
 //      console.log(constants.INTERVAL);
       let newSprites = [... this.state.sprites];
       for(i=0;i<newSprites.length; i++){
@@ -158,6 +190,8 @@ class SpriteEngine extends Component {
                 mySprite.anim_counter= 0;
               }
             }
+          } else if (mySpriteData.weapon) {
+            newSprites.splice(i,1); // Remove weapon if it bounces
           }
         }
       }

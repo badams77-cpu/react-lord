@@ -3,8 +3,8 @@ let spriteData =
 {
 virus: { left: ['virus'], right: ['virus'], up: ['virus'], down: ['virus'],
  weapon: false, pickup: false, deadly: true, hitpoints: 5, speed: 2},
-syringe: { left: ['syringe_left'], right: ['syringe_right'], up: ['syringe_up'], down: ['syringe_douwb'],
- weapon: false, pickup: false, deadly: true, hitpoints: 2, speed: 4},
+syringe: { left: ['syringe_left'], right: ['syringe_right'], up: ['syringe_up'], down: ['syringe_down'],
+ weapon: true, pickup: false, deadly: true, hitpoints: 2, speed: 4},
 player: { left: [
   'globeTrotter_left_0',
   'globeTrotter_left_1',
