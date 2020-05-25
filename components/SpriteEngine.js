@@ -26,11 +26,13 @@ class SpriteEngine extends Component {
          anim_counter: 0,
          direction: 'right',
          anim_delay_frames: 1,
-         delay_counter: 0
+         delay_counter: 0,
+         hitpoints: constants.PLAYER_LIFE
        })
         // Start Sprites
        for(let i=0; i<initial_sprites.length; i++){
-          let speed = spriteData['player'].speed;
+          let mySpriteData = spriteData[ initial_sprites[i]['spriteName']];
+          let speed = mySpriteData.speed;
           let angle = Math.random()*2.0*Math.PI;
           let dx = speed*Math.sin(angle);
           let dy = speed*Math.cos(angle);
@@ -43,7 +45,8 @@ class SpriteEngine extends Component {
             anim_counter: 0,
             direction: 'left',
             anim_delay_frames: 1,
-            delay_counter: 0
+            delay_counter: 0,
+            hitpoints: mySpriteData.hitpoints
           });
        }
        this.state = {
@@ -167,6 +170,7 @@ class SpriteEngine extends Component {
     moveSprites = ()=>{
 //      console.log(constants.INTERVAL);
       let newSprites = [... this.state.sprites];
+      let removeSprites = [];
       for(i=0;i<newSprites.length; i++){
         let mySprite = newSprites[i];
         let mySpriteData = spriteData[mySprite.spriteName];
@@ -181,12 +185,15 @@ class SpriteEngine extends Component {
         if (mySprite.y + this.state.tile_height > this.state.window_height){
          mySprite.dy = -2; mySprite.direction='up'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true;
         }
-        if (mySprite.dx!=0 || mySprite.dy!=0){
+        if (mySprite.dx!=0 || mySprite.dy!=0 || mySprite.spriteName==='explosion'){
           if (!newDirection){
             if (mySprite.delay_counter++ >=mySprite.anim_delay_frames){
               mySprite.anim_counter++;
               mySprite.delay_counter=0;
               if (mySprite.anim_counter>=mySpriteData[mySprite.direction].length){
+                if (mySprite.spriteName==='explosion'){
+                  removeSprites.push(i);
+                }
                 mySprite.anim_counter= 0;
               }
             }
@@ -195,7 +202,66 @@ class SpriteEngine extends Component {
           }
         }
       }
+            let removeCounter=0;
+            removeSprites.sort( (a,b)=>a-b);
+            for(i=0; i<removeSprites;i++){
+              newSprites.splice(removeSprites[i]-removeCounter,1);
+              removeCounter++;
+            }
       this.setState({ sprites: newSprites});
+      this.collisions();
+    }
+
+    collisions = ()=> {
+      if (this.state.sprites.length <2){ return; }
+      let newSprites = [...this.state.sprites];
+      let change = false;
+      let removeSprites= [];
+      // With Player
+      for(j=1 ; j<newSprites.length; j++){
+        if (spriteData[newSprites[j].spriteName].deadly && this.isCollide( newSprites[0], newSprites[j])){
+          console.log("Player hit");
+        }
+      }
+      // Weapon to Deadly
+      for(i=1; i<newSprites.length; i++){
+        let iData = spriteData[newSprites[i].spriteName];
+        if (iData.weapon){
+          for(j=1; j<newSprites.length; j++){
+            if (i==j){ continue; }
+            let jData= spriteData[newSprites[j].spriteName];
+            if (jData.deadly && this.isCollide( newSprites[i], newSprites[j])){
+             change=true;
+              newSprites[j].hitpoints -= iData.hitpoints;
+              removeSprites.push(i);
+              if (newSprites[j].hitpoints<=0){
+                newSprites[j].spriteName='explosion';
+                newSprites[j].dx=0;
+                newSprites[j].dy=0;
+                newSprites[j].anim_counter=0;
+                newSprites[j].delay_counter=0;
+              }
+            }
+          }
+        }
+      }
+      let removeCounter=0;
+      removeSprites.sort( (a,b)=>a-b);
+      for(i=0; i<removeSprites;i++){
+        mySprites.splice(removeSprites[i]-removeCounter,1);
+        removeCounter++;
+        change=true;
+      }
+      if (change){
+        this.setState({ sprites: newSprites});
+      }
+    }
+
+    isCollide = (sprite1, sprite2) => {
+      return !(sprite1.x+this.state.tile_width < sprite2.x ||
+               sprite1.x > sprite2.x+this.state.tile_width ||
+               sprite1.y+this.state.tile_height < sprite2.y ||
+               sprite1.y > sprite2.y + this.state.tile_height);
     }
 
 
