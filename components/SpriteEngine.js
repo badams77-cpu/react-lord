@@ -4,6 +4,8 @@ import spriteData from './SpriteData';
 import ImageOverlay from './ImageOverlay';
 import spriteGraphics from './SpriteGraphics';
 import constants from './Constants';
+import {connect} from 'react-redux';
+import {ADD_SCORE} from '../actions/Actions';
 
 
 class SpriteEngine extends Component {
@@ -202,12 +204,15 @@ class SpriteEngine extends Component {
           }
         }
       }
-            let removeCounter=0;
-            removeSprites.sort( (a,b)=>a-b);
-            for(i=0; i<removeSprites;i++){
-              newSprites.splice(removeSprites[i]-removeCounter,1);
-              removeCounter++;
-            }
+      let removeCounter=0;
+      removeSprites.sort( (a,b)=>a-b);
+      for(i=0; i<removeSprites;i++){
+         let remove= removeSprites[i]-removeCounter;
+         if (remove!=0){
+            newSprites.splice(remove,1);
+         }
+         removeCounter++;
+      }
       this.setState({ sprites: newSprites});
       this.collisions();
     }
@@ -240,6 +245,8 @@ class SpriteEngine extends Component {
                 newSprites[j].dy=0;
                 newSprites[j].anim_counter=0;
                 newSprites[j].delay_counter=0;
+                this.props.onAddScore(jData.score);
+                break;
               }
             }
           }
@@ -248,7 +255,8 @@ class SpriteEngine extends Component {
       let removeCounter=0;
       removeSprites.sort( (a,b)=>a-b);
       for(i=0; i<removeSprites;i++){
-        mySprites.splice(removeSprites[i]-removeCounter,1);
+        let remove= removeSprites[i]-removeCounter;
+        if (remove!=0){newSprites.splice(remove,1)};
         removeCounter++;
         change=true;
       }
@@ -311,4 +319,14 @@ class SpriteEngine extends Component {
 
 }
 
-export default SpriteEngine;
+const mapStateToProps = (state)=>{
+  return { score : state.score};
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAddScore: score=> dispatch({type: ADD_SCORE, score: score})
+  };
+}
+
+export default connect( mapStateToProps, mapDispatchToProps)(SpriteEngine);
