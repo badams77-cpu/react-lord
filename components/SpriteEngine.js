@@ -34,6 +34,10 @@ class SpriteEngine extends Component {
         // Start Sprites
        for(let i=0; i<initial_sprites.length; i++){
           let mySpriteData = spriteData[ initial_sprites[i]['spriteName']];
+          if (mySpriteData==null){
+             console.log("No spriteData for ",initial.sprites[i].spriteName);
+             continue;
+          }
           let speed = mySpriteData.speed;
           let angle = Math.random()*2.0*Math.PI;
           let dx = speed*Math.sin(angle);
@@ -176,22 +180,37 @@ class SpriteEngine extends Component {
       for(i=0;i<newSprites.length; i++){
         let mySprite = newSprites[i];
         let mySpriteData = spriteData[mySprite.spriteName];
+        if (mySpriteData==null){
+          console.log("No spriteData for ",i, mySprite.spriteName);
+          continue;
+        }
         mySprite.x += mySprite.dx;
         mySprite.y += mySprite.dy;
         let newDirection =false;
-        if (mySprite.x<0){ mySprite.dx = 2; mySprite.direction='right'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true; }
-        if (mySprite.y<0){ mySprite.dy = 2; mySprite.direction='down'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true; }
-        if (mySprite.x + this.state.tile_width> this.state.window_width ){
-          mySprite.dx = -2; mySprite.direction='left'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true;
-        }
-        if (mySprite.y + this.state.tile_height > this.state.window_height){
-         mySprite.dy = -2; mySprite.direction='up'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true;
+        if (mySprite.circle!=null && mySprite.circle!=0.0){
+          let rx = mySprite.x - mySprite.centerX;
+          let ry = mySprite.y - mySprite.centerY;
+          let r = Math.sqrt(rx*rx+ry*ry);
+          if (r<mySprite.circle){ continue; }
+          let angle = Math.atan2(-ry/r, rx/r);
+          mySprite.dx = mySpriteData.speed * Math.cos(angle);
+          mySprite.dy = mySpriteData.speed * Math.sin(angle);
+          this.setDiagonalDirection(mySprite);
+        } else {
+            if (mySprite.x<0){ mySprite.dx = 2; mySprite.direction='right'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true; }
+            if (mySprite.y<0){ mySprite.dy = 2; mySprite.direction='down'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true; }
+            if (mySprite.x + this.state.tile_width> this.state.window_width ){
+                mySprite.dx = -2; mySprite.direction='left'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true;
+            }
+            if (mySprite.y + this.state.tile_height > this.state.window_height){
+                mySprite.dy = -2; mySprite.direction='up'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true;
+            }
         }
         if (mySprite.dx!=0 || mySprite.dy!=0 || mySprite.spriteName==='explosion'){
           if (!newDirection){
             if (mySprite.delay_counter++ >=mySprite.anim_delay_frames){
               mySprite.anim_counter++;
-              mySprite.delay_counter=0;
+              mySprite.delay_counter=1;
               if (mySprite.anim_counter>=mySpriteData[mySprite.direction].length){
                 if (mySprite.spriteName==='explosion'){
                   removeSprites.push(i);
@@ -215,6 +234,52 @@ class SpriteEngine extends Component {
       }
       this.setState({ sprites: newSprites});
       this.collisions();
+      this.generator();
+    }
+
+    generator = ()=> {
+      let newSprites = [...this.state.sprites];
+      let change = false;
+      for(i=1 ; i<newSprites.length; i++){
+         let generateName = spriteData[newSprites[i].spriteName].generator;
+         if (generateName==null){ continue;}
+         if (Math.random()<spriteData[newSprites[i].spriteName].genchance){
+           let mySpriteData = spriteData[generateName];
+           if (mySpriteData==null){
+             console.log("no sprite data for ",generateName);
+             continue;
+           }
+           console.log("Creating new "+generateName);
+           let speed = mySpriteData.speed;
+           let angle = Math.random()*2.0*Math.PI;
+           let dx = speed*Math.sin(angle);
+           let dy = speed*Math.cos(angle);
+           change = true;
+           let newSprite = {
+             spriteName: generateName,
+             x: newSprites[i].x,
+             y: newSprites[i],y,
+             dx: dx,
+             dy: dy,
+             anim_counter: 0,
+             direction: 'left',
+             anim_delay_frames: 1,
+             delay_counter: 0,
+             circle: mySpriteData.circle*this.state.tile_width,
+             centerX: newSprites[i].x,
+             centerY: newSprites[i],y,
+             hitpoints: mySpriteData.hitpoints
+           };
+           if (mySpriteData.circle){
+             setDiagonalDirection(newSprite);
+           }
+           newSprites.push(newSprite);
+         }
+
+      }
+      if (change){
+          this.setState({ sprites: newSprites});
+      }
     }
 
     collisions = ()=> {
@@ -272,6 +337,29 @@ class SpriteEngine extends Component {
                sprite1.y > sprite2.y + this.state.tile_height);
     }
 
+    setDiagonalDirection = (sprite)=>{
+      let r = Math.sqrt( sprite.dx*sprite.dx + sprite.dy*sprite.dx);
+      let angle = Math.atan2 ( sprite.dx/r, sprite.dy/r);
+      if (angle<-PI*7.0/8.0){
+        sprite.direction='down';
+      } else if (angle<-PI*5.0/8.0){
+        sprite.direction='sw';
+      } else if (angle<-PI*3.0/8.0){
+        sprite.direction='left';
+      } else if (angle<-PI/8.0){
+        sprite.direction='nw';
+      } else if (angle<PI/8.0){
+        sprite.direction='up';
+      } else if (angle<PI*3.0/8.0){
+        sprite.direction='ne';
+      } else if (angle<PI*5.0/8.0){
+        sprite.direction='right';
+      } else if (angle<PI*7.0/8.0){
+        sprite.direction='se';
+      } else {
+        sprite.direction='down';
+      }
+    };
 
     render(){
               const SPRITE_STYLE="sprites_";

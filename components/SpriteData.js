@@ -2,14 +2,26 @@
 let spriteData =
 {
 virus: { left: ['virus'], right: ['virus'], up: ['virus'], down: ['virus'],
- weapon: false, pickup: false, deadly: true, hitpoints: 5, speed: 2, score: 10},
+ weapon: false, pickup: false, deadly: true, hitpoints: 5, speed: 2, score: 10, generator: null, genchance: 0, circle: 0},
 syringe: { left: ['syringe_left'], right: ['syringe_right'], up: ['syringe_up'], down: ['syringe_down'],
- weapon: true, pickup: false, deadly: true, hitpoints: 2, speed: 4, score: 0},
+ weapon: true, pickup: false, deadly: true, hitpoints: 2, speed: 4, score: 0, generator: null, genchance: 0, circle: 0} ,
 explosion: { left: ['explosion_0', 'explosion_1', 'explosion_2', 'explosion_3', 'explosion_4', 'explosion_5', 'explosion_6'],
 right: ['explosion_0', 'explosion_1', 'explosion_2', 'explosion_3', 'explosion_4', 'explosion_5', 'explosion_6'],
 up: ['explosion_0', 'explosion_1', 'explosion_2', 'explosion_3', 'explosion_4', 'explosion_5', 'explosion_6'],
 down: ['explosion_0', 'explosion_1', 'explosion_2', 'explosion_3', 'explosion_4', 'explosion_5', 'explosion_6'],
-  weapon: false, pickup: false, deadly: false, hitpoints: 0, speed: 0, score: 0},
+  weapon: false, pickup: false, deadly: false, hitpoints: 0, speed: 0, score: 0, generator: null, genchance: 0, circle:0 },
+purple_testtube: { left:['purple_testtube'], right: ['purple_testtube'], up: ['purple_testtubde'], down: ['purple_testtude'],
+  weapon: false, pickup: false, deadly: true, hitpoint: 60, speed: 0, score: 200, generator: 'virus', genchance: 0.01, circle:0
+},
+grey_bowl: {left:['grey_bowl'], right:['grey_bowl'], up:['grey_bowl'], down:['grey_bowl'],
+ weapon: false, pickup: false, deadly: true, hitpoints: 100, speed: 0, score: 500, generator: 'grey_bat', genchance: 0.01, circle: 0},
+ red_bowl: {left:['ged_bowl'], right:['red_bowl'], up:['red_bowl'], down:['red_bowl'],
+  weapon: false, pickup: false, deadly: true, hitpoints: 150, speed: 0, score: 1000, generator: 'red_bat', genchance: 0.015, circle: 0},
+  green_bowl: {left:['green_bowl'], right:['green_bowl'], up:['green_bowl'], down:['green_bowl'],
+   weapon: false, pickup: false, deadly: true, hitpoints: 200, speed: 0, score: 2000, generator: 'green_bat', genchance: 0.02, circle: 0},
+   
+
+  
 player: { left: [
   'globeTrotter_left_0',
   'globeTrotter_left_1',
@@ -82,7 +94,7 @@ down: [
   'globeTrotter_down_14',
   'globeTrotter_down_15',    
 ],
- weapon: false, pickup: false, deadly: false, hitpoints: 20, speed: 2, score: 0},
+ weapon: false, pickup: false, deadly: false, hitpoints: 20, speed: 2, score: 0, generator: null, genchance: 0, circle: 0},
  
  grey_bat: {
    left: ['grey_bat_left_0','grey_bat_left_1','grey_bat_left_2','grey_bat_left_3','grey_bat_left_4',
@@ -105,7 +117,7 @@ down: [
    'grey_bat_down_10','grey_bat_down_11','grey_bat_down_12','grey_bat_down_13','grey_bat_down_14',
    'grey_bat_down_15','grey_bat_down_16','grey_bat_down_17','grey_bat_down_18','grey_bat_down_19',
    ],    
-   weapon: false, pickup: false, deadly: true, hitpoints: 20, speed: 3, score: 20},
+   weapon: false, pickup: false, deadly: true, hitpoints: 20, speed: 3, score: 20, generator: null, genchance: 0, circle: 5},
  
  red_bat: {
    left: ['red_bat_left_0','red_bat_left_1','red_bat_left_2','red_bat_left_3','red_bat_left_4',
@@ -128,7 +140,7 @@ down: [
    'red_bat_down_10','red_bat_down_11','red_bat_down_12','red_bat_down_13','red_bat_down_14',
    'red_bat_down_15','red_bat_down_16','red_bat_down_17','red_bat_down_18','red_bat_down_19',
    ],    
-   weapon: false, pickup: false, deadly: true, hitpoints: 30, speed: 4, score: 50},
+   weapon: false, pickup: false, deadly: true, hitpoints: 30, speed: 4, score: 50, generator: null, genchance: 0.0, circle: 5},
  
   green_bat: {
     left: ['green_bat_left_0','green_bat_left_1','green_bat_left_2','green_bat_left_3','green_bat_left_4',
@@ -151,7 +163,7 @@ down: [
     'green_bat_down_10','green_bat_down_11','green_bat_down_12','green_bat_down_13','green_bat_down_14',
     'green_bat_down_15','green_bat_down_16','green_bat_down_17','green_bat_down_18','green_bat_down_19',
     ],    
-    weapon: false, pickup: false, deadly: true, hitpoints: 40, speed: 5, score: 100},
+    weapon: false, pickup: false, deadly: true, hitpoints: 40, speed: 5, score: 100, generator: null, genchance: 0, circle: 5},
 
 
 

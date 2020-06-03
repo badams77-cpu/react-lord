@@ -18,9 +18,14 @@ room0: {
   base: 'desert',
   sprites: [
     {
-      spriteName: 'virus',
-      xpos: 8,
-      ypos: 9
+      spriteName: 'grey_bowl',
+      xpos: 7,
+      ypos: 10
+    },
+    {
+      spriteName: 'purple_testtube',
+      xpos: 5,
+      ypos: 5
     }
   ],
   map:
