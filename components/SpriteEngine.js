@@ -192,9 +192,11 @@ class SpriteEngine extends Component {
           let ry = mySprite.y - mySprite.centerY;
           let r = Math.sqrt(rx*rx+ry*ry);
           if (r<mySprite.circle){ continue; }
-          let angle = Math.atan2(-ry/r, rx/r);
+          let angle = Math.atan2(-ry, rx);
+//          console.log("Angle: ", 180*angle/Math.PI)
           mySprite.dx = mySpriteData.speed * Math.cos(angle);
           mySprite.dy = mySpriteData.speed * Math.sin(angle);
+//          console.log("Circle: dx: ",mySprite.dx," dy: ", mySprite.dy);
           this.setDiagonalDirection(mySprite);
         } else {
             if (mySprite.x<0){ mySprite.dx = 2; mySprite.direction='right'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true; }
@@ -267,11 +269,11 @@ class SpriteEngine extends Component {
              delay_counter: 0,
              circle: mySpriteData.circle*this.state.tile_width,
              centerX: newSprites[i].x,
-             centerY: newSprites[i],y,
+             centerY: newSprites[i].y,
              hitpoints: mySpriteData.hitpoints
            };
            if (mySpriteData.circle){
-             setDiagonalDirection(newSprite);
+             this.setDiagonalDirection(newSprite);
            }
            newSprites.push(newSprite);
          }
@@ -340,21 +342,21 @@ class SpriteEngine extends Component {
     setDiagonalDirection = (sprite)=>{
       let r = Math.sqrt( sprite.dx*sprite.dx + sprite.dy*sprite.dx);
       let angle = Math.atan2 ( sprite.dx/r, sprite.dy/r);
-      if (angle<-PI*7.0/8.0){
+      if (angle<-Math.PI*7.0/8.0){
         sprite.direction='down';
-      } else if (angle<-PI*5.0/8.0){
+      } else if (angle<-Math.PI*5.0/8.0){
         sprite.direction='sw';
-      } else if (angle<-PI*3.0/8.0){
+      } else if (angle<-Math.PI*3.0/8.0){
         sprite.direction='left';
-      } else if (angle<-PI/8.0){
+      } else if (angle<-Math.PI/8.0){
         sprite.direction='nw';
-      } else if (angle<PI/8.0){
+      } else if (angle<Math.PI/8.0){
         sprite.direction='up';
-      } else if (angle<PI*3.0/8.0){
+      } else if (angle<Math.PI*3.0/8.0){
         sprite.direction='ne';
-      } else if (angle<PI*5.0/8.0){
+      } else if (angle<Math.PI*5.0/8.0){
         sprite.direction='right';
-      } else if (angle<PI*7.0/8.0){
+      } else if (angle<Math.PI*7.0/8.0){
         sprite.direction='se';
       } else {
         sprite.direction='down';
@@ -382,8 +384,17 @@ class SpriteEngine extends Component {
               const style = StyleSheet.create(styles);
               style_counter =0;
               for(i=0; i<sprites.length;i++){
+                     if (sprites[i]==null){ continue; }
                      let mySpriteData = spriteData[sprites[i].spriteName];
                      let sourceNames = mySpriteData[sprites[i].direction];
+                     if (sprites[i].anim_counter==null){
+                       console.log("sprite: ",i, " name: ", sprites[i].spriteName, " no anim counter");
+                       continue;
+                     }
+                     if (sourceNames==null){
+                          console.log("sprite: ",i, " name: ", sprites[i].spriteName, " missing anim for direction: "+sprites[i].direction);
+                          continue;
+                     }
                      let sourceName = sourceNames[sprites[i].anim_counter];
                      let source = spriteGraphics[sourceName];
                      let myStyle= style[SPRITE_STYLE+style_counter];
