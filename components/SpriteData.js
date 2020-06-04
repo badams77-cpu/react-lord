@@ -4,7 +4,7 @@ let spriteData =
 virus: { left: ['virus'], right: ['virus'], up: ['virus'], down: ['virus'],
  weapon: false, pickup: false, deadly: true, hitpoints: 5, speed: 2, score: 10, generator: null, genchance: 0, circle: 0},
 syringe: { left: ['syringe_left'], right: ['syringe_right'], up: ['syringe_up'], down: ['syringe_down'],
- weapon: true, pickup: false, deadly: true, hitpoints: 2, speed: 4, score: 0, generator: null, genchance: 0, circle: 0} ,
+ weapon: true, pickup: false, deadly: false, hitpoints: 2, speed: 4, score: 0, generator: null, genchance: 0, circle: 0} ,
 explosion: { left: ['explosion_0', 'explosion_1', 'explosion_2', 'explosion_3', 'explosion_4', 'explosion_5', 'explosion_6'],
 right: ['explosion_0', 'explosion_1', 'explosion_2', 'explosion_3', 'explosion_4', 'explosion_5', 'explosion_6'],
 up: ['explosion_0', 'explosion_1', 'explosion_2', 'explosion_3', 'explosion_4', 'explosion_5', 'explosion_6'],
@@ -137,7 +137,7 @@ down: [
    'grey_bat_se_10','grey_bat_se_11','grey_bat_se_12','grey_bat_se_13','grey_bat_se_14',
    'grey_bat_se_15','grey_bat_se_16','grey_bat_se_17','grey_bat_se_18','grey_bat_se_19',
    ],                      
-   weapon: false, pickup: false, deadly: true, hitpoints: 20, speed: 3, score: 20, generator: null, genchance: 0, circle: 5},
+   weapon: false, pickup: false, deadly: true, hitpoints: 8, speed: 3, score: 20, generator: null, genchance: 0, circle: 5},
  
  red_bat: {
    left: ['red_bat_left_0','red_bat_left_1','red_bat_left_2','red_bat_left_3','red_bat_left_4',
@@ -180,7 +180,7 @@ down: [
    'red_bat_se_10','red_bat_se_11','red_bat_se_12','red_bat_se_13','red_bat_se_14',
    'red_bat_se_15','red_bat_se_16','red_bat_se_17','red_bat_se_18','red_bat_se_19',
    ],  
-   weapon: false, pickup: false, deadly: true, hitpoints: 30, speed: 4, score: 50, generator: null, genchance: 0.0, circle: 5},
+   weapon: false, pickup: false, deadly: true, hitpoints: 12, speed: 4, score: 50, generator: null, genchance: 0.0, circle: 5},
  
   green_bat: {
     left: ['green_bat_left_0','green_bat_left_1','green_bat_left_2','green_bat_left_3','green_bat_left_4',
@@ -223,7 +223,7 @@ down: [
    'green_bat_se_10','green_bat_se_11','green_bat_se_12','green_bat_se_13','green_bat_se_14',
    'green_bat_se_15','green_bat_se_16','green_bat_se_17','green_bat_se_18','green_bat_se_19',
    ],          
-    weapon: false, pickup: false, deadly: true, hitpoints: 40, speed: 5, score: 100, generator: null, genchance: 0, circle: 5},
+    weapon: false, pickup: false, deadly: true, hitpoints: 15, speed: 5, score: 100, generator: null, genchance: 0, circle: 5},
 
 
 

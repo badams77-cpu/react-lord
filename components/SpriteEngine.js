@@ -208,7 +208,7 @@ class SpriteEngine extends Component {
                 mySprite.dy = -2; mySprite.direction='up'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true;
             }
         }
-        if (mySprite.dx!=0 || mySprite.dy!=0 || mySprite.spriteName==='explosion'){
+        if (mySprite.dx!==0 || mySprite.dy!==0 || mySprite.spriteName==='explosion'){
           if (!newDirection){
             if (mySprite.delay_counter++ >=mySprite.anim_delay_frames){
               mySprite.anim_counter++;
@@ -221,18 +221,24 @@ class SpriteEngine extends Component {
               }
             }
           } else if (mySpriteData.weapon) {
-            newSprites.splice(i,1); // Remove weapon if it bounces
+            removeSprites.push(i); // Remove weapon if it bounces
+            console.log("weapon bounce set remove ",i, removeSprites);
           }
         }
       }
-      let removeCounter=0;
-      removeSprites.sort( (a,b)=>a-b);
-      for(i=0; i<removeSprites;i++){
-         let remove= removeSprites[i]-removeCounter;
-         if (remove!=0){
-            newSprites.splice(remove,1);
-         }
-         removeCounter++;
+      if (removeSprites.length>0){
+          let removeCounter=0;
+          removeSprites.sort( (a,b)=>a-b);
+          console.log("starting remove", removeSprites);
+          for(i=0; i<removeSprites.length;i++){
+            console.log("To remove: "+removeSprites[i]-removeCounter);
+            let remove= removeSprites[i]-removeCounter;
+            if (remove>0 && remove<newSprites.length){
+                console.log("moveSprites: Removing sprite ",remove, newSprites[remove].spriteName);
+                newSprites.splice(remove,1);
+                removeCounter++;
+            }
+          }
       }
       this.setState({ sprites: newSprites});
       this.collisions();
@@ -241,6 +247,12 @@ class SpriteEngine extends Component {
 
     generator = ()=> {
       let newSprites = [...this.state.sprites];
+      let deadlyCount = 0;
+           this.state.sprites.forEach( (sprite) => {
+             let mySpriteData = spriteData[sprite.spriteName];
+      //       console.log(sprite.spriteName, mySpriteData);
+             if (mySpriteData && mySpriteData.deadly){ deadlyCount++;}});
+           if (deadlyCount>=constants.DEADLY_LIMIT){ return; }
       let change = false;
       for(i=1 ; i<newSprites.length; i++){
          let generateName = spriteData[newSprites[i].spriteName].generator;
@@ -265,7 +277,7 @@ class SpriteEngine extends Component {
              dy: dy,
              anim_counter: 0,
              direction: 'left',
-             anim_delay_frames: 0,
+             anim_delay_frames: 1,
              delay_counter: 0,
              circle: mySpriteData.circle*this.state.tile_width,
              centerX: newSprites[i].x,
@@ -292,7 +304,7 @@ class SpriteEngine extends Component {
       // With Player
       for(j=1 ; j<newSprites.length; j++){
         if (spriteData[newSprites[j].spriteName].deadly && this.isCollide( newSprites[0], newSprites[j])){
-          console.log("Player hit");
+//          console.log("Player hit");
         }
       }
       // Weapon to Deadly
@@ -305,11 +317,13 @@ class SpriteEngine extends Component {
             if (jData.deadly && this.isCollide( newSprites[i], newSprites[j])){
              change=true;
               newSprites[j].hitpoints -= iData.hitpoints;
+              console.log("Hit "+newSprites[j].spriteName+ " "+newSprites[j].hitpoints+" losing "+iData.hitpoints);
               removeSprites.push(i);
               if (newSprites[j].hitpoints<=0){
                 newSprites[j].spriteName='explosion';
                 newSprites[j].dx=0;
                 newSprites[j].dy=0;
+                newSprites[j].direction='left';
                 newSprites[j].anim_counter=0;
                 newSprites[j].delay_counter=0;
                 this.props.onAddScore(jData.score);
@@ -323,9 +337,12 @@ class SpriteEngine extends Component {
       removeSprites.sort( (a,b)=>a-b);
       for(i=0; i<removeSprites;i++){
         let remove= removeSprites[i]-removeCounter;
-        if (remove!=0){newSprites.splice(remove,1)};
-        removeCounter++;
-        change=true;
+         if (remove>0 && remove<newSprites.length){
+          console.log("collsions: Removing sprite ",remove, newSprites[remove].spriteName);
+          newSprites.splice(remove,1);
+          removeCounter++;
+          change=true;
+        };
       }
       if (change){
         this.setState({ sprites: newSprites});
