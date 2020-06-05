@@ -4,14 +4,14 @@ let spriteData =
 virus: { left: ['virus'], right: ['virus'], up: ['virus'], down: ['virus'],
  weapon: false, pickup: false, deadly: true, hitpoints: 5, speed: 2, score: 10, generator: null, genchance: 0, circle: 0},
 syringe: { left: ['syringe_left'], right: ['syringe_right'], up: ['syringe_up'], down: ['syringe_down'],
- weapon: true, pickup: false, deadly: false, hitpoints: 2, speed: 4, score: 0, generator: null, genchance: 0, circle: 0} ,
+ weapon: true, pickup: false, deadly: false, hitpoints: 5, speed: 4, score: 0, generator: null, genchance: 0, circle: 0} ,
 explosion: { left: ['explosion_0', 'explosion_1', 'explosion_2', 'explosion_3', 'explosion_4', 'explosion_5', 'explosion_6'],
 right: ['explosion_0', 'explosion_1', 'explosion_2', 'explosion_3', 'explosion_4', 'explosion_5', 'explosion_6'],
 up: ['explosion_0', 'explosion_1', 'explosion_2', 'explosion_3', 'explosion_4', 'explosion_5', 'explosion_6'],
 down: ['explosion_0', 'explosion_1', 'explosion_2', 'explosion_3', 'explosion_4', 'explosion_5', 'explosion_6'],
   weapon: false, pickup: false, deadly: false, hitpoints: 0, speed: 0, score: 0, generator: null, genchance: 0, circle:0 },
 purple_testtube: { left:['purple_testtube'], right: ['purple_testtube'], up: ['purple_testtubde'], down: ['purple_testtude'],
-  weapon: false, pickup: false, deadly: true, hitpoint: 60, speed: 0, score: 200, generator: 'virus', genchance: 0.01, circle:0
+  weapon: false, pickup: false, deadly: true, hitpoints: 60, speed: 0, score: 200, generator: 'virus', genchance: 0.01, circle:0
 },
 grey_bowl: {left:['grey_bowl'], right:['grey_bowl'], up:['grey_bowl'], down:['grey_bowl'],
  weapon: false, pickup: false, deadly: true, hitpoints: 100, speed: 0, score: 500, generator: 'grey_bat', genchance: 0.01, circle: 0},

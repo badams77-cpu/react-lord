@@ -174,7 +174,6 @@ class SpriteEngine extends Component {
 
 
     moveSprites = ()=>{
-//      console.log(constants.INTERVAL);
       let newSprites = [... this.state.sprites];
       let removeSprites = [];
       for(i=0;i<newSprites.length; i++){
@@ -191,13 +190,12 @@ class SpriteEngine extends Component {
           let rx = mySprite.x - mySprite.centerX;
           let ry = mySprite.y - mySprite.centerY;
           let r = Math.sqrt(rx*rx+ry*ry);
-          if (r<mySprite.circle){ continue; }
-          let angle = Math.atan2(-ry, rx);
-//          console.log("Angle: ", 180*angle/Math.PI)
-          mySprite.dx = mySpriteData.speed * Math.cos(angle);
-          mySprite.dy = mySpriteData.speed * Math.sin(angle);
-//          console.log("Circle: dx: ",mySprite.dx," dy: ", mySprite.dy);
-          this.setDiagonalDirection(mySprite);
+          if (r>=mySprite.circle){
+            let angle = Math.atan2(-rx, ry);
+            mySprite.dx = mySpriteData.speed * Math.cos(angle);
+            mySprite.dy = mySpriteData.speed * Math.sin(angle);
+            this.setDiagonalDirection(mySprite);
+          }
         } else {
             if (mySprite.x<0){ mySprite.dx = 2; mySprite.direction='right'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true; }
             if (mySprite.y<0){ mySprite.dy = 2; mySprite.direction='down'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true; }
