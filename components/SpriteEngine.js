@@ -26,7 +26,8 @@ class SpriteEngine extends Component {
          interval: null,
          pressStartX: 0,
          pressStartY: 0,
-         init_sprites: props.initial_sprites,
+         player_start: {x: props.player_start.x, y: props.player_start.y},
+         initial_sprites: props.initial_sprites,
        };
     }
 
@@ -74,7 +75,9 @@ class SpriteEngine extends Component {
    }
 
    restart= ()=>{
-     this.setState({sprites: this.startSprites(this.state)});
+     this.setState({
+       sprites: this.startSprites(this.state),
+     });
    }
 
 
@@ -138,7 +141,7 @@ class SpriteEngine extends Component {
       let y = event.nativeEvent.pageY;
       let dx=x-this.state.pressStartX;
       let dy=y-this.state.pressStartY;
-      console.log("Move x: ",x," y: ",y," dx: ",dx, "dy: ",dy);
+//      console.log("Move x: ",x," y: ",y," dx: ",dx, "dy: ",dy);
       let newSprites = [... this.state.sprites];
            let speed = spriteData['player'].speed;
            if (Math.abs(dx) > Math.abs(dy)){
@@ -274,7 +277,7 @@ class SpriteEngine extends Component {
              console.log("no sprite data for ",generateName);
              continue;
            }
-           console.log("Creating new "+generateName);
+//           console.log("Creating new "+generateName);
            let speed = mySpriteData.speed;
            let angle = Math.random()*2.0*Math.PI;
            let dx = speed*Math.sin(angle);
@@ -317,7 +320,7 @@ class SpriteEngine extends Component {
       for(j=1 ; j<newSprites.length; j++){
         let jData= spriteData[newSprites[j].spriteName];
         if (jData.deadly && this.isCollide( newSprites[0], newSprites[j])){
-           removeSprites.push(j);
+           if (jData.generator==null){ removeSprites.push(j); }
            this.props.onPlayerHit(jData.hitpoints);
         }
       }
@@ -352,7 +355,7 @@ class SpriteEngine extends Component {
       for(i=0; i<removeSprites;i++){
         let remove= removeSprites[i]-removeCounter;
          if (remove>0 && remove<newSprites.length){
-          console.log("collsions: Removing sprite ",remove, newSprites[remove].spriteName);
+//          console.log("collsions: Removing sprite ",remove, newSprites[remove].spriteName);
           newSprites.splice(remove,1);
           removeCounter++;
           change=true;
@@ -397,8 +400,9 @@ class SpriteEngine extends Component {
     render(){
         if (this.props.restart){
           setTimeout( ()=> {
-            restart();
-            props.onRestart();
+            console.log("SpriteEngine: restart");
+            this.restart();
+            this.props.onRestart();
           },40);
         }
               const SPRITE_STYLE="sprites_";
@@ -422,6 +426,7 @@ class SpriteEngine extends Component {
               style_counter =0;
               for(i=0; i<sprites.length;i++){
                      if (sprites[i]==null){ continue; }
+                     if (i==0 && this.props.game_over ){ continue; }
                      let mySpriteData = spriteData[sprites[i].spriteName];
                      let sourceNames = mySpriteData[sprites[i].direction];
                      if (sprites[i].anim_counter==null){
@@ -462,7 +467,7 @@ const mapStateToProps = (state)=>{
 const mapDispatchToProps = (dispatch) => {
   return {
     onAddScore: score=> dispatch({type: ADD_SCORE, score: score}),
-    onRestart: ()=> dispatch({type: RESTART_END}),
+    onRestart: ()=> dispatch({type: END_RESTART}),
     onPlayerHit: life=> dispatch({type: SUB_LIFE, life: life})
   };
 }

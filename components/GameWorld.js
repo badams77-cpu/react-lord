@@ -31,6 +31,7 @@ class GameWorld extends Component {
     render(){
         if (this.props.restart){
           setTimeout( ()=> {
+            console.log("Game world restart:");
             this.setState({ room: constants.START_ROOM, game: this.state.game+1})},20);
         }
         const TILE_STYLE = "tileStyle_";

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, Button} from 'react-native';
 import {connect} from 'react-redux';
 import {ADD_SCORE, ADD_LIFE, SUB_LIFE, RESTART, END_RESTART} from '../actions/Actions';
 
@@ -24,7 +24,7 @@ class ScoreBoard extends Component {
         color: '#ffffff'
       }
     });
-    let but = this.props.game_over? (<Button onPress={()=>{props.onRestart()}} title='Restart' color='#ff3300'/>):null;
+    let but = this.props.game_over? (<Button onPress={this.props.onRestart} title='Restart' color='#ff3300'/>):null;
     return (
       <View style={styles.container}><Text style={styles.text}>Score: {this.props.score}</Text>
       <Text style={styles.text}>Life: {this.props.life}</Text>
@@ -42,8 +42,8 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onRestart: () => dispatch({type: RESTART})
+    onRestart: () => { console.log("Restart Pressed"); dispatch({type: RESTART}); }
   };
 }
 
-export default connect(mapStateToProps)(ScoreBoard);
+export default connect(mapStateToProps, mapDispatchToProps)(ScoreBoard);
