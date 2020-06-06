@@ -5,7 +5,7 @@ import ImageOverlay from './ImageOverlay';
 import spriteGraphics from './SpriteGraphics';
 import constants from './Constants';
 import {connect} from 'react-redux';
-import {ADD_SCORE} from '../actions/Actions';
+import {ADD_SCORE, ADD_LIFE, SUB_LIFE, RESTART, END_RESTART} from '../actions/Actions';
 
 
 class SpriteEngine extends Component {
@@ -16,45 +16,7 @@ class SpriteEngine extends Component {
     constructor(props){
        super(props);
        props.setHandlersCallback({ onPressIn: this.onPressInHandler, onPressOut: this.onPressOutHandler});
-       let sprites = [];
-       let initial_sprites = props['initial_sprites'];
-       // Start player
-       sprites.push({
-         spriteName: 'player',
-         x: props.player_start.x*props.tile_width,
-         y: props.player_start.y*props.tile_height,
-         dx: 0,
-         dy: 0,
-         anim_counter: 0,
-         direction: 'right',
-         anim_delay_frames: 1,
-         delay_counter: 0,
-         hitpoints: constants.PLAYER_LIFE
-       })
-        // Start Sprites
-       for(let i=0; i<initial_sprites.length; i++){
-          let mySpriteData = spriteData[ initial_sprites[i]['spriteName']];
-          if (mySpriteData==null){
-             console.log("No spriteData for ",initial.sprites[i].spriteName);
-             continue;
-          }
-          let speed = mySpriteData.speed;
-          let angle = Math.random()*2.0*Math.PI;
-          let dx = speed*Math.sin(angle);
-          let dy = speed*Math.cos(angle);
-          sprites.push({
-            spriteName: initial_sprites[i]['spriteName'],
-            x: initial_sprites[i].xpos*props.tile_width,
-            y: initial_sprites[i].ypos*props.tile_height,
-            dx: dx,
-            dy: dy,
-            anim_counter: 0,
-            direction: 'left',
-            anim_delay_frames: 1,
-            delay_counter: 0,
-            hitpoints: mySpriteData.hitpoints
-          });
-       }
+       let sprites = this.startSprites(props);
        this.state = {
          window_width: props.window_width,
          window_height: props.window_height,
@@ -64,8 +26,58 @@ class SpriteEngine extends Component {
          interval: null,
          pressStartX: 0,
          pressStartY: 0,
+         init_sprites: props.initial_sprites,
        };
     }
+
+   startSprites = (props)=>{
+            let sprites = [];
+            let initial_sprites = props['initial_sprites'];
+            // Start player
+            sprites.push({
+              spriteName: 'player',
+              x: props.player_start.x*props.tile_width,
+              y: props.player_start.y*props.tile_height,
+              dx: 0,
+              dy: 0,
+              anim_counter: 0,
+              direction: 'right',
+              anim_delay_frames: 1,
+              delay_counter: 0,
+              hitpoints: constants.PLAYER_LIFE
+            })
+             // Start Sprites
+            for(let i=0; i<initial_sprites.length; i++){
+               let mySpriteData = spriteData[ initial_sprites[i]['spriteName']];
+               if (mySpriteData==null){
+                  console.log("No spriteData for ",initial.sprites[i].spriteName);
+                  continue;
+               }
+               let speed = mySpriteData.speed;
+               let angle = Math.random()*2.0*Math.PI;
+               let dx = speed*Math.sin(angle);
+               let dy = speed*Math.cos(angle);
+               sprites.push({
+                 spriteName: initial_sprites[i]['spriteName'],
+                 x: initial_sprites[i].xpos*props.tile_width,
+                 y: initial_sprites[i].ypos*props.tile_height,
+                 dx: dx,
+                 dy: dy,
+                 anim_counter: 0,
+                 direction: 'left',
+                 anim_delay_frames: 1,
+                 delay_counter: 0,
+                 hitpoints: mySpriteData.hitpoints
+               });
+            }
+            return sprites;
+   }
+
+   restart= ()=>{
+     this.setState({sprites: this.startSprites(this.state)});
+   }
+
+
 
    fire = (x,y)=>{
      console.log("Fire ",x ,y);
@@ -103,6 +115,7 @@ class SpriteEngine extends Component {
 
 
     onPressInHandler = (event) => {
+      if (this.props.game_over){ return; }
       if (!this.isOnPlayer(event.nativeEvent.pageX, event.nativeEvent.pageY)){
          this.fire(event.nativeEvent.pageX, event.nativeEvent.pageY);
                  this.setState({pressStartX: 0, pressStartY: 0});
@@ -220,19 +233,19 @@ class SpriteEngine extends Component {
             }
           } else if (mySpriteData.weapon) {
             removeSprites.push(i); // Remove weapon if it bounces
-            console.log("weapon bounce set remove ",i, removeSprites);
+//            console.log("weapon bounce set remove ",i, removeSprites);
           }
         }
       }
       if (removeSprites.length>0){
           let removeCounter=0;
           removeSprites.sort( (a,b)=>a-b);
-          console.log("starting remove", removeSprites);
+//          console.log("starting remove", removeSprites);
           for(i=0; i<removeSprites.length;i++){
-            console.log("To remove: "+removeSprites[i]-removeCounter);
+//            console.log("To remove: "+removeSprites[i]-removeCounter);
             let remove= removeSprites[i]-removeCounter;
             if (remove>0 && remove<newSprites.length){
-                console.log("moveSprites: Removing sprite ",remove, newSprites[remove].spriteName);
+//                console.log("moveSprites: Removing sprite ",remove, newSprites[remove].spriteName);
                 newSprites.splice(remove,1);
                 removeCounter++;
             }
@@ -295,14 +308,17 @@ class SpriteEngine extends Component {
     }
 
     collisions = ()=> {
+      if (this.props.game_over){ return; }
       if (this.state.sprites.length <2){ return; }
       let newSprites = [...this.state.sprites];
       let change = false;
       let removeSprites= [];
       // With Player
       for(j=1 ; j<newSprites.length; j++){
-        if (spriteData[newSprites[j].spriteName].deadly && this.isCollide( newSprites[0], newSprites[j])){
-//          console.log("Player hit");
+        let jData= spriteData[newSprites[j].spriteName];
+        if (jData.deadly && this.isCollide( newSprites[0], newSprites[j])){
+           removeSprites.push(j);
+           this.props.onPlayerHit(jData.hitpoints);
         }
       }
       // Weapon to Deadly
@@ -379,6 +395,12 @@ class SpriteEngine extends Component {
     };
 
     render(){
+        if (this.props.restart){
+          setTimeout( ()=> {
+            restart();
+            props.onRestart();
+          },40);
+        }
               const SPRITE_STYLE="sprites_";
               const TILES_WIDTH = this.state.tile_width;
               const TILES_HEIGHT = this.state.tile_height;
@@ -434,12 +456,14 @@ class SpriteEngine extends Component {
 }
 
 const mapStateToProps = (state)=>{
-  return { score : state.score};
+  return { score : state.score, restart: state.restart, game_over: state.game_over};
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddScore: score=> dispatch({type: ADD_SCORE, score: score})
+    onAddScore: score=> dispatch({type: ADD_SCORE, score: score}),
+    onRestart: ()=> dispatch({type: RESTART_END}),
+    onPlayerHit: life=> dispatch({type: SUB_LIFE, life: life})
   };
 }
 

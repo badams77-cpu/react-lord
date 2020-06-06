@@ -2,13 +2,15 @@ import React, {Component } from 'react';
 import {StyleSheet, Image, View, Dimensions, PanResponder, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import background from './Background.js';
 import map from './Maps.js';
-import SpriteEngine from './SpriteEngine.js'
+import SpriteEngine from './SpriteEngine.js';
+import constants from './Constants'
+import {connect} from 'react-redux';
 
 class GameWorld extends Component {
 
     constructor(props){
        super(props);
-       this.state = { room: 'room0', playerStart: { x: 8, y: 8}, onPressInHandler: null, onPressOutHandler: null};
+       this.state = { room: constants.START_ROOM, playerStart: { x: 8, y: 8}, onPressInHandler: null, onPressOutHandler: null, game: 0};
     }
 
     setHandlers( handlers){
@@ -27,6 +29,10 @@ class GameWorld extends Component {
     }
 
     render(){
+        if (this.props.restart){
+          setTimeout( ()=> {
+            this.setState({ room: constants.START_ROOM, game: this.state.game+1})},20);
+        }
         const TILE_STYLE = "tileStyle_";
         const window = Dimensions.get('window');
         let window_width = window.width;
@@ -89,4 +95,8 @@ class GameWorld extends Component {
 
 }
 
-export default GameWorld;
+const mapStateToProps = (state)=>{
+  return { score : state.score, restart: state.restart};
+}
+
+export default connect(mapStateToProps)(GameWorld);

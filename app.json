@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "game1",
-    "slug": "game1",
+    "name": "Viri Attack 0.1.1",
+    "slug": "viri_attack_0_1_1",
     "platforms": [
       "ios",
       "android",
@@ -9,9 +9,9 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/sprites/virus_0_0.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/virus.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
