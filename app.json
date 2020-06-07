@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "Viri Attack 0.1.1",
-    "slug": "viri_attack_0_1_1",
+    "name": "Virii Attack 0.1.1",
+    "slug": "virii_attack_0_1_1",
+    "description": "Fight Virii and the Bats that Spread them"
     "platforms": [
       "ios",
       "android",
