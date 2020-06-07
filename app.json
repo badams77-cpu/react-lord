@@ -23,7 +23,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleMobileAdsAppId" : "ca-app-pub-4790577348062750~4359663909"
+      }
+    },
+    "android" : {
+      "config": {
+        "googleMobileAdsAppId" : "ca-app-pub-4790577348062750~6677817435"
+
+      }
     }
+
   }
 }

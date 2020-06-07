@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, Button} from 'react-native';
+import {Platform, View, StyleSheet, Text, Button} from 'react-native';
 import {connect} from 'react-redux';
 import {ADD_SCORE, ADD_LIFE, SUB_LIFE, RESTART, END_RESTART} from '../actions/Actions';
+import constants from "./Constants";
+import {AdMobBanner} from 'expo-ads-admob';
 
 class ScoreBoard extends Component {
 
@@ -9,9 +11,16 @@ class ScoreBoard extends Component {
     super(props);
   }
 
-
+  bannerError = (err)=>{
+    console.log(err);
+  }
 
   render(){
+    const adUnitID = Platform.select({
+      ios: constants.IOS_AD,
+      android: constants.ANDROID_AD
+    });
+//    console.log("adUnitID",adUnitID);
     const styles = StyleSheet.create({
       container: {
         flex: 1,
@@ -29,6 +38,11 @@ class ScoreBoard extends Component {
       <View style={styles.container}><Text style={styles.text}>Score: {this.props.score}</Text>
       <Text style={styles.text}>Life: {this.props.life}</Text>
       {but}
+      <AdMobBanner
+        bannerSize="fullBanner"
+        adUnitID={adUnitID} // Test ID, Replace with your-admob-unit-id
+        servePersonalizedAds={true}
+        onDidFailToReceiveAdWithError={this.bannerError} />
       </View>
       );
   }
