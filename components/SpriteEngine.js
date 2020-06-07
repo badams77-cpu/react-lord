@@ -195,6 +195,9 @@ class SpriteEngine extends Component {
       for(i=0;i<newSprites.length; i++){
         let mySprite = newSprites[i];
         let mySpriteData = spriteData[mySprite.spriteName];
+        if (i==0 && this.props.game_over){
+          mySpriteData = spriteData['explosion'];
+        }
         if (mySpriteData==null){
           console.log("No spriteData for ",i, mySprite.spriteName);
           continue;
@@ -320,8 +323,14 @@ class SpriteEngine extends Component {
       for(j=1 ; j<newSprites.length; j++){
         let jData= spriteData[newSprites[j].spriteName];
         if (jData.deadly && this.isCollide( newSprites[0], newSprites[j])){
-           if (jData.generator==null){ removeSprites.push(j); }
            this.props.onPlayerHit(jData.hitpoints);
+           newSprites[j].spriteName='explosion';
+           newSprites[j].dx=0;
+           newSprites[j].dy=0;
+           newSprites[j].direction='left';
+           newSprites[j].anim_counter=0;
+           newSprites[j].delay_counter=0;
+           this.props.onAddScore(jData.score);
         }
       }
       // Weapon to Deadly
@@ -367,10 +376,20 @@ class SpriteEngine extends Component {
     }
 
     isCollide = (sprite1, sprite2) => {
-      return !(sprite1.x+this.state.tile_width < sprite2.x ||
+      if (!(sprite1.x+this.state.tile_width < sprite2.x ||
                sprite1.x > sprite2.x+this.state.tile_width ||
                sprite1.y+this.state.tile_height < sprite2.y ||
-               sprite1.y > sprite2.y + this.state.tile_height);
+               sprite1.y > sprite2.y + this.state.tile_height)){
+        let x = sprite1.x - sprite2.x;
+        let y = sprite1.y - sprite2.y;
+        let r = Math.sqrt(x*x+y*y);
+        let data1 = spriteData[sprite1.spriteName];
+        let data2 = spriteData[sprite2.spriteName];
+        if (r < this.state.tile_width*0.5*( data1.radius+data2.radius)){
+          return true;
+        }
+      };
+      return false;
     }
 
     setDiagonalDirection = (sprite)=>{
@@ -426,8 +445,10 @@ class SpriteEngine extends Component {
               style_counter =0;
               for(i=0; i<sprites.length;i++){
                      if (sprites[i]==null){ continue; }
-                     if (i==0 && this.props.game_over ){ continue; }
                      let mySpriteData = spriteData[sprites[i].spriteName];
+                     if (i==0 && this.props.game_over){
+                       mySpriteData = spriteData['explosion'];
+                     }
                      let sourceNames = mySpriteData[sprites[i].direction];
                      if (sprites[i].anim_counter==null){
                        console.log("sprite: ",i, " name: ", sprites[i].spriteName, " no anim counter");
