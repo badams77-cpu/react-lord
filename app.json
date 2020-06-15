@@ -10,7 +10,7 @@
     ],
     "version": "0.1.1",
     "orientation": "portrait",
-    "icon": "./assets/sprites/virus_0_0.png",
+    "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/virus.png",
       "resizeMode": "contain",
@@ -24,13 +24,15 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "0.1.1",
+      "buildNumber": "0.1.2",
       "config": {
         "googleMobileAdsAppId" : "ca-app-pub-4790577348062750~4359663909"
       }
     },
     "android" : {
       "package": "com.axialforcegames.virii_attack",
+      "versionCode": 1,
+      "permissions": [],
       "config": {
         "googleMobileAdsAppId" : "ca-app-pub-4790577348062750~6677817435"
 
