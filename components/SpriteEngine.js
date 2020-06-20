@@ -491,7 +491,7 @@ class SpriteEngine extends Component {
             this.props.onRestart();
           },40);
         }
-        if (this.props.change_room){
+        if (this.props.change_room && this.props.room!=this.state.room){
           setTimeout( ()=> {
             console.log("SpriteEngine: change room");
             this.change_room(this.props.room, this.props.player_start_x, this.props.player_start_y);
