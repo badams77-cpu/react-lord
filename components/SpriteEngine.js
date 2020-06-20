@@ -203,6 +203,7 @@ class SpriteEngine extends Component {
 
     split_room = (room)=>{
        let split = room.split("_");
+       console.log("old room",split)
        return { room_y: split[1], room_x: split[2]};
     }
 
@@ -237,7 +238,7 @@ class SpriteEngine extends Component {
              if (i!=0){ mySprite.dx = 2;
                 mySprite.direction='right'; mySprite.anim_counter=0; }
              mySprite.delay_counter=0; newDirection=true;
-               if (i==0){
+               if (i==0 && !this.props.change_room){
                  let myroom = this.split_room(this.state.room);
                  let newx = myroom.room_x-1;
                  if (newx<1){ newx=8;}
@@ -247,7 +248,7 @@ class SpriteEngine extends Component {
             if (mySprite.y<0){
               if (i!=0) { mySprite.dy = 2; mySprite.direction='down'; mySprite.anim_counter=0; }
               mySprite.delay_counter=0; newDirection=true;
-               if (i==0){
+               if (i==0 && !this.props.change_room){
                  let myroom = this.split_room(this.state.room);
                  let newy = myroom.room_y-1;
                  if (newy<1){ newy=8;}
@@ -257,7 +258,7 @@ class SpriteEngine extends Component {
             if (mySprite.x + this.state.tile_width> this.state.window_width ){
                 if (i!=0) {mySprite.dx = -2; mySprite.direction='left';
                  mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true; }
-                if (i==0){
+                 if (i==0 && !this.props.change_room){
                    let myroom = this.split_room(this.state.room);
                    let newx = myroom.room_x+1;
                    if (newx>8){ newx=1;}
@@ -269,7 +270,7 @@ class SpriteEngine extends Component {
                   mySprite.dy = -2; mySprite.direction='up';
                   mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true;
                 }
-                if (i==0){
+               if (i==0 && !this.props.change_room){
                      let myroom = this.split_room(this.state.room);
                      let newy = myroom.room_y+1;
                      if (newy>8){ newy=1;}
