@@ -78,6 +78,9 @@ class SpriteEngine extends Component {
    }
 
    restart= ()=>{
+     let mystate = {...this.state};
+     mystate['initial_sprites'] = maps[room]['sprites'];
+     mystate['player_start']= {x: x,y: y };
      this.setState({
        sprites: this.startSprites(this.state),
      });
@@ -208,7 +211,7 @@ class SpriteEngine extends Component {
 
     split_room = (room)=>{
        let split = room.split("_");
-       console.log("old room",split)
+//       console.log("old room",split)
        return { room_y: parseInt(split[1]), room_x: parseInt(split[2])};
     }
 
