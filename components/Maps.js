@@ -690,6 +690,7 @@ room_8_8: {
    ]
  },
 room_8_6: {
+     base: 'island',
      sprites: [
                {
                  spriteName: 'purple_testtube',

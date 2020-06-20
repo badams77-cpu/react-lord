@@ -50,7 +50,7 @@ class GameWorld extends Component {
         }
         const room = map[this.state.room];
         const myMap = room['map'];
-        const base = room['base'];
+        let base = room['base'];
         if (base==null){
           console.log("room  "+this.state.room+" no base defined");
           base='island';
