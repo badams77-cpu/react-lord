@@ -201,7 +201,7 @@ class SpriteEngine extends Component {
       if (this.state.interval!=null){ clearInterval(this.state.interval); }
     }
 
-    split_room (room)=>{
+    split_room = (room)=>{
        let split = room.split("_");
        return { room_y: split[1], room_x: split[2]};
     }
@@ -233,39 +233,44 @@ class SpriteEngine extends Component {
             this.setDiagonalDirection(mySprite);
           }
         } else {
-            if (mySprite.x<0){ mySprite.dx = 2;
-             mySprite.direction='right'; mySprite.anim_counter=0;
+            if (mySprite.x<0){
+             if (i!=0){ mySprite.dx = 2;
+                mySprite.direction='right'; mySprite.anim_counter=0; }
              mySprite.delay_counter=0; newDirection=true;
                if (i==0){
-                 let myroom = split(this.state_room);
+                 let myroom = split_room(this.state_room);
                  let newx = myroom.room_x-1;
                  if (newx<1){ newx=8;}
                  onChangeRoom('room_'+myroom.room_y+'_'+newx, (this.state.window_width-this.state.tile_width)/this.state.tile_width, mySprite.y/this.state.tile_height, );
                }
              }
             if (mySprite.y<0){
-              mySprite.dy = 2; mySprite.direction='down'; mySprite.anim_counter=0;
+              if (i!=0) { mySprite.dy = 2; mySprite.direction='down'; mySprite.anim_counter=0; }
               mySprite.delay_counter=0; newDirection=true;
                if (i==0){
-                 let myroom = split(this.state_room);
+                 let myroom = split_room(this.state_room);
                  let newy = myroom.room_y-1;
                  if (newy<1){ newy=8;}
                  onChangeRoom('room_'+newy+'_'+myroom.room_x, mySprite.x/tile.width, (this.state.window_height-this.state_tile_height)/this.state_tile_height );
                }
               }
             if (mySprite.x + this.state.tile_width> this.state.window_width ){
-                mySprite.dx = -2; mySprite.direction='left'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true;
+                if (i!=0) {mySprite.dx = -2; mySprite.direction='left';
+                 mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true; }
                 if (i==0){
-                   let myroom = split(this.state_room);
+                   let myroom = split_room(this.state_room);
                    let newx = myroom.room_x+1;
                    if (newx>8){ newx=1;}
                    onChangeRoom('room_'+myroom.room_y+'_'+newx, 0, mySprite.y/this.state.tile_height, );
                 }
             }
             if (mySprite.y + this.state.tile_height > this.state.window_height){
-                mySprite.dy = -2; mySprite.direction='up'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true;
+                if (i!=0){
+                  mySprite.dy = -2; mySprite.direction='up';
+                  mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true;
+                }
                 if (i==0){
-                     let myroom = split(this.state_room);
+                     let myroom = split_room(this.state_room);
                      let newy = myroom.room_y+1;
                      if (newy>8){ newy=1;}
                      onChangeRoom('room_'+newy+'_'+myroom.room_x, mySprite.x/tile.width, 0 );
@@ -537,11 +542,11 @@ class SpriteEngine extends Component {
 }
 
 const mapStateToProps = (state)=>{
-  return { score : state.score, restart: state.restart, game_over: state.game_over
+  return { score : state.score, restart: state.restart, game_over: state.game_over,
     change_room: state.change_room,
     room: state.room,
-    player_start_x: start_player_start_x,
-    player_start_y: start_player_start_y,
+    player_start_x: state.player_start_x,
+    player_start_y: state.player_start_y,
   };
 }
 
