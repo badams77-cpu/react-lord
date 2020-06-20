@@ -555,7 +555,7 @@ const mapDispatchToProps = (dispatch) => {
     onAddScore: score=> dispatch({type: ADD_SCORE, score: score}),
     onRestart: ()=> dispatch({type: END_RESTART}),
     onPlayerHit: life=> dispatch({type: SUB_LIFE, life: life}),
-    onChangeRoom: (room, x,y)=> dispatch({ type: change_room, room: room, player_start_x: x, player_start_y: y}),
+    onChangeRoom: (room, x,y)=> dispatch({ type: CHANGE_ROOM, room: room, player_start_x: x, player_start_y: y}),
     onEndChangeRoom: ()=> dispatch( {type: END_CHANGE_ROOM})
   };
 }
