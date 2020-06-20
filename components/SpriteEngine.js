@@ -146,8 +146,10 @@ class SpriteEngine extends Component {
 
 
    isOnPlayer = (x,y)=> {
+     console.log("press x ",this.state.sprites[0].x-this.state.tile_width,'<',x,'<',this.state.sprites[0].x+2*this.state.tile_width);
+     console.log("press y ",this.state.sprites[0].y-this.state.tile_height,'<',y,'<',this.state.sprites[0].y+2*this.state.tile_height);
      return (x>this.state.sprites[0].x-this.state.tile_width && x<this.state.sprites[0].x+2*this.state.tile_width)
-       && (y>this.state.sprites[0].y-this.state.tile_height && y<this.state.sprites[1].y+2*this.state.tile_height);
+       && (y>this.state.sprites[0].y-this.state.tile_height && y<this.state.sprites[0].y+2*this.state.tile_height);
    }
 
    onPressOutHandler = (event)=>{
