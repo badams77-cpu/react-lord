@@ -238,7 +238,7 @@ class SpriteEngine extends Component {
                 mySprite.direction='right'; mySprite.anim_counter=0; }
              mySprite.delay_counter=0; newDirection=true;
                if (i==0){
-                 let myroom = split_room(this.state_room);
+                 let myroom = this.split_room(this.state_room);
                  let newx = myroom.room_x-1;
                  if (newx<1){ newx=8;}
                  onChangeRoom('room_'+myroom.room_y+'_'+newx, (this.state.window_width-this.state.tile_width)/this.state.tile_width, mySprite.y/this.state.tile_height, );
@@ -248,7 +248,7 @@ class SpriteEngine extends Component {
               if (i!=0) { mySprite.dy = 2; mySprite.direction='down'; mySprite.anim_counter=0; }
               mySprite.delay_counter=0; newDirection=true;
                if (i==0){
-                 let myroom = split_room(this.state_room);
+                 let myroom = this.split_room(this.state_room);
                  let newy = myroom.room_y-1;
                  if (newy<1){ newy=8;}
                  onChangeRoom('room_'+newy+'_'+myroom.room_x, mySprite.x/tile.width, (this.state.window_height-this.state_tile_height)/this.state_tile_height );
@@ -258,7 +258,7 @@ class SpriteEngine extends Component {
                 if (i!=0) {mySprite.dx = -2; mySprite.direction='left';
                  mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true; }
                 if (i==0){
-                   let myroom = split_room(this.state_room);
+                   let myroom = this.split_room(this.state_room);
                    let newx = myroom.room_x+1;
                    if (newx>8){ newx=1;}
                    onChangeRoom('room_'+myroom.room_y+'_'+newx, 0, mySprite.y/this.state.tile_height, );
@@ -270,7 +270,7 @@ class SpriteEngine extends Component {
                   mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true;
                 }
                 if (i==0){
-                     let myroom = split_room(this.state_room);
+                     let myroom = this.split_room(this.state_room);
                      let newy = myroom.room_y+1;
                      if (newy>8){ newy=1;}
                      onChangeRoom('room_'+newy+'_'+myroom.room_x, mySprite.x/tile.width, 0 );
