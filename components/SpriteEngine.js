@@ -251,7 +251,7 @@ class SpriteEngine extends Component {
                  let myroom = this.split_room(this.state.room);
                  let newy = myroom.room_y-1;
                  if (newy<1){ newy=8;}
-                 this.props.onChangeRoom('room_'+newy+'_'+myroom.room_x, mySprite.x/tile.width, (this.state.window_height-this.state_tile_height)/this.state_tile_height );
+                 this.props.onChangeRoom('room_'+newy+'_'+myroom.room_x, mySprite.x/this.state.tile_width, (this.state.window_height-this.state_tile_height)/this.state_tile_height );
                }
               }
             if (mySprite.x + this.state.tile_width> this.state.window_width ){
@@ -273,7 +273,7 @@ class SpriteEngine extends Component {
                      let myroom = this.split_room(this.state.room);
                      let newy = myroom.room_y+1;
                      if (newy>8){ newy=1;}
-                     this.props.onChangeRoom('room_'+newy+'_'+myroom.room_x, mySprite.x/tile.width, 0 );
+                     this.props.onChangeRoom('room_'+newy+'_'+myroom.room_x, mySprite.x/this.state.tile_width, 0 );
                 }
 
             }

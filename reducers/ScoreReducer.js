@@ -33,6 +33,7 @@ scoreReducer = (state = initial_state, action)=>{
         return {...state, restart: false };
     case CHANGE_ROOM:
         if (state.game_over){ return {...state};}
+        console.log("new room ", action.room);
         return {...state, room: action.room, player_start_x: action.player_start_x,
           player_start_y: action.player_start_y, change_room: true};
     case END_CHANGE_ROOM:
