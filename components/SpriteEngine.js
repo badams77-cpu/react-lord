@@ -79,8 +79,9 @@ class SpriteEngine extends Component {
 
    restart= ()=>{
      let mystate = {...this.state};
-     mystate['initial_sprites'] = maps[room]['sprites'];
+     mystate['initial_sprites'] = maps[constants.START_ROOM]['sprites'];
      mystate['player_start']= {x: x,y: y };
+     mystate['room']=constants.START_ROOM;
      this.setState({
        sprites: this.startSprites(this.state),
      });
