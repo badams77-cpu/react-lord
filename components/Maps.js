@@ -48,6 +48,7 @@ room0: {
        [29,29,29,29,29,29,29,45,29,29,29,29,29,29,29,29]]
  },
  room_8_5: {
+     base: 'island',
      sprites: [
        {
          spriteName: 'grey_bowl',

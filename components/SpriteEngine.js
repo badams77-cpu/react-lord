@@ -30,6 +30,7 @@ class SpriteEngine extends Component {
          player_start: {x: props.player_start.x, y: props.player_start.y},
          initial_sprites: props.initial_sprites,
          room: props.room,
+         change_room: false,
        };
     }
 
@@ -90,7 +91,8 @@ class SpriteEngine extends Component {
             sprites: this.startSprites(mystate),
             room: room,
             player_start: {x: x,y: y },
-            initial_sprites:  maps[room]['sprites']
+            initial_sprites:  maps[room]['sprites'],
+            change_room: false
      });
   }
 
@@ -204,12 +206,13 @@ class SpriteEngine extends Component {
     split_room = (room)=>{
        let split = room.split("_");
        console.log("old room",split)
-       return { room_y: split[1], room_x: split[2]};
+       return { room_y: parseInt(split[1]), room_x: parseInt(split[2])};
     }
 
     moveSprites = ()=>{
       let newSprites = [... this.state.sprites];
       let removeSprites = [];
+      let myChangeRoom = this.state.change_room;
       for(i=0;i<newSprites.length; i++){
         let mySprite = newSprites[i];
         let mySpriteData = spriteData[mySprite.spriteName];
@@ -238,7 +241,7 @@ class SpriteEngine extends Component {
              if (i!=0){ mySprite.dx = 2;
                 mySprite.direction='right'; mySprite.anim_counter=0; }
              mySprite.delay_counter=0; newDirection=true;
-               if (i==0 && !this.props.change_room){
+               if (i==0 && !this.props.change_room && !this.state.change_room){
                  let myroom = this.split_room(this.state.room);
                  let newx = myroom.room_x-1;
                  if (newx<1){ newx=8;}
@@ -248,7 +251,8 @@ class SpriteEngine extends Component {
             if (mySprite.y<0){
               if (i!=0) { mySprite.dy = 2; mySprite.direction='down'; mySprite.anim_counter=0; }
               mySprite.delay_counter=0; newDirection=true;
-               if (i==0 && !this.props.change_room){
+               if (i==0 && !this.props.change_room && !this.state_change_room){
+                 myChangeRoom = true;
                  let myroom = this.split_room(this.state.room);
                  let newy = myroom.room_y-1;
                  if (newy<1){ newy=8;}
@@ -258,7 +262,8 @@ class SpriteEngine extends Component {
             if (mySprite.x + this.state.tile_width> this.state.window_width ){
                 if (i!=0) {mySprite.dx = -2; mySprite.direction='left';
                  mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true; }
-                 if (i==0 && !this.props.change_room){
+                 if (i==0 && !this.props.change_room && !this.state_change_room){
+                   myChangeRoom = true;
                    let myroom = this.split_room(this.state.room);
                    let newx = myroom.room_x+1;
                    if (newx>8){ newx=1;}
@@ -270,7 +275,8 @@ class SpriteEngine extends Component {
                   mySprite.dy = -2; mySprite.direction='up';
                   mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true;
                 }
-               if (i==0 && !this.props.change_room){
+               if (i==0 && !this.props.change_room && !this.state.change_room){
+                     myChangeRoom = true;
                      let myroom = this.split_room(this.state.room);
                      let newy = myroom.room_y+1;
                      if (newy>8){ newy=1;}
@@ -311,7 +317,7 @@ class SpriteEngine extends Component {
             }
           }
       }
-      this.setState({ sprites: newSprites});
+      this.setState({ sprites: newSprites, change_room: myChangeRoom});
       this.collisions();
       this.generator();
     }
@@ -522,7 +528,7 @@ class SpriteEngine extends Component {
                      let sourceName = sourceNames[sprites[i].anim_counter];
                      let source = spriteGraphics[sourceName];
                      let myStyle= style[SPRITE_STYLE+style_counter];
-                     spriteRender.push(
+              if (sprites[i].y< this.state.window_height){ spriteRender.push(
                       <ImageOverlay
                         style={myStyle}
                         source = {source}
@@ -534,7 +540,7 @@ class SpriteEngine extends Component {
                         key={style_counter}
                       /> );
                      style_counter++;
-              }
+              }};
               return (
                  <View style={ { opacity: 0.5, backgroundColor: '#000000', flex: 1 }} >{spriteRender}</View>
               );
