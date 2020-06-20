@@ -782,7 +782,7 @@ room_7_5: {
                  },
                  {
                    spriteName: 'purple_testtube',
-                   xpos: 9,
+                   xpos: 8,
                    ypos: 3,
                  },
                  {
@@ -847,6 +847,7 @@ room_7_4: {
   ]
 },
 room_7_3: {
+         base: 'island',
          sprites: [
                    {
                      spriteName: 'purple_testtube',

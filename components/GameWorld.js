@@ -51,6 +51,10 @@ class GameWorld extends Component {
         const room = map[this.state.room];
         const myMap = room['map'];
         const base = room['base'];
+        if (base==null){
+          console.log("room  "+this.state.room+" no base defined");
+          base='island';
+        }
         const myBackground = background[base];
         const TILES_HEIGHT = Math.floor(window_height/myMap.length);
         const TILES_WIDTH = Math.floor(window_width/myMap[0].length);

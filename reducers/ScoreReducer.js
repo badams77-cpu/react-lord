@@ -28,7 +28,9 @@ scoreReducer = (state = initial_state, action)=>{
          return {...state, player_life: newLife};
        }
     case RESTART:
-        return {...state, player_life: constants.PLAYER_LIFE, game_over: false, restart: true };
+        return {...state, player_life: constants.PLAYER_LIFE, game_over: false, restart: true,
+           player_start_x: constants.player_start_x, player_start_y: constants.player_start_y,
+         };
     case END_RESTART:
         return {...state, restart: false };
     case CHANGE_ROOM:
