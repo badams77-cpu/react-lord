@@ -84,19 +84,19 @@ class SpriteEngine extends Component {
 
   change_room = (room, x,y)=> {
      let mystate = {...this.state};
-     let mystate['initial_sprites'] = maps[room]['sprites'];
-     let mystate['player_start']= {x: x,y: y };
-          this.setState({
-            sprites: this.startSprites(this.state),
+     mystate['initial_sprites'] = maps[room]['sprites'];
+     mystate['player_start']= {x: x,y: y };
+     this.setState({
+            sprites: this.startSprites(mystate),
             room: room,
             player_start: {x: x,y: y },
             initial_sprites:  maps[room]['sprites']
-          });
+     });
   }
 
 
    fire = (x,y)=>{
-     console.log("Fire ",x ,y);
+//     console.log("Fire ",x ,y);
      let deltaX = x-this.state.sprites[0].x;
      let deltaY = y-this.state.sprites[0].y;
      let weaponCount = 0;
@@ -186,7 +186,7 @@ class SpriteEngine extends Component {
                newSprites[0].delay_counter= 0;
              }
            }
-           console.log(newSprites[0]);
+//           console.log(newSprites[0]);
            this.setState({ sprites: newSprites});
            return true;
    }
@@ -391,7 +391,7 @@ class SpriteEngine extends Component {
             if (jData.deadly && this.isCollide( newSprites[i], newSprites[j])){
              change=true;
               newSprites[j].hitpoints -= iData.hitpoints;
-              console.log("Hit "+newSprites[j].spriteName+ " "+newSprites[j].hitpoints+" losing "+iData.hitpoints);
+//              console.log("Hit "+newSprites[j].spriteName+ " "+newSprites[j].hitpoints+" losing "+iData.hitpoints);
               removeSprites.push(i);
               if (newSprites[j].hitpoints<=0){
                 newSprites[j].spriteName='explosion';

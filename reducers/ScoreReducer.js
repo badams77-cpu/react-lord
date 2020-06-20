@@ -32,9 +32,11 @@ scoreReducer = (state = initial_state, action)=>{
     case END_RESTART:
         return {...state, restart: false };
     case CHANGE_ROOM:
-        return {...state, room:: action.room, player_start_x: action.player_start_x,
+        if (state.game_over){ return {...state};}
+        return {...state, room: action.room, player_start_x: action.player_start_x,
           player_start_y: action.player_start_y, change_room: true};
     case END_CHANGE_ROOM:
+         if (state.game_over){ return {...state};}
          return {...start, change_room: false};
 
   }
