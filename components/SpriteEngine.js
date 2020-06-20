@@ -85,6 +85,7 @@ class SpriteEngine extends Component {
 
   change_room = (room, x,y)=> {
      let mystate = {...this.state};
+     if (room==this.state.room){ return; }
      mystate['initial_sprites'] = maps[room]['sprites'];
      mystate['player_start']= {x: x,y: y };
      this.setState({
