@@ -146,8 +146,8 @@ class SpriteEngine extends Component {
 
 
    isOnPlayer = (x,y)=> {
-     console.log("press x ",this.state.sprites[0].x-this.state.tile_width,'<',x,'<',this.state.sprites[0].x+2*this.state.tile_width);
-     console.log("press y ",this.state.sprites[0].y-this.state.tile_height,'<',y,'<',this.state.sprites[0].y+2*this.state.tile_height);
+//     console.log("press x ",this.state.sprites[0].x-this.state.tile_width,'<',x,'<',this.state.sprites[0].x+2*this.state.tile_width);
+//     console.log("press y ",this.state.sprites[0].y-this.state.tile_height,'<',y,'<',this.state.sprites[0].y+2*this.state.tile_height);
      return (x>this.state.sprites[0].x-this.state.tile_width && x<this.state.sprites[0].x+2*this.state.tile_width)
        && (y>this.state.sprites[0].y-this.state.tile_height && y<this.state.sprites[0].y+2*this.state.tile_height);
    }
@@ -258,7 +258,7 @@ class SpriteEngine extends Component {
                  let myroom = this.split_room(this.state.room);
                  let newy = myroom.room_y-1;
                  if (newy<1){ newy=8;}
-                 this.props.onChangeRoom('room_'+newy+'_'+myroom.room_x, mySprite.x/this.state.tile_width, (this.state.window_height-this.state_tile_height)/this.state_tile_height );
+                 this.props.onChangeRoom('room_'+newy+'_'+myroom.room_x, mySprite.x/this.state.tile_width, (this.state.window_height-this.state_tile_height)/this.state.tile_height );
                }
               }
             if (mySprite.x + this.state.tile_width> this.state.window_width ){
