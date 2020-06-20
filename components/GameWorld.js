@@ -34,6 +34,11 @@ class GameWorld extends Component {
             console.log("Game world restart:");
             this.setState({ room: constants.START_ROOM, game: this.state.game+1})},20);
         }
+        if (this.props.change_room){
+                    setTimeout( ()=> {
+                      console.log("Game world room:");
+                      this.setState({ room: this.props.room, game: this.state.game+1})},20);
+        }
         const TILE_STYLE = "tileStyle_";
         const window = Dimensions.get('window');
         let window_width = window.width;
@@ -87,6 +92,7 @@ class GameWorld extends Component {
                             tile_height={TILES_HEIGHT}
                             initial_sprites={initialSprites}
                             player_start={this.state.playerStart}
+                            room={this.props.room}
                           />
            </View>
            </TouchableOpacity>
@@ -97,7 +103,7 @@ class GameWorld extends Component {
 }
 
 const mapStateToProps = (state)=>{
-  return { score : state.score, restart: state.restart};
+  return { score : state.score, restart: state.restart, room: state.room, change_room: state.change_room};
 }
 
 export default connect(mapStateToProps)(GameWorld);

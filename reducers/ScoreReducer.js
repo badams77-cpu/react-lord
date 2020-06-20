@@ -1,4 +1,4 @@
-import {ADD_SCORE, ADD_LIFE, SUB_LIFE, RESTART, END_RESTART} from '../actions/Actions';
+import {ADD_SCORE, ADD_LIFE, SUB_LIFE, RESTART, END_RESTART, CHANGE_ROOM, END_CHANGE_ROOM} from '../actions/Actions';
 import redux from 'redux';
 import constants from '../components/Constants';
 
@@ -7,6 +7,10 @@ const initial_state = {
   player_life: constants.PLAYER_LIFE,
   game_over: false,
   restart: false,
+  room: constants.START_ROOM,
+  player_start_x: constants.PLAYER_START_X,
+  player_start_y: constants.PLAYER_START_Y,
+  change_room: false,
 }
 
 scoreReducer = (state = initial_state, action)=>{
@@ -24,9 +28,15 @@ scoreReducer = (state = initial_state, action)=>{
          return {...state, player_life: newLife};
        }
     case RESTART:
-        return {...state, player_life: constants.PLAYER_LIFE, game_over: false, restart: true }
+        return {...state, player_life: constants.PLAYER_LIFE, game_over: false, restart: true };
     case END_RESTART:
-        return {...state, restart: false }
+        return {...state, restart: false };
+    case CHANGE_ROOM:
+        return {...state, room:: action.room, player_start_x: action.player_start_x,
+          player_start_y: action.player_start_y, change_room: true};
+    case END_CHANGE_ROOM:
+         return {...start, change_room: false};
+
   }
   return state;
 }

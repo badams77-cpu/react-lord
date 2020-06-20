@@ -5,7 +5,8 @@ import ImageOverlay from './ImageOverlay';
 import spriteGraphics from './SpriteGraphics';
 import constants from './Constants';
 import {connect} from 'react-redux';
-import {ADD_SCORE, ADD_LIFE, SUB_LIFE, RESTART, END_RESTART} from '../actions/Actions';
+import {ADD_SCORE, ADD_LIFE, SUB_LIFE, RESTART, END_RESTART, CHANGE_ROOM, END_CHANGE_ROOM} from '../actions/Actions';
+import maps from './Maps';
 
 
 class SpriteEngine extends Component {
@@ -28,6 +29,7 @@ class SpriteEngine extends Component {
          pressStartY: 0,
          player_start: {x: props.player_start.x, y: props.player_start.y},
          initial_sprites: props.initial_sprites,
+         room: props.room,
        };
     }
 
@@ -80,6 +82,17 @@ class SpriteEngine extends Component {
      });
    }
 
+  change_room = (room, x,y)=> {
+     let mystate = {...this.state};
+     let mystate['initial_sprites'] = maps[room]['sprites'];
+     let mystate['player_start']= {x: x,y: y };
+          this.setState({
+            sprites: this.startSprites(this.state),
+            room: room,
+            player_start: {x: x,y: y },
+            initial_sprites:  maps[room]['sprites']
+          });
+  }
 
 
    fire = (x,y)=>{
@@ -188,6 +201,10 @@ class SpriteEngine extends Component {
       if (this.state.interval!=null){ clearInterval(this.state.interval); }
     }
 
+    split_room (room)=>{
+       let split = room.split("_");
+       return { room_y: split[1], room_x: split[2]};
+    }
 
     moveSprites = ()=>{
       let newSprites = [... this.state.sprites];
@@ -216,13 +233,44 @@ class SpriteEngine extends Component {
             this.setDiagonalDirection(mySprite);
           }
         } else {
-            if (mySprite.x<0){ mySprite.dx = 2; mySprite.direction='right'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true; }
-            if (mySprite.y<0){ mySprite.dy = 2; mySprite.direction='down'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true; }
+            if (mySprite.x<0){ mySprite.dx = 2;
+             mySprite.direction='right'; mySprite.anim_counter=0;
+             mySprite.delay_counter=0; newDirection=true;
+               if (i==0){
+                 let myroom = split(this.state_room);
+                 let newx = myroom.room_x-1;
+                 if (newx<1){ newx=8;}
+                 onChangeRoom('room_'+myroom.room_y+'_'+newx, (this.state.window_width-this.state.tile_width)/this.state.tile_width, mySprite.y/this.state.tile_height, );
+               }
+             }
+            if (mySprite.y<0){
+              mySprite.dy = 2; mySprite.direction='down'; mySprite.anim_counter=0;
+              mySprite.delay_counter=0; newDirection=true;
+               if (i==0){
+                 let myroom = split(this.state_room);
+                 let newy = myroom.room_y-1;
+                 if (newy<1){ newy=8;}
+                 onChangeRoom('room_'+newy+'_'+myroom.room_x, mySprite.x/tile.width, (this.state.window_height-this.state_tile_height)/this.state_tile_height );
+               }
+              }
             if (mySprite.x + this.state.tile_width> this.state.window_width ){
                 mySprite.dx = -2; mySprite.direction='left'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true;
+                if (i==0){
+                   let myroom = split(this.state_room);
+                   let newx = myroom.room_x+1;
+                   if (newx>8){ newx=1;}
+                   onChangeRoom('room_'+myroom.room_y+'_'+newx, 0, mySprite.y/this.state.tile_height, );
+                }
             }
             if (mySprite.y + this.state.tile_height > this.state.window_height){
                 mySprite.dy = -2; mySprite.direction='up'; mySprite.anim_counter=0; mySprite.delay_counter=0; newDirection=true;
+                if (i==0){
+                     let myroom = split(this.state_room);
+                     let newy = myroom.room_y+1;
+                     if (newy>8){ newy=1;}
+                     onChangeRoom('room_'+newy+'_'+myroom.room_x, mySprite.x/tile.width, 0 );
+                }
+
             }
         }
         if (mySprite.dx!==0 || mySprite.dy!==0 || mySprite.spriteName==='explosion'){
@@ -424,6 +472,13 @@ class SpriteEngine extends Component {
             this.props.onRestart();
           },40);
         }
+        if (this.props.change_room){
+          setTimeout( ()=> {
+            console.log("SpriteEngine: change room");
+            this.change_room(this.props.room, this.props.player_start_x, this.props.player_start_y);
+            this.props.onEndChangeRoom();
+          },40);
+        }
               const SPRITE_STYLE="sprites_";
               const TILES_WIDTH = this.state.tile_width;
               const TILES_HEIGHT = this.state.tile_height;
@@ -482,14 +537,21 @@ class SpriteEngine extends Component {
 }
 
 const mapStateToProps = (state)=>{
-  return { score : state.score, restart: state.restart, game_over: state.game_over};
+  return { score : state.score, restart: state.restart, game_over: state.game_over
+    change_room: state.change_room,
+    room: state.room,
+    player_start_x: start_player_start_x,
+    player_start_y: start_player_start_y,
+  };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onAddScore: score=> dispatch({type: ADD_SCORE, score: score}),
     onRestart: ()=> dispatch({type: END_RESTART}),
-    onPlayerHit: life=> dispatch({type: SUB_LIFE, life: life})
+    onPlayerHit: life=> dispatch({type: SUB_LIFE, life: life}),
+    onChangeRoom: (room, x,y)=> dispatch({ type: change_room, room: room, player_start_x: x, player_start_y: y}),
+    onEndChangeRoom: ()=> dispatch( {type: END_CHANGE_ROOM})
   };
 }
 
