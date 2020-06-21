@@ -264,7 +264,7 @@ class SpriteEngine extends Component {
           let hit=false;
         if (mySprite.dx!=0 && mySprite.circle==0.0){
           if (oldX!=newX){
-            let addX = dx>0? 1 : 0;
+            let addX = mySrpite.dx>0? 1 : 0;
             hit = this.isHard(newY, newX+addX,i);
             if (!hit && newY*this.state.tile_height!=mySprite.y){ hit = this.isHard(newY+1, newX+addX, i);}
             if (hit){
@@ -285,7 +285,7 @@ class SpriteEngine extends Component {
         }
         if (mySprite.dy!=0 && mySprite.circle==0.0){
           if (oldY!=newY){
-            let addY = dy>0? 1 : 0;
+            let addY = mySprite.dy>0? 1 : 0;
             hit = this.isHard(newY+addY, newX,i);
             if (!hit && newX*this.state.tile_width!= mySprite.x){ hit = this.isHard(newY+addY, newX+1,i); }
             if (hit){
