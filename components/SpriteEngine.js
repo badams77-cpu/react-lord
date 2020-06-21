@@ -234,7 +234,7 @@ class SpriteEngine extends Component {
         if (x>=row.length){ return false; }
         const tile = row[x];
         const hard = hardness[base];
-        if (i==0){ console.log({y:y, x:x, tile:tile,hard:hard[tile]}); }
+//        if (i==0){ console.log({y:y, x:x, tile:tile,hard:hard[tile]}); }
         return (hard[tile]==1);
     }
 
