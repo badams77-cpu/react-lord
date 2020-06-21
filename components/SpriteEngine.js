@@ -7,6 +7,7 @@ import constants from './Constants';
 import {connect} from 'react-redux';
 import {ADD_SCORE, ADD_LIFE, SUB_LIFE, RESTART, END_RESTART, CHANGE_ROOM, END_CHANGE_ROOM} from '../actions/Actions';
 import maps from './Maps';
+import hardness from './Hardness';
 
 
 class SpriteEngine extends Component {
@@ -48,6 +49,7 @@ class SpriteEngine extends Component {
               direction: 'right',
               anim_delay_frames: 1,
               delay_counter: 0,
+              rotate: 0,
               hitpoints: constants.PLAYER_LIFE
             })
              // Start Sprites
@@ -71,6 +73,7 @@ class SpriteEngine extends Component {
                  direction: 'left',
                  anim_delay_frames: 1,
                  delay_counter: 0,
+                 rotate: 0,
                  hitpoints: mySpriteData.hitpoints
                });
             }
@@ -216,6 +219,23 @@ class SpriteEngine extends Component {
        return { room_y: parseInt(split[1]), room_x: parseInt(split[2])};
     }
 
+    isHard = (x,y)=>{
+        if (x<0 || y<0){ return false;}
+        const room = map[this.state.room];
+        const myMap = room['map'];
+        let base = room['base'];
+        if (base==null){
+          console.log("room  "+this.state.room+" no base defined");
+          base='island';
+        }
+        if (y>=myMap.length){ return false;}
+        const row = myMap[y];
+        if (x>=row.length){ return false; }
+        const tile = row[x];
+        const hard = hardness[base];
+        return (hard[tile]==1);
+    }
+
     moveSprites = ()=>{
       let newSprites = [... this.state.sprites];
       let removeSprites = [];
@@ -230,15 +250,63 @@ class SpriteEngine extends Component {
           console.log("No spriteData for ",i, mySprite.spriteName);
           continue;
         }
+        let before_x = mySprite.x;
+        let before_y = mySprite.y;
         mySprite.x += mySprite.dx;
         mySprite.y += mySprite.dy;
         let newDirection =false;
+          let oldX = Math.floor(before_x/this.state.tile_width);
+          let newX = Math.floor(mySprite.x/this.state.tile_width);
+          let oldY = Math.floor(before_y/this.state.tile_height);
+          let newY = Math.floor(mySprite.y/this.state.tile_height);
+          let hit=false;
+        if (mySprite.dx!=0 && mySprite.circle==0.0){
+          if (oldX!=newX){
+            hit = isHard(newY, newX);
+            if (!hit && newY*this.state.tile_height!=mySprite.y){ hit = isHard(newY+1, newX);}
+            if (hit){
+              mySprite.x=before_x;
+              mySprite.y=before_y;
+              if (i==0){
+                mySprite.dx=0;
+              } else {
+                mySprite.rot=-mySprite.rot;
+                mySprite.dx=-mySprite.dx;
+                mySprite.direction = mySprite.dx<0? 'left': 'right';
+                newDirection=true;
+                mySprite.delay_counter=0;
+                mySprite.anim_counter=0;
+              }
+            }
+          }
+        }
+        if (mySprite.dy!=0 && mySprite.circle=0.0){
+          if (oldY!=newY){
+            hit = isHard(newY, newX);
+            if (!hit && newX*this.state.tile_width!= mySprite.x){ hit = isHard(newY, newX+1); }
+            if (hit){
+              mySprite.x=before_x;
+              mySprite.y=before_y;
+              if (i==0){
+                mySprite.dy=0;
+              } else {
+                mySprite.rot=-mySprite.rot;
+                mySprite.dy=-mySprite.dy;
+                mySprite.direction = mySprite.dy<0? 'up': 'down';
+                newDirection = true;
+                mySprite.delay_counter=0;
+                mySprite.anim_counter=0;
+              }
+            }
+          }
+        }
+
         if (mySprite.circle!=null && mySprite.circle!=0.0){
           let rx = mySprite.x - mySprite.centerX;
           let ry = mySprite.y - mySprite.centerY;
           let r = Math.sqrt(rx*rx+ry*ry);
           if (r>=mySprite.circle){
-            let angle = Math.atan2(-rx, ry);
+            let angle = rot*Math.atan2(-rx, ry);
             mySprite.dx = mySpriteData.speed * Math.cos(angle);
             mySprite.dy = mySpriteData.speed * Math.sin(angle);
             this.setDiagonalDirection(mySprite);
@@ -356,6 +424,7 @@ class SpriteEngine extends Component {
            let angle = Math.random()*2.0*Math.PI;
            let dx = speed*Math.sin(angle);
            let dy = speed*Math.cos(angle);
+           let rot = Math.random()>0.5 ? 1 : -1;
            change = true;
            let newSprite = {
              spriteName: generateName,
@@ -370,6 +439,7 @@ class SpriteEngine extends Component {
              circle: mySpriteData.circle*this.state.tile_width,
              centerX: newSprites[i].x,
              centerY: newSprites[i].y,
+             rotate: rot,
              hitpoints: mySpriteData.hitpoints
            };
            if (mySpriteData.circle){
