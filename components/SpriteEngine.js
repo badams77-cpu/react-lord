@@ -50,7 +50,7 @@ class SpriteEngine extends Component {
               anim_delay_frames: 1,
               delay_counter: 0,
               rotate: 0,
-              cirle: 0.0,
+              circle: 0.0,
               hitpoints: constants.PLAYER_LIFE
             })
              // Start Sprites
