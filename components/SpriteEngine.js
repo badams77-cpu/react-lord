@@ -6,7 +6,7 @@ import spriteGraphics from './SpriteGraphics';
 import constants from './Constants';
 import {connect} from 'react-redux';
 import {ADD_SCORE, ADD_LIFE, SUB_LIFE, RESTART, END_RESTART, CHANGE_ROOM, END_CHANGE_ROOM} from '../actions/Actions';
-import map from './Maps';
+import maps from './Maps';
 import hardness from './Hardness';
 
 
@@ -50,6 +50,7 @@ class SpriteEngine extends Component {
               anim_delay_frames: 1,
               delay_counter: 0,
               rotate: 0,
+              cirle: 0.0,
               hitpoints: constants.PLAYER_LIFE
             })
              // Start Sprites
@@ -221,7 +222,7 @@ class SpriteEngine extends Component {
 
     isHard = (x,y)=>{
         if (x<0 || y<0){ return false;}
-        const room = map[this.state.room];
+        const room = maps[this.state.room];
         const myMap = room['map'];
         let base = room['base'];
         if (base==null){
@@ -233,7 +234,7 @@ class SpriteEngine extends Component {
         if (x>=row.length){ return false; }
         const tile = row[x];
         const hard = hardness[base];
-        console.log({y:y, x:x, tile:,tile,hard:hard});
+        console.log({y:y, x:x, tile:tile,hard:hard[tile]});
         return (hard[tile]==1);
     }
 
