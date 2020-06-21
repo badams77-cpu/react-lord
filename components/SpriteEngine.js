@@ -6,7 +6,7 @@ import spriteGraphics from './SpriteGraphics';
 import constants from './Constants';
 import {connect} from 'react-redux';
 import {ADD_SCORE, ADD_LIFE, SUB_LIFE, RESTART, END_RESTART, CHANGE_ROOM, END_CHANGE_ROOM} from '../actions/Actions';
-import maps from './Maps';
+import map from './Maps';
 import hardness from './Hardness';
 
 
@@ -233,6 +233,7 @@ class SpriteEngine extends Component {
         if (x>=row.length){ return false; }
         const tile = row[x];
         const hard = hardness[base];
+        console.log({y:y, x:x, tile:,tile,hard:hard});
         return (hard[tile]==1);
     }
 
@@ -262,8 +263,8 @@ class SpriteEngine extends Component {
           let hit=false;
         if (mySprite.dx!=0 && mySprite.circle==0.0){
           if (oldX!=newX){
-            hit = isHard(newY, newX);
-            if (!hit && newY*this.state.tile_height!=mySprite.y){ hit = isHard(newY+1, newX);}
+            hit = this.isHard(newY, newX);
+            if (!hit && newY*this.state.tile_height!=mySprite.y){ hit = this.isHard(newY+1, newX);}
             if (hit){
               mySprite.x=before_x;
               mySprite.y=before_y;
@@ -280,10 +281,10 @@ class SpriteEngine extends Component {
             }
           }
         }
-        if (mySprite.dy!=0 && mySprite.circle=0.0){
+        if (mySprite.dy!=0 && mySprite.circle==0.0){
           if (oldY!=newY){
-            hit = isHard(newY, newX);
-            if (!hit && newX*this.state.tile_width!= mySprite.x){ hit = isHard(newY, newX+1); }
+            hit = this.isHard(newY, newX);
+            if (!hit && newX*this.state.tile_width!= mySprite.x){ hit = this.isHard(newY, newX+1); }
             if (hit){
               mySprite.x=before_x;
               mySprite.y=before_y;
@@ -306,7 +307,7 @@ class SpriteEngine extends Component {
           let ry = mySprite.y - mySprite.centerY;
           let r = Math.sqrt(rx*rx+ry*ry);
           if (r>=mySprite.circle){
-            let angle = rot*Math.atan2(-rx, ry);
+            let angle = mySprite.rot*Math.atan2(-rx, ry);
             mySprite.dx = mySpriteData.speed * Math.cos(angle);
             mySprite.dy = mySpriteData.speed * Math.sin(angle);
             this.setDiagonalDirection(mySprite);
