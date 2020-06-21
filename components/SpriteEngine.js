@@ -220,7 +220,7 @@ class SpriteEngine extends Component {
        return { room_y: parseInt(split[1]), room_x: parseInt(split[2])};
     }
 
-    isHard = (x,y)=>{
+    isHard = (y,x, i)=>{
         if (x<0 || y<0){ return false;}
         const room = maps[this.state.room];
         const myMap = room['map'];
@@ -234,7 +234,7 @@ class SpriteEngine extends Component {
         if (x>=row.length){ return false; }
         const tile = row[x];
         const hard = hardness[base];
-        console.log({y:y, x:x, tile:tile,hard:hard[tile]});
+        if (i==0){ console.log({y:y, x:x, tile:tile,hard:hard[tile]}); }
         return (hard[tile]==1);
     }
 
@@ -264,8 +264,9 @@ class SpriteEngine extends Component {
           let hit=false;
         if (mySprite.dx!=0 && mySprite.circle==0.0){
           if (oldX!=newX){
-            hit = this.isHard(newY, newX);
-            if (!hit && newY*this.state.tile_height!=mySprite.y){ hit = this.isHard(newY+1, newX);}
+            let addX = dx>0? 1 : 0;
+            hit = this.isHard(newY, newX+addX,i);
+            if (!hit && newY*this.state.tile_height!=mySprite.y){ hit = this.isHard(newY+1, newX+addX, i);}
             if (hit){
               mySprite.x=before_x;
               mySprite.y=before_y;
@@ -284,8 +285,9 @@ class SpriteEngine extends Component {
         }
         if (mySprite.dy!=0 && mySprite.circle==0.0){
           if (oldY!=newY){
-            hit = this.isHard(newY, newX);
-            if (!hit && newX*this.state.tile_width!= mySprite.x){ hit = this.isHard(newY, newX+1); }
+            let addY = dy>0? 1 : 0;
+            hit = this.isHard(newY+addY, newX,i);
+            if (!hit && newX*this.state.tile_width!= mySprite.x){ hit = this.isHard(newY+addY, newX+1,i); }
             if (hit){
               mySprite.x=before_x;
               mySprite.y=before_y;
