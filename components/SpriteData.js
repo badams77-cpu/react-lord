@@ -13,6 +13,20 @@ down: ['explosion_0', 'explosion_1', 'explosion_2', 'explosion_3', 'explosion_4'
 purple_testtube: { left:['purple_testtube'], right: ['purple_testtube'], up: ['purple_testtubde'], down: ['purple_testtude'],
   radius: 0.5, weapon: false, pickup: false, deadly: true, hitpoints: 60, speed: 0, score: 200, generator: 'virus', genchance: 0.01, circle:0
 },
+purple_testtube: { left:['purple_testtube'], right: ['purple_testtube'], up: ['purple_testtube'], down: ['purple_testtube'],
+  radius: 0.5, weapon: false, pickup: false, deadly: true, hitpoints: 60, speed: 0, score: 200, generator: 'virus', genchance: 0.01, circle:0
+},
+brown_testtube: { left:['brown_testtube'], right: ['brown_testtube'], up: ['purple_testtube'], down: ['purple_testtube'],
+  radius: 0.5, weapon: false, pickup: false, deadly: true, hitpoints: 100, speed: 0, score: 300, generator: 'virus', genchance: 0.01, circle:0
+},
+black_testtube: { left:['black_testtube'], right: ['black_testtube'], up: ['black_testtube'], down: ['black_testtube'],
+  radius: 0.5, weapon: false, pickup: false, deadly: true, hitpoints: 150, speed: 0, score: 500, generator: 'virus', genchance: 0.01, circle:0
+},
+cyan_testtube: { left:['cyan_testtube'], right: ['cyan_testtube'], up: ['cyan_testtube'], down: ['cyan_testtube'],
+  radius: 0.5, weapon: false, pickup: false, deadly: true, hitpoints: 200, speed: 0, score: 750, generator: 'virus', genchance: 0.01, circle:0
+},
+
+
 grey_bowl: {left:['grey_bowl'], right:['grey_bowl'], up:['grey_bowl'], down:['grey_bowl'],
  radius: 0.6, weapon: false, pickup: false, deadly: true, hitpoints: 100, speed: 0, score: 500, generator: 'grey_bat', genchance: 0.01, circle: 0},
  red_bowl: {left:['ged_bowl'], right:['red_bowl'], up:['red_bowl'], down:['red_bowl'],
