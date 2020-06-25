@@ -22,6 +22,11 @@ let spriteGraphics = {
   cyan_testtube :  require("../assets/sprites/cyan_testtube.png"),
   purple_testtube :  require("../assets/sprites/purple_testtube.png"),
 
+  red_key: require("../assets/sprites/red_key.png"),
+  green_key: require("../assets/sprites/green_key.png"),
+  yellow_key: require("../assets/sprites/yellow_key.png"),
+  blue_key: require("../assets/sprites/blue_key.png"),
+  crown: require("../assets/sprites/crown.png"),
 
   globeTrotter_left_0 : require("../assets/sprites/globaltrotter_left_0.png"),
   globeTrotter_left_1 : require("../assets/sprites/globaltrotter_left_1.png"),

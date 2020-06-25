@@ -25,7 +25,26 @@ black_testtube: { left:['black_testtube'], right: ['black_testtube'], up: ['blac
 cyan_testtube: { left:['cyan_testtube'], right: ['cyan_testtube'], up: ['cyan_testtube'], down: ['cyan_testtube'],
   radius: 0.5, weapon: false, pickup: false, deadly: true, hitpoints: 200, speed: 0, score: 750, generator: 'virus', genchance: 0.01, circle:0
 },
-
+red_key: {
+ left:['red_key'], right: ['red_key'], up: ['red_key'], down: ['red_key'],
+  radius: 0.5, weapon: false, pickup: true, deadly: false, hitpoints: 60, speed: 0, score: 1000, generator: null, genchance: 0.00, circle:0
+},
+green_key: {
+  left:['green_key'], right: ['green_key'], up: ['green_key'], down: ['green_key'],
+  radius: 0.5, weapon: false, pickup: true, deadly: false, hitpoints: 60, speed: 0, score: 1200, generator: null, genchance: 0.00, circle:0
+},
+yellow_key: {
+  left:['yellow_key'], right: ['yellow_key'], up: ['yellow_key'], down: ['yellow_key'],
+  radius: 0.5, weapon: false, pickup: true, deadly: false, hitpoints: 60, speed: 0, score: 1500, generator: null, genchance: 0.00, circle:0
+},
+blue_key: {
+  left:['blue_key'], right: ['yellow_key'], up: ['yellow_key'], down: ['yellow_key'],
+  radius: 0.5, weapon: false, pickup: true, deadly: false, hitpoints: 60, speed: 0, score: 1500, generator: null, genchance: 0.00, circle:0
+},
+crown: {
+  left:['crown'], right: ['crown'], up: ['crown'], down: ['crown'],
+  radius: 0.5, weapon: false, pickup: true, deadly: false, hitpoints: 60, speed: 0, score: 2000, generator: null, genchance: 0.00, circle:0
+},
 
 grey_bowl: {left:['grey_bowl'], right:['grey_bowl'], up:['grey_bowl'], down:['grey_bowl'],
  radius: 0.6, weapon: false, pickup: false, deadly: true, hitpoints: 100, speed: 0, score: 500, generator: 'grey_bat', genchance: 0.01, circle: 0},
