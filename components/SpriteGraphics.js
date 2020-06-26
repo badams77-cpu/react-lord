@@ -1,5 +1,6 @@
 
 let spriteGraphics = {
+  winner: require("../assets/winner.png"),
   virus :     require("../assets/sprites/virus_dark.png"),
   syringe_left: require("../assets/sprites/syringe_left.png"),
   syringe_right: require("../assets/sprites/syringe_right.png"),
@@ -28,6 +29,26 @@ let spriteGraphics = {
   blue_key: require("../assets/sprites/blue_key.png"),
   crown: require("../assets/sprites/crown.png"),
 
+  red_door_1: require("../assets/sprites/red_door_1.png"),
+  red_door_2: require("../assets/sprites/red_door_2.png"),  
+  red_door_3: require("../assets/sprites/red_door_3.png"),
+  red_door_4: require("../assets/sprites/red_door_4.png"),
+
+  green_door_1: require("../assets/sprites/green_door_1.png"),
+  green_door_2: require("../assets/sprites/green_door_2.png"),  
+  green_door_3: require("../assets/sprites/green_door_3.png"),
+  green_door_4: require("../assets/sprites/green_door_4.png"),
+  
+  yellow_door_1: require("../assets/sprites/yellow_door_1.png"),
+  yellow_door_2: require("../assets/sprites/yellow_door_2.png"),  
+  yellow_door_3: require("../assets/sprites/yellow_door_3.png"),
+  yellow_door_4: require("../assets/sprites/yellow_door_4.png"),
+  
+  blue_door_1: require("../assets/sprites/blue_door_1.png"),
+  blue_door_2: require("../assets/sprites/blue_door_2.png"),  
+  blue_door_3: require("../assets/sprites/blue_door_3.png"),
+  blue_door_4: require("../assets/sprites/blue_door_4.png"),
+  
   globeTrotter_left_0 : require("../assets/sprites/globaltrotter_left_0.png"),
   globeTrotter_left_1 : require("../assets/sprites/globaltrotter_left_1.png"),
   globeTrotter_left_2 : require("../assets/sprites/globaltrotter_left_2.png"),
