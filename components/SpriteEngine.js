@@ -267,12 +267,12 @@ class SpriteEngine extends Component {
               let jData1 = spriteData[newSprites[j].spriteName];
               if (jData1['door']!=null && this.isCollide(newSprites[0], newSprites[j])){
                 // Hit Door
-                console.log("Have key? "+jData1['door'], this.props.pickups, this.props.pickups[jData1['door']])
+//                console.log("Have key? "+jData1['door'], this.props.pickups, this.props.pickups[jData1['door']])
                 if (this.props.pickups[jData1['door']]){
-                  let acount = mySprite[j].anim_counter;
+                  let acount = newSprites[j].anim_counter;
                   if (acount<3){ acount++;}
                   // Open Door animation
-                  mySprite[j].anim_counter=acount;
+                  newSprites[j].anim_counter=acount;
                 } else {
                   // Block player
                   newSprites[i].x=before_x;
@@ -290,7 +290,8 @@ class SpriteEngine extends Component {
             hit = this.isHard(newY, newX+addX,i);
             if (!hit && Math.abs(newY*this.state.tile_height-mySprite.y)>4){ hit = this.isHard(newY+1, newX+addX, i);}
             if (hit){
-              if (i==0) { console.log("Hit ",newY, newX+addX, mySprite.x, mySprite.y); }
+              if (i==0) { //console.log("Hit ",newY, newX+addX, mySprite.x, mySprite.y);
+               }
               mySprite.x=this.state.tile_width*Math.round(before_x/this.state.tile_width);
               mySprite.y=before_y;
               if (i==0){
