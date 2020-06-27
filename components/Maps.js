@@ -1661,7 +1661,7 @@ room_4_7: {
   ]
 },
 
-room_5_8: {
+room_5_7: {
   base: 'island',
   sprites: [
           {
