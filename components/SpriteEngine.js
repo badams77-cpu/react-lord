@@ -575,10 +575,10 @@ class SpriteEngine extends Component {
         }
         if (this.props.change_room && this.props.room!=this.state.room){
           setTimeout( ()=> {
-            console.log("SpriteEngine: change room");
+//            console.log("SpriteEngine: change room");
             this.change_room(this.props.room, this.props.player_start_x, this.props.player_start_y);
             this.props.onEndChangeRoom();
-          },40);
+          },20);
         }
               const SPRITE_STYLE="sprites_";
               const TILES_WIDTH = this.state.tile_width;
