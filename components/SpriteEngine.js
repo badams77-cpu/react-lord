@@ -478,9 +478,8 @@ class SpriteEngine extends Component {
            this.props.onAddScore(jData.score);
         }
         if (jData.pickup && this.isCollide( newSprites[0], newSprites[j])){
-          this.onAddScore(jData.score);
-          this.onPickup(newSprites[j].spriteName);
-          push(removeSprites, j);
+          this.props.onPickup(newSprites[j].spriteName, jData.score);
+          removeSprites.push(j);
         }
       }
       // Weapon to Deadly
@@ -604,9 +603,9 @@ class SpriteEngine extends Component {
               if (this.props.pickups['crown']!=null){
                                       styles[SPRITE_STYLE+style_counter++] = {
                                         position: 'absolute',
-                                        width: TILES_WIDTH*4,
+                                        width: TILES_WIDTH*6,
                                         height: TILES_HEIGHT*3,
-                                        left: window_width/2-TILES_WIDTH*2,
+                                        left: window_width/2-TILES_WIDTH*3,
                                         top: window_width/2-TILES_HEIGHT*1.5,
                                         zIndex: 2,
                                       };
@@ -616,7 +615,7 @@ class SpriteEngine extends Component {
               for(i=0; i<sprites.length;i++){
                      if (sprites[i]==null){ continue; }
                      let mySpriteData = spriteData[sprites[i].spriteName];
-                     if (i==0 && this.props.game_over){
+                     if (i==0 && this.props.game_over && this.props.pickups['crown']==null){
                        mySpriteData = spriteData['explosion'];
                      }
                      let sourceNames = mySpriteData[sprites[i].direction];
@@ -651,8 +650,8 @@ class SpriteEngine extends Component {
                         style={myStyle}
                         source = {spriteGraphics.winner}
                         height={TILES_HEIGHT*4}
-                        width={TILES_WIDTH*3}
-                        left={window_width/2-TILES_WIDTH*2}
+                        width={TILES_WIDTH*6}
+                        left={window_width/2-TILES_WIDTH*3}
                         overlayAlpha={0.5}
                          top={window_width/2-TILES_HEIGHT*1.5}
                         key={style_counter}
@@ -683,7 +682,7 @@ const mapDispatchToProps = (dispatch) => {
     onPlayerHit: life=> dispatch({type: SUB_LIFE, life: life}),
     onChangeRoom: (room, x,y)=> dispatch({ type: CHANGE_ROOM, room: room, player_start_x: x, player_start_y: y}),
     onEndChangeRoom: ()=> dispatch( {type: END_CHANGE_ROOM}),
-    onPickup: (item)=> dispatch({type: PICKUP, item: item })
+    onPickup: (item,score)=> dispatch({type: PICKUP, item: item, score:score })
   };
 }
 

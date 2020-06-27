@@ -27,7 +27,7 @@ cyan_testtube: { left:['cyan_testtube'], right: ['cyan_testtube'], up: ['cyan_te
 },
 red_key: {
  left:['red_key'], right: ['red_key'], up: ['red_key'], down: ['red_key'],
-  radius: 0.5, weapon: false, pickup: true, deadly: false, hitpoints: 60, speed: 0, score: 1000, generator: null, genchance: 0.00, circle:0
+  radius: 0.8, weapon: false, pickup: true, deadly: false, hitpoints: 60, speed: 0, score: 1000, generator: null, genchance: 0.00, circle:0
 },
 red_door: {
   left:['red_door_1','red_door_2','red_door_3','red_door_4'],
@@ -64,15 +64,15 @@ blue_door: {
 
 green_key: {
   left:['green_key'], right: ['green_key'], up: ['green_key'], down: ['green_key'],
-  radius: 0.5, weapon: false, pickup: true, deadly: false, hitpoints: 60, speed: 0, score: 1200, generator: null, genchance: 0.00, circle:0
+  radius: 0.8, weapon: false, pickup: true, deadly: false, hitpoints: 60, speed: 0, score: 1200, generator: null, genchance: 0.00, circle:0
 },
 yellow_key: {
   left:['yellow_key'], right: ['yellow_key'], up: ['yellow_key'], down: ['yellow_key'],
-  radius: 0.5, weapon: false, pickup: true, deadly: false, hitpoints: 60, speed: 0, score: 1500, generator: null, genchance: 0.00, circle:0
+  radius: 0.8, weapon: false, pickup: true, deadly: false, hitpoints: 60, speed: 0, score: 1500, generator: null, genchance: 0.00, circle:0
 },
 blue_key: {
   left:['blue_key'], right: ['yellow_key'], up: ['yellow_key'], down: ['yellow_key'],
-  radius: 0.5, weapon: false, pickup: true, deadly: false, hitpoints: 60, speed: 0, score: 1500, generator: null, genchance: 0.00, circle:0
+  radius: 0.8, weapon: false, pickup: true, deadly: false, hitpoints: 60, speed: 0, score: 1500, generator: null, genchance: 0.00, circle:0
 },
 crown: {
   left:['crown'], right: ['crown'], up: ['crown'], down: ['crown'],

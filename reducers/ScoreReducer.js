@@ -30,12 +30,14 @@ scoreReducer = (state = initial_state, action)=>{
        }
     case PICKUP:
       if (state.game_over){ return {...state};}
-      let pickups = {...this.state.pickups};
+      let pickups = {...state.pickups};
+      if (pickups[action.item]!=null)     { return {...state};}
       pickups[action.item]=1;
       let myGameOver = pickups['crown']!=null;
-      return {...state, pickups: pickups, game_over: myGameOver };
+      let pNewScore =action.score + state.score;
+      return {...state, pickups: pickups, game_over: myGameOver, score: pNewScore};
     case RESTART:
-        return {...state, player_life: constants.PLAYER_LIFE, game_over: false, restart: true,
+        return {...state, player_life: constants.PLAYER_LIFE, game_over: false, restart: true, pickups: {},
            player_start_x: constants.player_start_x, player_start_y: constants.player_start_y,
            change_room: false, score: 0
          };

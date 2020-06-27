@@ -43,12 +43,13 @@ class ScoreBoard extends Component {
        if (!this.props.pickups.hasOwnProperty(key)) continue;
        let mySpriteData = spriteData[key];
        let src = spriteGraphics[mySpriteData['left'][0]];
-       pickups.push( <Image src={src} style={{width: 60, height: 60}} />);
+       pickCount++;
+       pickups.push( <Image source={src} style={{width: 60, height: 60}} key={pickCount} />);
     }
 
     return (
       <View style={styles.container}>
-        <View style={{}}>{pickups}</View>
+        <View style={{flex: 1, flexDirection: 'row'}}>{pickups}</View>
       <Text style={styles.text}>Score: {this.props.score}</Text>
       <Text style={styles.text}>Life: {this.props.life}</Text>
       {but}
