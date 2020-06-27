@@ -93,17 +93,6 @@ room0: {
         xpos: 5,
         ypos: 5
       },
-      {
-        spriteName: 'red_key',
-        xpos: 3,
-        ypos: 3,
-      },
-      {
-        spriteName: 'crown',
-        xpos: 8,
-        ypos: 3,
-      }
-
     ],
     map: [
 [264,264,264,264,264,271,248,270,264,264,264,264],
