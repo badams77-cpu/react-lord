@@ -155,8 +155,8 @@ class SpriteEngine extends Component {
 
 
    isOnPlayer = (x,y)=> {
-     console.log("press x ",this.state.sprites[0].x-this.state.tile_width,'<',x,'<',this.state.sprites[0].x+2*this.state.tile_width);
-     console.log("press y ",this.state.sprites[0].y-this.state.tile_height,'<',y,'<',this.state.sprites[0].y+2*this.state.tile_height);
+//     console.log("press x ",this.state.sprites[0].x-this.state.tile_width,'<',x,'<',this.state.sprites[0].x+2*this.state.tile_width);
+//     console.log("press y ",this.state.sprites[0].y-this.state.tile_height,'<',y,'<',this.state.sprites[0].y+2*this.state.tile_height);
      return (x>this.state.sprites[0].x-this.state.tile_width && x<this.state.sprites[0].x+2*this.state.tile_width)
        && (y>this.state.sprites[0].y-this.state.tile_height && y<this.state.sprites[0].y+2*this.state.tile_height);
    }
@@ -262,13 +262,36 @@ class SpriteEngine extends Component {
           let oldY = Math.floor(before_y/this.state.tile_height);
           let newY = Math.floor(mySprite.y/this.state.tile_height);
           let hit=false;
+          if (i==0 ){
+            for(j=1; j<newSprites.length;j++){
+              let jData1 = spriteData[newSprites[j].spriteName];
+              if (jData1['door']!=null && this.isCollide(newSprites[0], newSprites[j])){
+                // Hit Door
+                console.log("Have key? "+jData1['door'], this.props.pickups, this.props.pickups[jData1['door']])
+                if (this.props.pickups[jData1['door']]){
+                  let acount = mySprite[j].anim_counter;
+                  if (acount<3){ acount++;}
+                  // Open Door animation
+                  mySprite[j].anim_counter=acount;
+                } else {
+                  // Block player
+                  newSprites[i].x=before_x;
+                  newSprites[i].y=before_y;
+                  newSprites[i].dx=0;
+                  newSprites[i].dy=0;
+                }
+              }
+            }
+          }
+
         if (mySprite.dx!=0 && mySprite.circle==0.0){
           if (oldX!=newX){
             let addX = mySprite.dx>0? 1 : 0;
             hit = this.isHard(newY, newX+addX,i);
-            if (!hit && newY*this.state.tile_height!=mySprite.y){ hit = this.isHard(newY+1, newX+addX, i);}
+            if (!hit && Math.abs(newY*this.state.tile_height-mySprite.y)>4){ hit = this.isHard(newY+1, newX+addX, i);}
             if (hit){
-              mySprite.x=before_x;
+              if (i==0) { console.log("Hit ",newY, newX+addX, mySprite.x, mySprite.y); }
+              mySprite.x=this.state.tile_width*Math.round(before_x/this.state.tile_width);
               mySprite.y=before_y;
               if (i==0){
                 mySprite.dx=0;
@@ -287,10 +310,10 @@ class SpriteEngine extends Component {
           if (oldY!=newY){
             let addY = mySprite.dy>0? 1 : 0;
             hit = this.isHard(newY+addY, newX,i);
-            if (!hit && newX*this.state.tile_width!= mySprite.x){ hit = this.isHard(newY+addY, newX+1,i); }
+            if (!hit && Math.abs(newX*this.state.tile_width- mySprite.x)>4){ hit = this.isHard(newY+addY, newX+1,i); }
             if (hit){
               mySprite.x=before_x;
-              mySprite.y=before_y;
+              mySprite.y=this.state.tile_height*Math.round(before_y/this.state.tile_height);
               if (i==0){
                 mySprite.dy=0;
               } else {
@@ -568,10 +591,10 @@ class SpriteEngine extends Component {
     render(){
         if (this.props.restart){
           setTimeout( ()=> {
-            console.log("SpriteEngine: restart");
+//            console.log("SpriteEngine: restart");
             this.restart();
             this.props.onRestart();
-          },40);
+          },20);
         }
         if (this.props.change_room && this.props.room!=this.state.room){
           setTimeout( ()=> {

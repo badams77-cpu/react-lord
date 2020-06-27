@@ -10,7 +10,12 @@ class GameWorld extends Component {
 
     constructor(props){
        super(props);
-       this.state = { room: constants.START_ROOM, playerStart: { x: 8, y: 8}, onPressInHandler: null, onPressOutHandler: null, game: 0};
+       this.state = { room: constants.START_ROOM,
+         playerStart: { x: constants.PLAYER_START_X, y: constants.PLAYER_START_Y},
+         onPressInHandler: null,
+         onPressOutHandler: null,
+         game: 0
+       };
     }
 
     setHandlers( handlers){

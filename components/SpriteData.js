@@ -34,32 +34,28 @@ red_door: {
   right:['red_door_1','red_door_2','red_door_3','red_door_4'],  
   up:['red_door_1','red_door_2','red_door_3','red_door_4'],
   down:['red_door_1','red_door_2','red_door_3','red_door_4'],
-  radius: 1.0, weapon: false, pickup: false, deadly: false, hitpoints: 0, speed: 0, score: 1000, generator: null, genchance: 0.00,
-  door: true
+  radius: 1.0, weapon: false, door: 'red_key', pickup: false, deadly: false, hitpoints: 0, speed: 0, score: 1000, generator: null, genchance: 0.00,
 },
 green_door: {
   left:['green_door_1','green_door_2','green_door_3','green_door_4'],
   right:['green_door_1','green_door_2','green_door_3','green_door_4'],  
   up:['green_door_1','green_door_2','green_door_3','green_door_4'],
   down:['green_door_1','green_door_2','green_door_3','green_door_4'],
-  radius: 1.0, weapon: false, pickup: false, deadly: false, hitpoints: 0, speed: 0, score: 1200, generator: null, genchance: 0.00,
-  door: true
+  radius: 1.0, weapon: false, pickup: false, door: 'green_key', deadly: false, hitpoints: 0, speed: 0, score: 1200, generator: null, genchance: 0.00,
 },
 yellow_door: {
   left:['yellow_door_1','yellow_door_2','yellow_door_3','yellow_door_4'],
   right:['yellow_door_1','yellow_door_2','yellow_door_3','yellow_door_4'],  
   up:['yellow_door_1','yellow_door_2','yellow_door_3','yellow_door_4'],
   down:['yellow_door_1','yellow_door_2','yellow_door_3','yellow_door_4'],
-  radius: 1.0, weapon: false, pickup: false, deadly: false, hitpoints: 0, speed: 0, score: 1500, generator: null, genchance: 0.00,
-  door: true
+  radius: 1.0, weapon: false, pickup: false, door: 'yellow_key',deadly: false, hitpoints: 0, speed: 0, score: 1500, generator: null, genchance: 0.00,
 },
 blue_door: {
   left:['blue_door_1','blue_door_2','blue_door_3','blue_door_4'],
   right:['blue_door_1','blue_door_2','blue_door_3','blue_door_4'],  
   up:['blue_door_1','blue_door_2','blue_door_3','blue_door_4'],
   down:['blue_door_1','blue_door_2','blue_door_3','blue_door_4'],
-  radius: 1.0, weapon: false, pickup: false, deadly: false, hitpoints: 0, speed: 0, score: 1500, generator: null, genchance: 0.00,
-  door: true
+  radius: 1.0, weapon: false, pickup: false, door:'blue_key', deadly: false, hitpoints: 0, speed: 0, score: 1500, generator: null, genchance: 0.00,
 },
 
 green_key: {
@@ -80,7 +76,7 @@ crown: {
 },
 grey_bowl: {left:['grey_bowl'], right:['grey_bowl'], up:['grey_bowl'], down:['grey_bowl'],
  radius: 0.6, weapon: false, pickup: false, deadly: true, hitpoints: 100, speed: 0, score: 500, generator: 'grey_bat', genchance: 0.01, circle: 0},
- red_bowl: {left:['ged_bowl'], right:['red_bowl'], up:['red_bowl'], down:['red_bowl'],
+ red_bowl: {left:['red_bowl'], right:['red_bowl'], up:['red_bowl'], down:['red_bowl'],
   radius: 0.6, weapon: false, pickup: false, deadly: true, hitpoints: 150, speed: 0, score: 1000, generator: 'red_bat', genchance: 0.015, circle: 0},
   green_bowl: {left:['green_bowl'], right:['green_bowl'], up:['green_bowl'], down:['green_bowl'],
    radius: 0.6, weapon: false, pickup: false, deadly: true, hitpoints: 200, speed: 0, score: 2000, generator: 'green_bat', genchance: 0.02, circle: 0},

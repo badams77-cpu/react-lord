@@ -309,10 +309,9 @@ desert: [
           require("../assets/background/grass_rock1.png"),
           require("../assets/background/grass_rock2.png"),          
 
-          require("../assets/background/path(1).png"), // Extra Space to fix missing tile
-
           require("../assets/background/path_fence1.png"),
           require("../assets/background/path_fence2.png"),
+          require("../assets/background/path(1).png"), // Extra Space to fix missing tile
              // Missing in tilemap, don't add
           require("../assets/background/path_fence4.png"),
           require("../assets/background/path_fence5.png"),

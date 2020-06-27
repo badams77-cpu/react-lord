@@ -1412,6 +1412,11 @@ room_2_8: {
       xpos: 8,
       ypos: 8,
     },
+    {
+      spriteName: 'red_key',
+      xpos: 6,
+      ypos: 6,
+    }
   ],
   map: [
     [0,0,0,0,199,200,174,198,0,0,96,85],
@@ -1468,12 +1473,13 @@ room_3_8: {
   ]
 },
 room_4_8: {
+  base: 'island',
   sprites: [
-    {
-        spriteName: 'red_door',
-        xpos: 5,
-        ypos: 6
-        },
+          {
+            spriteName: 'red_door',
+            xpos: 5,
+          ypos: 6
+         },
           {
             spriteName: 'purple_testtube',
             xpos: 3,
