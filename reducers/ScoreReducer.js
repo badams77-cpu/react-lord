@@ -1,4 +1,4 @@
-import {ADD_SCORE, ADD_LIFE, SUB_LIFE, RESTART, END_RESTART, CHANGE_ROOM, END_CHANGE_ROOM} from '../actions/Actions';
+import {ADD_SCORE, ADD_LIFE, SUB_LIFE, PICKUP, RESTART, END_RESTART, CHANGE_ROOM, END_CHANGE_ROOM} from '../actions/Actions';
 import redux from 'redux';
 import constants from '../components/Constants';
 
@@ -11,6 +11,7 @@ const initial_state = {
   player_start_x: constants.PLAYER_START_X,
   player_start_y: constants.PLAYER_START_Y,
   change_room: false,
+  pickups: {},
 }
 
 scoreReducer = (state = initial_state, action)=>{
@@ -27,6 +28,12 @@ scoreReducer = (state = initial_state, action)=>{
        } else {
          return {...state, player_life: newLife};
        }
+    case PICKUP:
+      if (state.game_over){ return {...state};}
+      let pickups = {...this.state.pickups};
+      pickups[action.item]=1;
+      let myGameOver = pickups['crown']!=null;
+      return {...state, pickups: pickups, game_over: myGameOver };
     case RESTART:
         return {...state, player_life: constants.PLAYER_LIFE, game_over: false, restart: true,
            player_start_x: constants.player_start_x, player_start_y: constants.player_start_y,

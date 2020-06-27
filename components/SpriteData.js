@@ -29,6 +29,39 @@ red_key: {
  left:['red_key'], right: ['red_key'], up: ['red_key'], down: ['red_key'],
   radius: 0.5, weapon: false, pickup: true, deadly: false, hitpoints: 60, speed: 0, score: 1000, generator: null, genchance: 0.00, circle:0
 },
+red_door: {
+  left:['red_door_1','red_door_2','red_door_3','red_door_4'],
+  right:['red_door_1','red_door_2','red_door_3','red_door_4'],  
+  up:['red_door_1','red_door_2','red_door_3','red_door_4'],
+  down:['red_door_1','red_door_2','red_door_3','red_door_4'],
+  radius: 1.0, weapon: false, pickup: false, deadly: false, hitpoints: 0, speed: 0, score: 1000, generator: null, genchance: 0.00,
+  door: true
+},
+green_door: {
+  left:['green_door_1','green_door_2','green_door_3','green_door_4'],
+  right:['green_door_1','green_door_2','green_door_3','green_door_4'],  
+  up:['green_door_1','green_door_2','green_door_3','green_door_4'],
+  down:['green_door_1','green_door_2','green_door_3','green_door_4'],
+  radius: 1.0, weapon: false, pickup: false, deadly: false, hitpoints: 0, speed: 0, score: 1200, generator: null, genchance: 0.00,
+  door: true
+},
+yellow_door: {
+  left:['yellow_door_1','yellow_door_2','yellow_door_3','yellow_door_4'],
+  right:['yellow_door_1','yellow_door_2','yellow_door_3','yellow_door_4'],  
+  up:['yellow_door_1','yellow_door_2','yellow_door_3','yellow_door_4'],
+  down:['yellow_door_1','yellow_door_2','yellow_door_3','yellow_door_4'],
+  radius: 1.0, weapon: false, pickup: false, deadly: false, hitpoints: 0, speed: 0, score: 1500, generator: null, genchance: 0.00,
+  door: true
+},
+blue_door: {
+  left:['blue_door_1','blue_door_2','blue_door_3','blue_door_4'],
+  right:['blue_door_1','blue_door_2','blue_door_3','blue_door_4'],  
+  up:['blue_door_1','blue_door_2','blue_door_3','blue_door_4'],
+  down:['blue_door_1','blue_door_2','blue_door_3','blue_door_4'],
+  radius: 1.0, weapon: false, pickup: false, deadly: false, hitpoints: 0, speed: 0, score: 1500, generator: null, genchance: 0.00,
+  door: true
+},
+
 green_key: {
   left:['green_key'], right: ['green_key'], up: ['green_key'], down: ['green_key'],
   radius: 0.5, weapon: false, pickup: true, deadly: false, hitpoints: 60, speed: 0, score: 1200, generator: null, genchance: 0.00, circle:0
@@ -45,7 +78,6 @@ crown: {
   left:['crown'], right: ['crown'], up: ['crown'], down: ['crown'],
   radius: 0.5, weapon: false, pickup: true, deadly: false, hitpoints: 60, speed: 0, score: 2000, generator: null, genchance: 0.00, circle:0
 },
-
 grey_bowl: {left:['grey_bowl'], right:['grey_bowl'], up:['grey_bowl'], down:['grey_bowl'],
  radius: 0.6, weapon: false, pickup: false, deadly: true, hitpoints: 100, speed: 0, score: 500, generator: 'grey_bat', genchance: 0.01, circle: 0},
  red_bowl: {left:['ged_bowl'], right:['red_bowl'], up:['red_bowl'], down:['red_bowl'],

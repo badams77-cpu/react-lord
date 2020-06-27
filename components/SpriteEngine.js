@@ -5,7 +5,7 @@ import ImageOverlay from './ImageOverlay';
 import spriteGraphics from './SpriteGraphics';
 import constants from './Constants';
 import {connect} from 'react-redux';
-import {ADD_SCORE, ADD_LIFE, SUB_LIFE, RESTART, END_RESTART, CHANGE_ROOM, END_CHANGE_ROOM} from '../actions/Actions';
+import {ADD_SCORE, ADD_LIFE, SUB_LIFE, PICKUP, RESTART, END_RESTART, CHANGE_ROOM, END_CHANGE_ROOM} from '../actions/Actions';
 import maps from './Maps';
 import hardness from './Hardness';
 
@@ -477,6 +477,11 @@ class SpriteEngine extends Component {
            newSprites[j].delay_counter=0;
            this.props.onAddScore(jData.score);
         }
+        if (jData.pickup && this.isCollide( newSprites[0], newSprites[j])){
+          this.onAddScore(jData.score);
+          this.onPickup(newSprites[j].spriteName);
+          push(removeSprites, j);
+        }
       }
       // Weapon to Deadly
       for(i=1; i<newSprites.length; i++){
@@ -593,6 +598,19 @@ class SpriteEngine extends Component {
                         zIndex: 2,
                       };
               }
+                      const window = Dimensions.get('window');
+                      let window_width = window.width;
+                      let window_height = window.height;
+              if (this.props.pickups['crown']!=null){
+                                      styles[SPRITE_STYLE+style_counter++] = {
+                                        position: 'absolute',
+                                        width: TILES_WIDTH*4,
+                                        height: TILES_HEIGHT*3,
+                                        left: window_width/2-TILES_WIDTH*2,
+                                        top: window_width/2-TILES_HEIGHT*1.5,
+                                        zIndex: 2,
+                                      };
+              }
               const style = StyleSheet.create(styles);
               style_counter =0;
               for(i=0; i<sprites.length;i++){
@@ -626,6 +644,21 @@ class SpriteEngine extends Component {
                       /> );
                      style_counter++;
               }};
+              if (this.props.pickups['crown']!=null){
+                    let myStyle= style[SPRITE_STYLE+style_counter];
+                     spriteRender.push(
+                      <ImageOverlay
+                        style={myStyle}
+                        source = {spriteGraphics.winner}
+                        height={TILES_HEIGHT*4}
+                        width={TILES_WIDTH*3}
+                        left={window_width/2-TILES_WIDTH*2}
+                        overlayAlpha={0.5}
+                         top={window_width/2-TILES_HEIGHT*1.5}
+                        key={style_counter}
+                      /> );
+              }
+
               return (
                  <View style={ { opacity: 0.5, backgroundColor: '#000000', flex: 1 }} >{spriteRender}</View>
               );
@@ -639,6 +672,7 @@ const mapStateToProps = (state)=>{
     room: state.room,
     player_start_x: state.player_start_x,
     player_start_y: state.player_start_y,
+    pickups: state.pickups
   };
 }
 
@@ -648,7 +682,8 @@ const mapDispatchToProps = (dispatch) => {
     onRestart: ()=> dispatch({type: END_RESTART}),
     onPlayerHit: life=> dispatch({type: SUB_LIFE, life: life}),
     onChangeRoom: (room, x,y)=> dispatch({ type: CHANGE_ROOM, room: room, player_start_x: x, player_start_y: y}),
-    onEndChangeRoom: ()=> dispatch( {type: END_CHANGE_ROOM})
+    onEndChangeRoom: ()=> dispatch( {type: END_CHANGE_ROOM}),
+    onPickup: (item)=> dispatch({type: PICKUP, item: item })
   };
 }
 
