@@ -20,7 +20,7 @@ class ScoreBoard extends Component {
   }
 
     componentDidMount(){
-        this.state.interval = setInterval( ()=> nextTip(), constants.TIP_TIMEOUT);
+        this.state.interval = setInterval( ()=> this.nextTip(), constants.TIP_TIMEOUT);
     }
 
     componentWillUnmount(){

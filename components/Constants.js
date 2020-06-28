@@ -6,7 +6,7 @@ const constants = {
  MAP_WIDTH: 8,
  MAP_HEIGHT: 8,
  DEADLY_LIMIT: 12,
- TIP_TIMEOUT: 1500,
+ TIP_TIMEOUT: 30000,
  START_ROOM: 'room_8_4',
 // START_ROOM: 'room_2_8',
  PLAYER_START_X: 7,
