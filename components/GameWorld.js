@@ -37,12 +37,12 @@ class GameWorld extends Component {
         if (this.props.restart){
           setTimeout( ()=> {
             console.log("Game world restart:");
-            this.setState({ room: constants.START_ROOM, game: this.state.game+1})},20);
+            this.setState({ room: constants.START_ROOM, game: this.state.game+1})},10);
         }
         if (this.props.change_room){
                     setTimeout( ()=> {
                       console.log("Game world room:");
-                      this.setState({ room: this.props.room, game: this.state.game+1})},20);
+                      this.setState({ room: this.props.room, game: this.state.game+1})},10);
         }
         const TILE_STYLE = "tileStyle_";
         const window = Dimensions.get('window');

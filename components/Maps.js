@@ -1426,11 +1426,12 @@ room_2_8: {
       xpos: 8,
       ypos: 8,
     },
-    {
-      spriteName: 'red_key',
-      xpos: 6,
-      ypos: 6,
-    }
+//  For Test Only
+//    {
+//      spriteName: 'red_key',
+//      xpos: 6,
+//      ypos: 6,
+//    }
   ],
   map: [
     [0,0,0,0,199,200,174,198,0,0,96,85],
