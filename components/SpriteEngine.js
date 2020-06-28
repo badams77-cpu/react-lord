@@ -112,7 +112,7 @@ class SpriteEngine extends Component {
      let deltaY = y-this.state.sprites[0].y;
      let weaponCount = 0;
      let weapon = 'syringe';
-     if (this.props.pickups['weopen_blue']){
+     if (this.props.pickups['weapon_blue']){
        weapon = 'syringe_blue';
      } else if (this.props.pickups['weapon_red']){
        weapon = 'syringe_red';

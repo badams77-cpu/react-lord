@@ -37,7 +37,7 @@ scoreReducer = (state = initial_state, action)=>{
       let pNewScore =action.score + state.score;
       let newlife = state.player_life;
       if (action.item.startsWith('life')){
-        newlife = constants.player_life;
+        newlife = constants.PLAYER_LIFE;
       }
       return {...state, pickups: pickups, game_over: myGameOver, score: pNewScore, player_life: newlife};
     case RESTART:
