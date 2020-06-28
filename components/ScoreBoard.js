@@ -7,12 +7,34 @@ import spriteData from './SpriteData';
 import ImageOverlay from './ImageOverlay';
 import spriteGraphics from './SpriteGraphics';
 import {AdMobBanner} from 'expo-ads-admob';
+import tips from './Tips';
 
 class ScoreBoard extends Component {
 
   constructor(props){
     super(props);
+    this.state = {
+      tip: 0,
+      interval: null
+    };
   }
+
+    componentDidMount(){
+        this.state.interval = setInterval( ()=> nextTip(), constants.TIP_TIMEOUT);
+    }
+
+    componentWillUnmount(){
+      if (this.state.interval!=null){ clearInterval(this.state.interval); }
+    }
+
+  nextTip = ()=>{
+    let tip = this.state.tip;
+    tip++;
+    if (tip>=tips.length){ tip=0;}
+    this.setState({...this.state, tip: tip});
+  }
+
+
 
   bannerError = (err)=>{
     console.log(err);
@@ -52,6 +74,7 @@ class ScoreBoard extends Component {
         <View style={{flex: 1, flexDirection: 'row'}}>{pickups}</View>
       <Text style={styles.text}>Score: {this.props.score}</Text>
       <Text style={styles.text}>Life: {this.props.life}</Text>
+      <Text style={styles.text}>{tips[this.state.tip]}</Text>
       {but}
       <AdMobBanner
         bannerSize="fullBanner"
