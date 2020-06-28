@@ -63,6 +63,7 @@ class ScoreBoard extends Component {
     let pickups = [];
     for(var key in  this.props.pickups){
        if (!this.props.pickups.hasOwnProperty(key)) continue;
+       if (key.startsWith('life')) continue;
        let mySpriteData = spriteData[key];
        let src = spriteGraphics[mySpriteData['left'][0]];
        pickCount++;

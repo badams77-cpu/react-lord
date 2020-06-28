@@ -2,10 +2,22 @@
 let spriteGraphics = {
   winner: require("../assets/winner.png"),
   virus :     require("../assets/sprites/virus_dark.png"),
+  life: required("../assets/sprites/life.png"),
   syringe_left: require("../assets/sprites/syringe_left.png"),
   syringe_right: require("../assets/sprites/syringe_right.png"),
   syringe_up: require("../assets/sprites/syringe_up.png"),
   syringe_down: require("../assets/sprites/syringe_down.png"),
+
+  syringe_red_left: require("../assets/sprites/syringe_red_left.png"),
+  syringe_red_right: require("../assets/sprites/syringe_red_right.png"),
+  syringe_red_up: require("../assets/sprites/syringe_red_up.png"),
+  syringe_red_down: require("../assets/sprites/syringe_red_down.png"),
+
+  syringe_blue_left: require("../assets/sprites/syringe_blue_left.png"),
+  syringe_blue_right: require("../assets/sprites/syringe_blue_right.png"),
+  syringe_blue_up: require("../assets/sprites/syringe_blue_up.png"),
+  syringe_blue_down: require("../assets/sprites/syringe_blue_down.png"),
+
   explosion_0 : require("../assets/sprites/explosion_0.png"),
   explosion_1 : require("../assets/sprites/explosion_1.png"),
   explosion_2 : require("../assets/sprites/explosion_2.png"),

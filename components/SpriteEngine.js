@@ -111,12 +111,18 @@ class SpriteEngine extends Component {
      let deltaX = x-this.state.sprites[0].x;
      let deltaY = y-this.state.sprites[0].y;
      let weaponCount = 0;
+     let weapon = 'syringe';
+     if (this.props.pickups['weopen_blue']){
+       weapon = 'syringe_blue';
+     } else if (this.props.pickups['weapon_red']){
+       weapon = 'syringe_red';
+     }
      this.state.sprites.forEach( (sprite) => {
        let mySpriteData = spriteData[sprite.spriteName];
 //       console.log(sprite.spriteName, mySpriteData);
        if (mySpriteData && mySpriteData.weapon){ weaponCount++;}});
      if (weaponCount>=constants.MAX_SHOTS){ return; }
-     let speed = spriteData[this.weapon].speed;
+     let speed = spriteData[weapon].speed;
      let dx=0;
      let dy=0;
      let direction='left';
@@ -127,7 +133,7 @@ class SpriteEngine extends Component {
      }
      let newSprites = [...this.state.sprites];
      newSprites.push({
-              spriteName: this.weapon,
+              spriteName: weapon,
               x: this.state.sprites[0].x + Math.sign(dx)*this.state.tile_width,
               y: this.state.sprites[0].y + Math.sign(dy)*this.state.tile_height,
               dx: dx,

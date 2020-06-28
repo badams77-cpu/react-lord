@@ -4,7 +4,15 @@ let spriteData =
 virus: { left: ['virus'], right: ['virus'], up: ['virus'], down: ['virus'],
  radius: 0.9, weapon: false, pickup: false, deadly: true, hitpoints: 5, speed: 2, score: 10, generator: null, genchance: 0, circle: 0},
 syringe: { left: ['syringe_left'], right: ['syringe_right'], up: ['syringe_up'], down: ['syringe_down'],
- radius: 0.5, weapon: true, pickup: false, deadly: false, hitpoints: 5, speed: 4, score: 0, generator: null, genchance: 0, circle: 0} ,
+ radius: 0.5, weapon: true, pickup: false, deadly: false, hitpoints: 5, speed: 4, score: 0,
+  generator: null, genchance: 0, circle: 0} ,
+syringe_red: { left: ['syringe_red_left'], right: ['syringe_red_right'], up: ['syringe_red_up'], down: ['syringe_red_down'],
+ radius: 0.5, weapon: true, pickup: false, deadly: false, hitpoints: 10, speed: 4, score: 0,
+  generator: null, genchance: 0, circle: 0} ,
+syringe_blue: { left: ['syringe_blue_left'], right: ['syringe_blue_right'], up: ['syringe_blue_up'], down: ['syringe_blue_down'],
+ radius: 0.5, weapon: true, pickup: false, deadly: false, hitpoints: 20, speed: 4, score: 0,
+  generator: null, genchance: 0, circle: 0} ,  
+
 explosion: { left: ['explosion_0', 'explosion_1', 'explosion_2', 'explosion_3', 'explosion_4', 'explosion_5', 'explosion_6'],
 right: ['explosion_0', 'explosion_1', 'explosion_2', 'explosion_3', 'explosion_4', 'explosion_5', 'explosion_6'],
 up: ['explosion_0', 'explosion_1', 'explosion_2', 'explosion_3', 'explosion_4', 'explosion_5', 'explosion_6'],
@@ -74,6 +82,25 @@ crown: {
   left:['crown'], right: ['crown'], up: ['crown'], down: ['crown'],
   radius: 0.5, weapon: false, pickup: true, deadly: false, hitpoints: 60, speed: 0, score: 2000, generator: null, genchance: 0.00, circle:0
 },
+life1: {
+  left: ['life'], right: ['life'], up: ['life'], down: ['life'],
+  radius: 0.7, weopen: false, pickup: true, deadly: false, hitpoint: 60, speed: 0, score: 500, generator: null, genchance: 0.0
+},
+life2: {
+  left: ['life'], right: ['life'], up: ['life'], down: ['life'],
+  radius: 0.7, weopen: false, pickup: true, deadly: false, hitpoint: 60, speed: 0, score: 500, generator: null, genchance: 0.0
+},
+life3: {
+  left: ['life'], right: ['life'], up: ['life'], down: ['life'],
+  radius: 0.7, weopen: false, pickup: true, deadly: false, hitpoint: 60, speed: 0, score: 500, generator: null, genchance: 0.0
+}
+weapon_red: { left: ['syringe_red_left'], right: ['syringe_red_right'], up: ['syringe_red_up'], down: ['syringe_red_down'],
+ radius: 0.5, weapon: false, pickup: true, deadly: false, hitpoints: 10, speed: 0, score: 1000,
+  generator: null, genchance: 0, circle: 0} ,
+weapon_blue: { left: ['syringe_blue_left'], right: ['syringe_blue_right'], up: ['syringe_blue_up'], down: ['syringe_blue_down'],
+ radius: 0.5, weapon: false, pickup: true, deadly: false, hitpoints: 10, speed: 0, score: 2000,
+  generator: null, genchance: 0, circle: 0} ,  
+
 grey_bowl: {left:['grey_bowl'], right:['grey_bowl'], up:['grey_bowl'], down:['grey_bowl'],
  radius: 0.6, weapon: false, pickup: false, deadly: true, hitpoints: 100, speed: 0, score: 500, generator: 'grey_bat', genchance: 0.01, circle: 0},
  red_bowl: {left:['red_bowl'], right:['red_bowl'], up:['red_bowl'], down:['red_bowl'],

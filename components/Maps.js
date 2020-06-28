@@ -821,6 +821,11 @@ room_7_4: {
                      ypos: 3,
                    },
                    {
+                     spriteName: 'life2',
+                     xpos: 5,
+                     ypos: 5,
+                   },
+                   {
                      spriteName: 'purple_testtube',
                      xpos: 6,
                      ypos: 9,
@@ -947,6 +952,11 @@ room_5_1: {
       spriteName: 'red_bowl',
       xpos: 6,
       ypos: 6,
+    },
+    {
+      spriteName: 'life1',
+      xpos: 5,
+      ypos: 5,
     }
   ],
 
@@ -1238,6 +1248,10 @@ room_1_4: {
 room_1_5: {
       base: 'island',
       sprites: [
+        { spriteName: 'weapon_red',
+          xpos: 5,
+          ypos: 5,
+        }
         {
           spriteName: 'brown_testtube',
           xpos: 4,
@@ -1447,6 +1461,11 @@ room_3_8: {
         ypos: 3,
       },
       {
+        spriteName: 'life3',
+        xpos: 5,
+        ypos: 5,
+      },
+      {
         spriteName: 'purple_testtube',
         xpos: 3,
         ypos: 8,
@@ -1515,6 +1534,11 @@ room_5_8: {
           xpos: 5,
           ypos: 5
         },
+        {
+          spriteName: 'weapon_blue',
+          xpos: 6,
+          ypos: 6,
+        }
           {
             spriteName: 'purple_testtube',
             xpos: 5,

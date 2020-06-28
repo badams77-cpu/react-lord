@@ -7,7 +7,8 @@ const tips = [
   'Bowls generate bats, testtubes virii',
   'To pass a door find key of same color',
   'Red Syringe does more damage, find it',
-  'Green Syringe does most damage'
+  'Blue Syringe does most damage',
+  'Each life pack works once only'
 ];
 
 
