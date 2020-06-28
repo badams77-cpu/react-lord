@@ -1251,7 +1251,7 @@ room_1_5: {
         { spriteName: 'weapon_red',
           xpos: 5,
           ypos: 5,
-        }
+        },
         {
           spriteName: 'brown_testtube',
           xpos: 4,
@@ -1538,7 +1538,7 @@ room_5_8: {
           spriteName: 'weapon_blue',
           xpos: 6,
           ypos: 6,
-        }
+        },
           {
             spriteName: 'purple_testtube',
             xpos: 5,

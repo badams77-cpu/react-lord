@@ -93,7 +93,7 @@ life2: {
 life3: {
   left: ['life'], right: ['life'], up: ['life'], down: ['life'],
   radius: 0.7, weopen: false, pickup: true, deadly: false, hitpoint: 60, speed: 0, score: 500, generator: null, genchance: 0.0
-}
+},
 weapon_red: { left: ['syringe_red_left'], right: ['syringe_red_right'], up: ['syringe_red_up'], down: ['syringe_red_down'],
  radius: 0.5, weapon: false, pickup: true, deadly: false, hitpoints: 10, speed: 0, score: 1000,
   generator: null, genchance: 0, circle: 0} ,
