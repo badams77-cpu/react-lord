@@ -2,6 +2,10 @@
 let spriteGraphics = {
   winner: require("../assets/winner.png"),
   virus :     require("../assets/sprites/virus_dark.png"),
+  brown_virus :     require("../assets/sprites/brown_virus.png"),
+  purple_virus:   require("../assets/sprites/purple_virus.png"),
+  cyan_virus:   require("../assets/sprites/cyan_virus.png"),
+  
   life: require("../assets/sprites/life.png"),
   syringe_left: require("../assets/sprites/syringe_left.png"),
   syringe_right: require("../assets/sprites/syringe_right.png"),

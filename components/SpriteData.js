@@ -2,7 +2,15 @@
 let spriteData =
 {
 virus: { left: ['virus'], right: ['virus'], up: ['virus'], down: ['virus'],
+ radius: 0.9, weapon: false, pickup: false, deadly: true, hitpoints: 15, speed: 3, score: 35, generator: null, genchance: 0, circle: 0},
+brown_virus: { left: ['brown_virus'], right: ['brown_virus'], up: ['brown_virus'], down: ['brown_virus'],
+ radius: 0.9, weapon: false, pickup: false, deadly: true, hitpoints: 10, speed: 2, score: 25, generator: null, genchance: 0, circle: 0},
+purple_virus: { left: ['purple_virus'], right: ['purple_virus'], up: ['purple_virus'], down: ['purple_virus'],
  radius: 0.9, weapon: false, pickup: false, deadly: true, hitpoints: 5, speed: 2, score: 10, generator: null, genchance: 0, circle: 0},
+cyan_virus: { left: ['cyan_virus'], right: ['cyan_virus'], up: ['cyan_virus'], down: ['cyan_virus'],
+ radius: 0.9, weapon: false, pickup: false, deadly: true, hitpoints: 20, speed: 3, score: 50, generator: null, genchance: 0, circle: 0},
+
+
 syringe: { left: ['syringe_left'], right: ['syringe_right'], up: ['syringe_up'], down: ['syringe_down'],
  radius: 0.5, weapon: true, pickup: false, deadly: false, hitpoints: 5, speed: 4, score: 0,
   generator: null, genchance: 0, circle: 0} ,
@@ -18,20 +26,17 @@ right: ['explosion_0', 'explosion_1', 'explosion_2', 'explosion_3', 'explosion_4
 up: ['explosion_0', 'explosion_1', 'explosion_2', 'explosion_3', 'explosion_4', 'explosion_5', 'explosion_6'],
 down: ['explosion_0', 'explosion_1', 'explosion_2', 'explosion_3', 'explosion_4', 'explosion_5', 'explosion_6'],
   radius: 1.0, weapon: false, pickup: false, deadly: false, hitpoints: 0, speed: 0, score: 0, generator: null, genchance: 0, circle:0 },
-purple_testtube: { left:['purple_testtube'], right: ['purple_testtube'], up: ['purple_testtubde'], down: ['purple_testtude'],
-  radius: 0.5, weapon: false, pickup: false, deadly: true, hitpoints: 60, speed: 0, score: 200, generator: 'virus', genchance: 0.01, circle:0
-},
 purple_testtube: { left:['purple_testtube'], right: ['purple_testtube'], up: ['purple_testtube'], down: ['purple_testtube'],
-  radius: 0.5, weapon: false, pickup: false, deadly: true, hitpoints: 60, speed: 0, score: 200, generator: 'virus', genchance: 0.01, circle:0
+  radius: 0.5, weapon: false, pickup: false, deadly: true, hitpoints: 60, speed: 0, score: 200, generator: 'purple_virus', genchance: 0.01, circle:0
 },
-brown_testtube: { left:['brown_testtube'], right: ['brown_testtube'], up: ['purple_testtube'], down: ['purple_testtube'],
-  radius: 0.5, weapon: false, pickup: false, deadly: true, hitpoints: 100, speed: 0, score: 300, generator: 'virus', genchance: 0.01, circle:0
+brown_testtube: { left:['brown_testtube'], right: ['brown_testtube'], up: ['brown_testtube'], down: ['brown_testtube'],
+  radius: 0.5, weapon: false, pickup: false, deadly: true, hitpoints: 100, speed: 0, score: 300, generator: 'brown_virus', genchance: 0.01, circle:0
 },
 black_testtube: { left:['black_testtube'], right: ['black_testtube'], up: ['black_testtube'], down: ['black_testtube'],
   radius: 0.5, weapon: false, pickup: false, deadly: true, hitpoints: 150, speed: 0, score: 500, generator: 'virus', genchance: 0.01, circle:0
 },
 cyan_testtube: { left:['cyan_testtube'], right: ['cyan_testtube'], up: ['cyan_testtube'], down: ['cyan_testtube'],
-  radius: 0.5, weapon: false, pickup: false, deadly: true, hitpoints: 200, speed: 0, score: 750, generator: 'virus', genchance: 0.01, circle:0
+  radius: 0.5, weapon: false, pickup: false, deadly: true, hitpoints: 200, speed: 0, score: 750, generator: 'cyan_virus', genchance: 0.01, circle:0
 },
 red_key: {
  left:['red_key'], right: ['red_key'], up: ['red_key'], down: ['red_key'],
