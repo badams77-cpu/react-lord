@@ -334,15 +334,17 @@ class SpriteEngine extends Component {
             }
           }
         }
-
+        let isCircle = 0;
         if (mySprite.circle!=null && mySprite.circle!=0.0){
           let rx = mySprite.x - mySprite.centerX;
           let ry = mySprite.y - mySprite.centerY;
           let r = Math.sqrt(rx*rx+ry*ry);
           if (r>=mySprite.circle){
-            let angle = mySprite.rot*Math.atan2(-rx, ry);
+            let angle = mySprite.rotate*Math.atan2(-rx, ry);
             mySprite.dx = mySpriteData.speed * Math.cos(angle);
             mySprite.dy = mySpriteData.speed * Math.sin(angle);
+//            console.log("dx: "+ mySprite.dx, "dy: "+mySprite.dy);
+            let isCircle = 1;
             this.setDiagonalDirection(mySprite);
           }
         } else {
@@ -403,6 +405,9 @@ class SpriteEngine extends Component {
             if (mySprite.delay_counter++ >=mySprite.anim_delay_frames){
               mySprite.anim_counter++;
               mySprite.delay_counter=1;
+              if (isCircle){
+                console.log("Bat: ",mySprite.direction, mySprite.anim_counter, mySpriteData[mySprite.direction].length);
+              }
               if (mySprite.anim_counter>=mySpriteData[mySprite.direction].length){
                 if (mySprite.spriteName==='explosion'){
                   removeSprites.push(i);
