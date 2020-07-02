@@ -9,7 +9,7 @@ import {ADD_SCORE, ADD_LIFE, SUB_LIFE, PICKUP, RESTART, END_RESTART, CHANGE_ROOM
 import maps from './Maps';
 import hardness from './Hardness';
 import { Audio } from 'expo-av';
-import soundFiles from './Soundds';
+import soundFiles from './Sounds';
 
 class SpriteEngine extends Component {
 
@@ -27,11 +27,6 @@ class SpriteEngine extends Component {
        super(props);
        props.setHandlersCallback({ onPressIn: this.onPressInHandler, onPressOut: this.onPressOutHandler});
        let sprites = this.startSprites(props);
-
-        for(var key in soundFiles){
-            if (!validation_messages.hasOwnProperty(key)) continue;
-            sounds[key] = { playAsync: ()=> {}}; // Initial Default Sounds
-        };
 
        this.state = {
          window_width: props.window_width,
@@ -158,7 +153,7 @@ class SpriteEngine extends Component {
               delay_counter: 0
       });
       this.setState( {sprites: newSprites});
-      if (sounds['fire']){ sounds['fire'].playAsync(); }
+      if (this.sounds['fire']){ this.sounds['fire'].playAsync(); }
     }
 
 
@@ -234,10 +229,10 @@ class SpriteEngine extends Component {
 
 
         for(var key in soundFiles){
-            if (!validation_messages.hasOwnProperty(key)) continue;
+            if (!soundFiles.hasOwnProperty(key)) continue;
              const soundObject = new Audio.Sound();
              await soundObject.loadAsync(mySounds['key']);
-             sounds[key]=soundObject;
+             this.sounds[key]=soundObject;
         };
 
     }
@@ -303,7 +298,7 @@ class SpriteEngine extends Component {
                 if (this.props.pickups[jData1['door']]){
                   let acount = newSprites[j].anim_counter;
                   if (acount==0){
-                          if (sounds['door']){ sounds['door'].playAsync(); }
+                          if (this.sounds['door']){ this.sounds['door'].playAsync(); }
                   }
                   if (acount<3){ acount++;}
                   // Open Door animation
@@ -512,7 +507,7 @@ class SpriteEngine extends Component {
            };
            if (mySpriteData.circle){
              this.setDiagonalDirection(newSprite);
-             if (sounds['bat']){ sounds['bat'].playAsync(); }
+             if (this.sounds['bat']){ this.sounds['bat'].playAsync(); }
            }
            newSprites.push(newSprite);
          }
@@ -566,7 +561,7 @@ class SpriteEngine extends Component {
                 newSprites[j].direction='left';
                 newSprites[j].anim_counter=0;
                 newSprites[j].delay_counter=0;
-                if (sounds['bang']){ sounds['bang'].playAsync(); }
+                if (this.sounds['bang']){ this.sounds['bang'].playAsync(); }
                 this.props.onAddScore(jData.score);
                 break;
               }
