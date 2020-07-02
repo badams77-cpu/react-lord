@@ -8,9 +8,14 @@ import {connect} from 'react-redux';
 import {ADD_SCORE, ADD_LIFE, SUB_LIFE, PICKUP, RESTART, END_RESTART, CHANGE_ROOM, END_CHANGE_ROOM} from '../actions/Actions';
 import maps from './Maps';
 import hardness from './Hardness';
+import sounds from './Sounds'
 
 
 class SpriteEngine extends Component {
+
+
+
+
 
     _panResponder = {};
     weapon = 'syringe';
@@ -144,6 +149,7 @@ class SpriteEngine extends Component {
               delay_counter: 0
       });
       this.setState( {sprites: newSprites});
+      if (sounds['fire']){ sounds['fire'].playAsync(); }
     }
 
 
@@ -276,6 +282,9 @@ class SpriteEngine extends Component {
 //                console.log("Have key? "+jData1['door'], this.props.pickups, this.props.pickups[jData1['door']])
                 if (this.props.pickups[jData1['door']]){
                   let acount = newSprites[j].anim_counter;
+                  if (acount==0){
+                          if (sounds['door']){ sounds['door'].playAsync(); }
+                  }
                   if (acount<3){ acount++;}
                   // Open Door animation
                   newSprites[j].anim_counter=acount;
@@ -483,6 +492,7 @@ class SpriteEngine extends Component {
            };
            if (mySpriteData.circle){
              this.setDiagonalDirection(newSprite);
+             if (sounds['bat']){ sounds['bat'].playAsync(); }
            }
            newSprites.push(newSprite);
          }
@@ -536,6 +546,7 @@ class SpriteEngine extends Component {
                 newSprites[j].direction='left';
                 newSprites[j].anim_counter=0;
                 newSprites[j].delay_counter=0;
+                if (sounds['bang']){ sounds['bang'].playAsync(); }
                 this.props.onAddScore(jData.score);
                 break;
               }
@@ -558,6 +569,11 @@ class SpriteEngine extends Component {
         this.setState({ sprites: newSprites});
       }
     }
+
+
+
+
+
 
     isCollide = (sprite1, sprite2) => {
       if (!(sprite1.x+this.state.tile_width < sprite2.x ||
