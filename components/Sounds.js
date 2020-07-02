@@ -1,6 +1,6 @@
-        let soundFiles = {bat: '../assets/sound/bat.wav',
-          fire: '../assets/sound/fire.wav',
-          bang: '../assets/sound/bang.wav',
-          door: '../assets/sound/door_open.wav'};
+        let soundFiles = {bat: require('../assets/sound/bat.wav'),
+          fire: require('../assets/sound/fire.wav'),
+          bang: require('../assets/sound/bang.wav'),
+          door: require('../assets/sound/door_open.wav')};
 
 export default soundFiles;

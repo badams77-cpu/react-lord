@@ -153,7 +153,7 @@ class SpriteEngine extends Component {
               delay_counter: 0
       });
       this.setState( {sprites: newSprites});
-      if (this.sounds['fire']){ this.sounds['fire'].playAsync(); }
+      if (this.sounds['fire']){ this.sounds['fire'].replayAsync(); }
     }
 
 
@@ -231,7 +231,7 @@ class SpriteEngine extends Component {
         for(var key in soundFiles){
             if (!soundFiles.hasOwnProperty(key)) continue;
              const soundObject = new Audio.Sound();
-             await soundObject.loadAsync(mySounds['key']);
+             await soundObject.loadAsync(soundFiles[key]);
              this.sounds[key]=soundObject;
         };
 
@@ -298,7 +298,7 @@ class SpriteEngine extends Component {
                 if (this.props.pickups[jData1['door']]){
                   let acount = newSprites[j].anim_counter;
                   if (acount==0){
-                          if (this.sounds['door']){ this.sounds['door'].playAsync(); }
+                          if (this.sounds['door']){ this.sounds['door'].replayAsync(); }
                   }
                   if (acount<3){ acount++;}
                   // Open Door animation
@@ -507,7 +507,7 @@ class SpriteEngine extends Component {
            };
            if (mySpriteData.circle){
              this.setDiagonalDirection(newSprite);
-             if (this.sounds['bat']){ this.sounds['bat'].playAsync(); }
+             if (this.sounds['bat']){ this.sounds['bat'].replayAsync(); }
            }
            newSprites.push(newSprite);
          }
@@ -561,7 +561,7 @@ class SpriteEngine extends Component {
                 newSprites[j].direction='left';
                 newSprites[j].anim_counter=0;
                 newSprites[j].delay_counter=0;
-                if (this.sounds['bang']){ this.sounds['bang'].playAsync(); }
+                if (this.sounds['bang']){ this.sounds['bang'].replayAsync(); }
                 this.props.onAddScore(jData.score);
                 break;
               }
