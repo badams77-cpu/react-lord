@@ -536,8 +536,12 @@ class SpriteEngine extends Component {
            newSprites[j].anim_counter=0;
            newSprites[j].delay_counter=0;
            this.props.onAddScore(jData.score);
+           if (this.sounds['ouch']){ this.sounds['ouch'].replayAsync(); }
         }
         if (jData.pickup && this.isCollide( newSprites[0], newSprites[j])){
+          if (!this.props.pickups[newSprites[j].spriteName] && this.sounds['winner']){
+            this.sounds['winner'].replayAsync();
+          }
           this.props.onPickup(newSprites[j].spriteName, jData.score);
           removeSprites.push(j);
         }
