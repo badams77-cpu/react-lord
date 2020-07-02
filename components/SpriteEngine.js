@@ -13,6 +13,7 @@ import soundFiles from './Sounds';
 
 class SpriteEngine extends Component {
 
+    gcount = 0;
 
     sounds = {
 
@@ -41,6 +42,7 @@ class SpriteEngine extends Component {
          initial_sprites: props.initial_sprites,
          room: props.room,
          change_room: false,
+         game: 0,
        };
     }
 
@@ -97,6 +99,7 @@ class SpriteEngine extends Component {
      mystate['room']=constants.START_ROOM;
      this.setState({
        sprites: this.startSprites(this.state),
+       game: this.state.game+1,
      });
    }
 
@@ -110,7 +113,8 @@ class SpriteEngine extends Component {
             room: room,
             player_start: {x: x,y: y },
             initial_sprites:  maps[room]['sprites'],
-            change_room: false
+            change_room: false,
+            game: this.state.game+1,
      });
   }
 
@@ -637,17 +641,25 @@ class SpriteEngine extends Component {
 
     render(){
         if (this.props.restart){
+          let mygcount = this.gcount;
           setTimeout( ()=> {
 //            console.log("SpriteEngine: restart");
-            this.restart();
-            this.props.onRestart();
+//            if (this.gcount==mygcount){
+              this.restart();
+              this.props.onRestart();
+              this.gcount++;
+//            }
           },20);
         }
         if (this.props.change_room && this.props.room!=this.state.room){
+          let mygcount1 = this.gcount;
           setTimeout( ()=> {
 //            console.log("SpriteEngine: change room");
-            this.change_room(this.props.room, this.props.player_start_x, this.props.player_start_y);
-            this.props.onEndChangeRoom();
+//            if (this.gcount==mygcount1){
+              this.change_room(this.props.room, this.props.player_start_x, this.props.player_start_y);
+              this.props.onEndChangeRoom();
+              this.gcount++;
+//            }
           },20);
         }
               const SPRITE_STYLE="sprites_";

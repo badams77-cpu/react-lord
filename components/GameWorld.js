@@ -8,6 +8,8 @@ import {connect} from 'react-redux';
 
 class GameWorld extends Component {
 
+    gcount = 0;
+
     constructor(props){
        super(props);
        this.state = { room: constants.START_ROOM,
@@ -35,14 +37,25 @@ class GameWorld extends Component {
 
     render(){
         if (this.props.restart){
+          let mygcount = this.gcount;
           setTimeout( ()=> {
             console.log("Game world restart:");
-            this.setState({ room: constants.START_ROOM, game: this.state.game+1})},10);
+//            if (mygcount==this.gcount){
+              this.setState({ room: constants.START_ROOM, game: this.state.game+1});
+//              }
+              }
+            ,10);
+
         }
         if (this.props.change_room){
+          let mygcount1 = this.gcount;
                     setTimeout( ()=> {
                       console.log("Game world room:");
-                      this.setState({ room: this.props.room, game: this.state.game+1})},10);
+//          if (mygcount1==this.gcount){
+                      this.setState({ room: this.props.room, game: this.state.game+1});
+//          }
+          },10);
+
         }
         const TILE_STYLE = "tileStyle_";
         const window = Dimensions.get('window');
