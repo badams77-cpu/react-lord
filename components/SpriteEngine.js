@@ -8,13 +8,16 @@ import {connect} from 'react-redux';
 import {ADD_SCORE, ADD_LIFE, SUB_LIFE, PICKUP, RESTART, END_RESTART, CHANGE_ROOM, END_CHANGE_ROOM} from '../actions/Actions';
 import maps from './Maps';
 import hardness from './Hardness';
-import sounds from './Sounds'
-
+import { Audio } from 'expo-av';
+import soundFiles from './Soundds';
 
 class SpriteEngine extends Component {
 
 
+    sounds = {
 
+
+    };
 
 
     _panResponder = {};
@@ -24,6 +27,12 @@ class SpriteEngine extends Component {
        super(props);
        props.setHandlersCallback({ onPressIn: this.onPressInHandler, onPressOut: this.onPressOutHandler});
        let sprites = this.startSprites(props);
+
+        for(var key in soundFiles){
+            if (!validation_messages.hasOwnProperty(key)) continue;
+            sounds[key] = { playAsync: ()=> {}}; // Initial Default Sounds
+        };
+
        this.state = {
          window_width: props.window_width,
          window_height: props.window_height,
@@ -218,8 +227,19 @@ class SpriteEngine extends Component {
 
 
 
-    componentDidMount(){
+
+    async componentDidMount(){
         this.state.interval = setInterval( ()=>this.moveSprites(), constants.INTERVAL);
+
+
+
+        for(var key in soundFiles){
+            if (!validation_messages.hasOwnProperty(key)) continue;
+             const soundObject = new Audio.Sound();
+             await soundObject.loadAsync(mySounds['key']);
+             sounds[key]=soundObject;
+        };
+
     }
 
     componentWillUnmount(){
