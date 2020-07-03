@@ -15,6 +15,8 @@ class SpriteEngine extends Component {
 
     gcount = 0;
 
+    groom ='';
+
     sounds = {
 
 
@@ -28,7 +30,7 @@ class SpriteEngine extends Component {
        super(props);
        props.setHandlersCallback({ onPressIn: this.onPressInHandler, onPressOut: this.onPressOutHandler});
        let sprites = this.startSprites(props);
-
+       groom = props.room;
        this.state = {
          window_width: props.window_width,
          window_height: props.window_height,
@@ -97,15 +99,18 @@ class SpriteEngine extends Component {
      mystate['initial_sprites'] = maps[constants.START_ROOM]['sprites'];
      mystate['player_start']= {x: x,y: y };
      mystate['room']=constants.START_ROOM;
+     groom = constants.START_ROOM;
      this.setState({
-       sprites: this.startSprites(this.state),
+       sprites: this.startSprites(mystate),
        game: this.state.game+1,
      });
    }
 
   change_room = (room, x,y)=> {
      let mystate = {...this.state};
-     if (room==this.state.room){ return; }
+     if (room==this.state.room || room==this.groom){ return; }
+     console.log("SpriteEngine: new room",room);
+     groom = room;
      mystate['initial_sprites'] = maps[room]['sprites'];
      mystate['player_start']= {x: x,y: y };
      this.setState({

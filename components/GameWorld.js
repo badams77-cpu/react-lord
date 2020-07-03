@@ -9,9 +9,12 @@ import {connect} from 'react-redux';
 class GameWorld extends Component {
 
     gcount = 0;
+    groom = '';
+
 
     constructor(props){
        super(props);
+       groom = constants.START_ROOM;
        this.state = { room: constants.START_ROOM,
          playerStart: { x: constants.PLAYER_START_X, y: constants.PLAYER_START_Y},
          onPressInHandler: null,
@@ -38,6 +41,7 @@ class GameWorld extends Component {
     render(){
         if (this.props.restart){
           let mygcount = this.gcount;
+          groom = constants.START_ROOM;
           setTimeout( ()=> {
             console.log("Game world restart:");
 //            if (mygcount==this.gcount){
@@ -52,7 +56,10 @@ class GameWorld extends Component {
                     setTimeout( ()=> {
                       console.log("Game world room:");
 //          if (mygcount1==this.gcount){
+            if (this.props.room!=groom && this.props.room!=this.state.room){
+                      groom = this.props.room;
                       this.setState({ room: this.props.room, game: this.state.game+1});
+            }
 //          }
           },10);
 
