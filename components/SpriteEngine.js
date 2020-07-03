@@ -97,12 +97,13 @@ class SpriteEngine extends Component {
    restart= ()=>{
      let mystate = {...this.state};
      mystate['initial_sprites'] = maps[constants.START_ROOM]['sprites'];
-     mystate['player_start']= {x: x,y: y };
+     mystate['player_start']= {x: this.props.player_start_x,y: this.props.player_start_y };
      mystate['room']=constants.START_ROOM;
      groom = constants.START_ROOM;
      this.setState({
        sprites: this.startSprites(mystate),
        game: this.state.game+1,
+       room: this.props.room,
      });
    }
 
@@ -283,6 +284,8 @@ class SpriteEngine extends Component {
         let mySpriteData = spriteData[mySprite.spriteName];
         if (i==0 && this.props.game_over){
           mySpriteData = spriteData['explosion'];
+          mySpriteData.dx=0;
+          mySpriteData.dy=0;
         }
         if (mySpriteData==null){
           console.log("No spriteData for ",i, mySprite.spriteName);
@@ -381,15 +384,17 @@ class SpriteEngine extends Component {
             this.setDiagonalDirection(mySprite);
           }
         } else {
+          if (!this.props.game_over && !this.props.restart){
             if (mySprite.x<0){
              if (i!=0){ mySprite.dx = 2;
                 mySprite.direction='right'; mySprite.anim_counter=0; }
              mySprite.delay_counter=0; newDirection=true;
-               if (i==0 && !this.props.change_room && !this.state.change_room){
+               if (i==0 && !this.props.game_over && !this.props.restart && !this.props.change_room && !this.state.change_room){
                  let myroom = this.split_room(this.state.room);
                  let newx = myroom.room_x-1;
                  if (newx<1){ newx=8;}
                  mySprite.dx=0;
+                 console.log("x<0 change room: room_x="+newx);
                  this.props.onChangeRoom('room_'+myroom.room_y+'_'+newx, (this.state.window_width-this.state.tile_width)/this.state.tile_width, mySprite.y/this.state.tile_height, );
                }
              }
@@ -402,6 +407,7 @@ class SpriteEngine extends Component {
                  let newy = myroom.room_y-1;
                  mySprite.dy=0;
                  if (newy<1){ newy=8;}
+                                  console.log("y<0 change room: roon_y="+newy);
                  this.props.onChangeRoom('room_'+newy+'_'+myroom.room_x, mySprite.x/this.state.tile_width, (this.state.window_height-this.state.tile_height)/this.state.tile_height );
                }
               }
@@ -414,6 +420,7 @@ class SpriteEngine extends Component {
                    let newx = myroom.room_x+1;
                    mySprite.dx=0;
                    if (newx>8){ newx=1;}
+                   console.log("x>width change room: x="+newx);
                    this.props.onChangeRoom('room_'+myroom.room_y+'_'+newx, 0, mySprite.y/this.state.tile_height, );
                 }
             }
@@ -428,10 +435,12 @@ class SpriteEngine extends Component {
                      let newy = myroom.room_y+1;
                      mySprite.dy=0;
                      if (newy>8){ newy=1;}
+                 console.log("y>width change room: y="+newy);
                      this.props.onChangeRoom('room_'+newy+'_'+myroom.room_x, mySprite.x/this.state.tile_width, 0 );
                 }
 
             }
+          }
         }
         if (mySprite.dx!==0 || mySprite.dy!==0 || mySprite.spriteName==='explosion'){
           if (!newDirection){
@@ -539,8 +548,8 @@ class SpriteEngine extends Component {
         if (jData.deadly && this.isCollide( newSprites[0], newSprites[j])){
            this.props.onPlayerHit(jData.hitpoints);
            newSprites[j].spriteName='explosion';
-           newSprites[j].dx=0;
-           newSprites[j].dy=0;
+           newSprites[0].dx=0;
+           newSprites[0].dy=0;
            newSprites[j].direction='left';
            newSprites[j].anim_counter=0;
            newSprites[j].delay_counter=0;
@@ -767,7 +776,10 @@ const mapDispatchToProps = (dispatch) => {
     onAddScore: score=> dispatch({type: ADD_SCORE, score: score}),
     onRestart: ()=> dispatch({type: END_RESTART}),
     onPlayerHit: life=> dispatch({type: SUB_LIFE, life: life}),
-    onChangeRoom: (room, x,y)=> dispatch({ type: CHANGE_ROOM, room: room, player_start_x: x, player_start_y: y}),
+    onChangeRoom: (room, x,y)=> {
+      console.log("change room ",room,x,y);
+      dispatch({ type: CHANGE_ROOM, room: room, player_start_x: x, player_start_y: y})
+    },
     onEndChangeRoom: ()=> dispatch( {type: END_CHANGE_ROOM}),
     onPickup: (item,score)=> dispatch({type: PICKUP, item: item, score:score })
   };

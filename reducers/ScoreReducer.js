@@ -41,14 +41,16 @@ scoreReducer = (state = initial_state, action)=>{
       }
       return {...state, pickups: pickups, game_over: myGameOver, score: pNewScore, player_life: newlife};
     case RESTART:
+        if (!state.game_over){ return  {...state}; }
         return {...state, player_life: constants.PLAYER_LIFE, game_over: false, restart: true, pickups: {},
            player_start_x: constants.PLAYER_START_X, player_start_y: constants.PLAYER_START_Y,
-           change_room: false, score: 0
+           change_room: false, room: constants.START_ROOM, score: 0
          };
     case END_RESTART:
+        console.log("restart end");
         return {...state, restart: false };
     case CHANGE_ROOM:
-        if (state.game_over){ return {...state};}
+        if (state.game_over || state.restart || state.change_room){ return {...state};}
         if (state.room==action.room){ return {...state}; }
         console.log("new room ", action.room);
         return {...state, room: action.room, player_start_x: action.player_start_x,

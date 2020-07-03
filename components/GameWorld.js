@@ -44,10 +44,11 @@ class GameWorld extends Component {
           groom = constants.START_ROOM;
           setTimeout( ()=> {
             console.log("Game world restart:");
-//            if (mygcount==this.gcount){
+            if (mygcount==this.gcount){
+              this.gcount++;
               this.setState({ room: constants.START_ROOM, game: this.state.game+1});
-//              }
               }
+            }
             ,10);
 
         }
