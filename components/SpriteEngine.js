@@ -157,7 +157,10 @@ class SpriteEngine extends Component {
               delay_counter: 0
       });
       this.setState( {sprites: newSprites});
-      if (this.sounds['fire']){ this.sounds['fire'].replayAsync(); }
+//      if (this.sounds['fire']){
+       // this.sounds['fire'].replayAsync();
+         this.playSound('fire');
+//       }
     }
 
 
@@ -231,14 +234,14 @@ class SpriteEngine extends Component {
         this.state.interval = setInterval( ()=>this.moveSprites(), constants.INTERVAL);
 
 
-
+/*
         for(var key in soundFiles){
             if (!soundFiles.hasOwnProperty(key)) continue;
              const soundObject = new Audio.Sound();
              await soundObject.loadAsync(soundFiles[key]);
              this.sounds[key]=soundObject;
         };
-
+*/
     }
 
     componentWillUnmount(){
@@ -302,7 +305,11 @@ class SpriteEngine extends Component {
                 if (this.props.pickups[jData1['door']]){
                   let acount = newSprites[j].anim_counter;
                   if (acount==0){
-                          if (this.sounds['door']){ this.sounds['door'].replayAsync(); }
+//                          if (this.sounds['door']){
+
+                            //this.sounds['door'].replayAsync();
+                             this.playSound('door');
+//                           }
                   }
                   if (acount<3){ acount++;}
                   // Open Door animation
@@ -511,7 +518,10 @@ class SpriteEngine extends Component {
            };
            if (mySpriteData.circle){
              this.setDiagonalDirection(newSprite);
-             if (this.sounds['bat']){ this.sounds['bat'].replayAsync(); }
+//             if (this.sounds['bat']){
+              //  this.sounds['bat'].replayAsync();
+               this.playSound('bat');
+//             }
            }
            newSprites.push(newSprite);
          }
@@ -540,11 +550,17 @@ class SpriteEngine extends Component {
            newSprites[j].anim_counter=0;
            newSprites[j].delay_counter=0;
            this.props.onAddScore(jData.score);
-           if (this.sounds['ouch']){ this.sounds['ouch'].replayAsync(); }
+//           if (this.sounds['ouch']){
+//             this.sounds['ouch'].replayAsync();
+             this.playSound('ouch');
+//           }
         }
         if (jData.pickup && this.isCollide( newSprites[0], newSprites[j])){
-          if (!this.props.pickups[newSprites[j].spriteName] && this.sounds['winner']){
-            this.sounds['winner'].replayAsync();
+          if (!this.props.pickups[newSprites[j].spriteName]
+//          && this.sounds['winner']){
+            ){
+//            this.sounds['winner'].replayAsync();
+              this.playSound('winner');
           }
           this.props.onPickup(newSprites[j].spriteName, jData.score);
           removeSprites.push(j);
@@ -569,7 +585,10 @@ class SpriteEngine extends Component {
                 newSprites[j].direction='left';
                 newSprites[j].anim_counter=0;
                 newSprites[j].delay_counter=0;
-                if (this.sounds['bang']){ this.sounds['bang'].replayAsync(); }
+//                if (this.sounds['bang']){
+//                  this.sounds['bang'].replayAsync();
+                    this.playSound('bang');
+//                 }
                 this.props.onAddScore(jData.score);
                 break;
               }
@@ -638,6 +657,38 @@ class SpriteEngine extends Component {
         sprite.direction='down';
       }
     };
+
+    playSound = (soundName) => {
+      const soundObject = new Audio.Sound();
+      if (!soundFiles[soundName]){
+        console.log("No sound file ",soundName);
+        return;
+      }
+      try {
+         setTimeout(
+           async ()=>{
+            try {
+//              console.log("try play ",soundName, soundFiles[soundName]);
+              await soundObject.loadAsync(soundFiles[soundName]);
+             soundObject.playAsync();
+             }  catch (error){
+               console.log(error);
+             }
+           }
+         ,10);
+         setTimeout(
+           ()=> {
+             try {
+               soundObject.unloadAsync();
+             }  catch (error){
+               console.log(error);
+             }
+           }, 5000
+         )
+      } catch (error){
+        console.log(error);
+      }
+    }
 
     render(){
         if (this.props.restart){
