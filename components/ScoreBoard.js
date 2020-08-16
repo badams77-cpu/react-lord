@@ -69,13 +69,16 @@ class ScoreBoard extends Component {
        pickCount++;
        pickups.push( <Image source={src} style={{width: 60, height: 60}} key={pickCount} />);
     }
-
+    let roomStatus = this.props.deadrooms[this.props.room]!=null ? 'Room Clear' : 'Room Not Clear';
+    let roomCount = Object.keys(this.props.deadrooms).length;
     return (
       <View style={styles.container}>
         <View style={{flex: 1, flexDirection: 'row'}}>{pickups}</View>
       <Text style={styles.text}>Score: {this.props.score}</Text>
       <Text style={styles.text}>Life: {this.props.life}</Text>
       <Text style={styles.text}>{tips[this.state.tip]}</Text>
+      <Text style={styles.text}>{roomStatus}</Text>
+      <Text style={styles.text}>Cleared {roomCount} rooms out of {constants.ROOM_COUNT}</Text>
       {but}
       <AdMobBanner
         bannerSize="fullBanner"
@@ -90,7 +93,8 @@ class ScoreBoard extends Component {
 }
 
 const mapStateToProps = (state)=>{
-  return { score : state.score, life: state.player_life, game_over: state.game_over, pickups: state.pickups };
+  return { score : state.score, life: state.player_life, game_over: state.game_over,
+   pickups: state.pickups, deadrooms: state.deadrooms, room: state.room };
 }
 
 const mapDispatchToProps = (dispatch) => {

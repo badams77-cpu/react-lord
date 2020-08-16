@@ -5,7 +5,8 @@ import ImageOverlay from './ImageOverlay';
 import spriteGraphics from './SpriteGraphics';
 import constants from './Constants';
 import {connect} from 'react-redux';
-import {ADD_SCORE, ADD_LIFE, SUB_LIFE, PICKUP, RESTART, END_RESTART, CHANGE_ROOM, END_CHANGE_ROOM} from '../actions/Actions';
+import {ADD_SCORE, ADD_LIFE, SUB_LIFE, PICKUP, RESTART,
+END_RESTART, CHANGE_ROOM, END_CHANGE_ROOM, CLEAR_ROOM} from '../actions/Actions';
 import maps from './Maps';
 import hardness from './Hardness';
 import { Audio } from 'expo-av';
@@ -67,11 +68,18 @@ class SpriteEngine extends Component {
               hitpoints: constants.PLAYER_LIFE
             })
              // Start Sprites
+
             for(let i=0; i<initial_sprites.length; i++){
                let mySpriteData = spriteData[ initial_sprites[i]['spriteName']];
                if (mySpriteData==null){
                   console.log("No spriteData for ",initial.sprites[i].spriteName);
                   continue;
+               }
+
+               if (props.deadrooms!=null && props.deadrooms[props.room]!=null){
+                 if (mySpriteData.deadly){
+                   continue;
+                 }
                }
                let speed = mySpriteData.speed;
                let angle = Math.random()*2.0*Math.PI;
@@ -99,6 +107,7 @@ class SpriteEngine extends Component {
      mystate['initial_sprites'] = maps[constants.START_ROOM]['sprites'];
      mystate['player_start']= {x: this.props.player_start_x,y: this.props.player_start_y };
      mystate['room']=constants.START_ROOM;
+     mystate['deadRooms']==this.props.deadRooms;
      groom = constants.START_ROOM;
      this.setState({
        sprites: this.startSprites(mystate),
@@ -266,14 +275,31 @@ class SpriteEngine extends Component {
           console.log("room  "+this.state.room+" no base defined");
           base='island';
         }
-        if (y>=myMap.length){ return false;}
+        if (y>=myMap.length){ return this.isHard(y-1,x,i); }
         const row = myMap[y];
-        if (x>=row.length){ return false; }
+        if (x>=row.length){ return this.isHard(y,x-1,i); }
         const tile = row[x];
         const hard = hardness[base];
 //        if (i==0){ console.log({y:y, x:x, tile:tile,hard:hard[tile]}); }
         return (hard[tile]==1);
     }
+
+    allDead = (sprites)=> {
+       let undeadCount = 0;
+       for(i=0; i<sprites.length;i++){
+               let mySprite = sprites[i];
+               let mySpriteData = spriteData[mySprite.spriteName];
+               if (mySprite.x<=this.state.tile_width || mySprite.y-this.state.tile_height ||
+                 mySprite.x>this.state.window_width || mySprite.y>this.state.window_height){ continue;}
+               if (mySpriteData.deadly){
+                 undeadCount++;
+               }
+       }
+       if (undeadCount==0){
+         this.props.onClearRoom(this.state.room);
+       }
+    }
+
 
     moveSprites = ()=>{
       let newSprites = [... this.state.sprites];
@@ -327,7 +353,7 @@ class SpriteEngine extends Component {
           }
 
         if (mySprite.dx!=0 && mySprite.circle==0.0){
-          if (oldX!=newX){
+ //         if (oldX!=newX){
             let addX = mySprite.dx>0? 1 : 0;
             hit = this.isHard(newY, newX+addX,i);
             if (!hit && Math.abs(newY*this.state.tile_height-mySprite.y)>4){ hit = this.isHard(newY+1, newX+addX, i);}
@@ -347,10 +373,10 @@ class SpriteEngine extends Component {
                 mySprite.anim_counter=0;
               }
             }
-          }
+ //         }
         }
         if (mySprite.dy!=0 && mySprite.circle==0.0){
-          if (oldY!=newY){
+ //         if (oldY!=newY){
             let addY = mySprite.dy>0? 1 : 0;
             hit = this.isHard(newY+addY, newX,i);
             if (!hit && Math.abs(newX*this.state.tile_width- mySprite.x)>4){ hit = this.isHard(newY+addY, newX+1,i); }
@@ -368,7 +394,7 @@ class SpriteEngine extends Component {
                 mySprite.anim_counter=0;
               }
             }
-          }
+ //         }
         }
         let isCircle = 0;
         if (mySprite.circle!=null && mySprite.circle!=0.0){
@@ -383,6 +409,7 @@ class SpriteEngine extends Component {
             let isCircle = 1;
             this.setDiagonalDirection(mySprite);
           }
+
         } else {
           if (!this.props.game_over && !this.props.restart){
             if (mySprite.x<0){
@@ -554,6 +581,7 @@ class SpriteEngine extends Component {
            newSprites[j].anim_counter=0;
            newSprites[j].delay_counter=0;
            this.props.onAddScore(jData.score);
+           this.allDead(newSprites); // Test if all dead and dispatch
            if (this.sounds['ouch']){ this.sounds['ouch'].replayAsync(); }
         }
         if (jData.pickup && this.isCollide( newSprites[0], newSprites[j])){
@@ -584,6 +612,7 @@ class SpriteEngine extends Component {
                 newSprites[j].anim_counter=0;
                 newSprites[j].delay_counter=0;
                 if (this.sounds['bang']){ this.sounds['bang'].replayAsync(); }
+                this.allDead(newSprites); // Test if all dead and dispatch
                 this.props.onAddScore(jData.score);
                 break;
               }
@@ -767,7 +796,8 @@ const mapStateToProps = (state)=>{
     room: state.room,
     player_start_x: state.player_start_x,
     player_start_y: state.player_start_y,
-    pickups: state.pickups
+    pickups: state.pickups,
+    deadrooms: state.deadrooms,
   };
 }
 
@@ -780,6 +810,9 @@ const mapDispatchToProps = (dispatch) => {
       console.log("change room ",room,x,y);
       dispatch({ type: CHANGE_ROOM, room: room, player_start_x: x, player_start_y: y})
     },
+    onClearRoom: (room)=>{
+         console.log("Clear room",room);
+         dispatch({ type: CLEAR_ROOM, room: room}); },
     onEndChangeRoom: ()=> dispatch( {type: END_CHANGE_ROOM}),
     onPickup: (item,score)=> dispatch({type: PICKUP, item: item, score:score })
   };

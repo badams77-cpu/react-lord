@@ -1,4 +1,5 @@
-import {ADD_SCORE, ADD_LIFE, SUB_LIFE, PICKUP, RESTART, END_RESTART, CHANGE_ROOM, END_CHANGE_ROOM} from '../actions/Actions';
+import {ADD_SCORE, ADD_LIFE, SUB_LIFE, PICKUP, RESTART, END_RESTART, CHANGE_ROOM, END_CHANGE_ROOM,
+ CLEAR_ROOM} from '../actions/Actions';
 import redux from 'redux';
 import constants from '../components/Constants';
 
@@ -11,6 +12,7 @@ const initial_state = {
   player_start_x: constants.PLAYER_START_X,
   player_start_y: constants.PLAYER_START_Y,
   change_room: false,
+  deadrooms: {},
   pickups: {},
 }
 
@@ -28,6 +30,10 @@ scoreReducer = (state = initial_state, action)=>{
        } else {
          return {...state, player_life: newLife};
        }
+    case CLEAR_ROOM:
+      let rooms = {...state.deadrooms};
+      rooms[action.room] = 1;
+      return {...state, deadrooms: rooms};
     case PICKUP:
       if (state.game_over){ return {...state};}
       let pickups = {...state.pickups};
@@ -44,7 +50,8 @@ scoreReducer = (state = initial_state, action)=>{
         if (!state.game_over){ return  {...state}; }
         return {...state, player_life: constants.PLAYER_LIFE, game_over: false, restart: true, pickups: {},
            player_start_x: constants.PLAYER_START_X, player_start_y: constants.PLAYER_START_Y,
-           change_room: false, room: constants.START_ROOM, score: 0
+           change_room: false, room: constants.START_ROOM, score: 0,
+           deadrooms: {},
          };
     case END_RESTART:
         console.log("restart end");
