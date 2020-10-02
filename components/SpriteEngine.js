@@ -179,7 +179,7 @@ class SpriteEngine extends Component {
     onPressInHandler = (event) => {
       if (this.props.game_over){ return; }
       if (event.nativeEvent==null){
-        console.log("Null native event",event);
+//        console.log("Null native event",event);
         return;
       }
       if (!this.isOnPlayer(event.nativeEvent.pageX, event.nativeEvent.pageY)){
@@ -203,7 +203,7 @@ class SpriteEngine extends Component {
    onPressOutHandler = (event)=>{
       if (this.state.pressStartX==0 && this.state.pressStartY==0){ return; }
       if (event.nativeEvent==null){
-        console.log("Null native event",event);
+//        console.log("Null native event",event);
         return;
       }
       let x= event.nativeEvent.pageX;
