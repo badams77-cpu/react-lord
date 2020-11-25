@@ -208,6 +208,7 @@ class SpriteEngine extends Component {
       }
       let x= event.nativeEvent.pageX;
       let y = event.nativeEvent.pageY;
+      
       let dx=x-this.state.pressStartX;
       let dy=y-this.state.pressStartY;
 //      console.log("Move x: ",x," y: ",y," dx: ",dx, "dy: ",dy);
