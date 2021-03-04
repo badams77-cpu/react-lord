@@ -116,6 +116,24 @@ class SpriteEngine extends Component {
      });
    }
 
+    myInterval = (func, wait)=>{
+        var outerThis = this;
+        var interv = function(w){
+            return function(){
+                    outerThis.setState({'interval':setTimeout(interv, wait)});
+                    try{
+                        func.call(null);
+                    }
+                    catch(e){
+                        t = 0;
+                        throw e.toString();
+                    }
+            };
+        }(wait);
+        this.setState({'interval':setTimeout(interv, wait)});
+        return interv;
+    };
+
   change_room = (room, x,y)=> {
      let mystate = {...this.state};
      if (room==this.state.room || room==this.groom){ return; }
@@ -252,8 +270,8 @@ class SpriteEngine extends Component {
 
 
     async componentDidMount(){
-        this.state.interval = setInterval( ()=>this.moveSprites(), constants.INTERVAL);
-
+//        this.state.interval = setInterval( ()=>this.moveSprites(), constants.INTERVAL);
+              this.setState({'interval' : this.myInterval( ()=>this.moveSprites(), constants.INTERVAL)});
 
 
         for(var key in soundFiles){
@@ -266,7 +284,8 @@ class SpriteEngine extends Component {
     }
 
     componentWillUnmount(){
-      if (this.state.interval!=null){ clearInterval(this.state.interval); }
+//      if (this.state.interval!=null){ clearInterval(this.state.interval); }
+      if (this.state.interval!=null){ clearTimeout(this.state.interval); }
     }
 
     split_room = (room)=>{
