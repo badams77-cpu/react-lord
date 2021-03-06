@@ -31,6 +31,7 @@ scoreReducer = (state = initial_state, action)=>{
          return {...state, player_life: newLife};
        }
     case CLEAR_ROOM:
+//      console.log("cleared room: "+action.room);
       let rooms = {...state.deadrooms};
       rooms[action.room] = 1;
       return {...state, deadrooms: rooms};

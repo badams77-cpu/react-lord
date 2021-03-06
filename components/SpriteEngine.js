@@ -317,8 +317,8 @@ class SpriteEngine extends Component {
        for(i=0; i<sprites.length;i++){
                let mySprite = sprites[i];
                let mySpriteData = spriteData[mySprite.spriteName];
-               if (mySprite.x<=this.state.tile_width || mySprite.y-this.state.tile_height ||
-                 mySprite.x>this.state.window_width || mySprite.y>this.state.window_height){ continue;}
+               if (mySprite.x<=0 || mySprite.y<=0 ||
+                 mySprite.x>this.state.window_width - this.state.tile_width || mySprite.y>this.state.window_height - this.state.tile_height){ continue;}
                if (mySpriteData.deadly){
                  undeadCount++;
                }
