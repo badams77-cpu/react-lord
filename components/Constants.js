@@ -1,6 +1,6 @@
 
 const constants = {
- INTERVAL: 50,
+ INTERVAL: 40,
  MAX_SHOTS: 5,
  PLAYER_LIFE: 100,
  AD_EXTRA_LIFE: 50,
