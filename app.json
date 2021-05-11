@@ -8,7 +8,7 @@
       "android",
       "web"
     ],
-    "version": "1.9.0",
+    "version": "1.10.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -24,14 +24,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "1.9.0",
+      "buildNumber": "1.10.0",
       "config": {
         "googleMobileAdsAppId" : "ca-app-pub-4790577348062750~4359663909"
       }
     },
     "android" : {
       "package": "com.axialforcegames.virii_attack",
-      "versionCode":9,
+      "versionCode":11,
       "permissions": [],
       "config": {
         "googleMobileAdsAppId" : "ca-app-pub-4790577348062750~6677817435"
