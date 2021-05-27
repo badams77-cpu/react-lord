@@ -1,5 +1,5 @@
 import React, {Component } from 'react';
-import {StyleSheet, Image, View, Dimensions, PanResponder, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import {StyleSheet, Image, View, Dimensions, PanResponder, Pressable } from 'react-native';
 import background from './Background.js';
 import map from './Maps.js';
 import SpriteEngine from './SpriteEngine.js';
@@ -111,7 +111,7 @@ class GameWorld extends Component {
             }
         }
         return (
-           <TouchableOpacity onPressOut={this.onPressOut} onPressIn={this.onPressIn} style={{width: window_width, height: window_width}}>
+           <Pressable onPressOut={this.onPressOut} onPressIn={this.onPressIn} style={{width: window_width, height: window_width}}>
            <View style={{flex:1, backgroundColor: '#0000000' }} >
              {tiles}
                           <SpriteEngine
@@ -125,7 +125,7 @@ class GameWorld extends Component {
                             room={this.props.room}
                           />
            </View>
-           </TouchableOpacity>
+           </Pressable>
         );
         this.refs.touch.setOpacityTo( 100, 0);
     }
