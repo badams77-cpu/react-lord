@@ -97,6 +97,7 @@ class GameWorld extends Component {
                   left: x*TILES_WIDTH,
                   top: y*TILES_HEIGHT,
                   opacity: 1,
+                    resizeMode: "cover",
                   backgroundColor: '#000000',
                   zIndex: 0,
                 };

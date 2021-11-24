@@ -35,7 +35,8 @@ export default class ImageOverlay extends Component {
             left: left,
             top: top,
             position: 'absolute',
-            justifyContent: 'center'
+            justifyContent: 'center',
+              resizeMode: "cover",
           }
         }
       >
