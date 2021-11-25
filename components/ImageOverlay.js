@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {
   Dimensions,
   ImageBackground,
+
   StyleSheet,
   Text,
   View,

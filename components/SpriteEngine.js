@@ -47,6 +47,7 @@ class SpriteEngine extends Component {
          change_room: false,
          game: 0,
        };
+
     }
 
    startSprites = (props)=>{
@@ -99,6 +100,7 @@ class SpriteEngine extends Component {
                  hitpoints: mySpriteData.hitpoints
                });
             }
+            this.loadNeededSpriteGraphics(spriteGraphics);
             return sprites;
    }
 
@@ -709,6 +711,32 @@ class SpriteEngine extends Component {
         sprite.direction='down';
       }
     };
+
+    loadNeededSpriteGraphics = ()=>{
+        let names=[];
+        for(sprite in this.sprites){
+          names.push(sprite.spriteName);
+          if (sprite.generator!=null && sprite.generator!=''){
+            names.push(sprite.generator);
+          }
+        }
+        for( k of Object.keys(spriteGraphics)){
+          if (names.some(()=>{k.startWith(name) })){
+            this.loadImages(spriteGraphics[k]).then( console.log("loaded "+k));
+          }
+        };
+    }
+
+    loadImages(images) {
+        return Promise.all(Object.keys(images).map((i) => {
+            let img = {
+                ...Image.resolveAssetSource(images[i]),
+                cache: 'force-cache'
+            };
+
+            return Image.prefetch(img);
+        }));
+    }
 
     render(){
         if (this.props.restart){
