@@ -3,6 +3,7 @@ import {StyleSheet, View, Dimensions } from 'react-native';
 import spriteData from './SpriteData';
 import ImageOverlay from './ImageOverlay';
 import spriteGraphics from './SpriteGraphics';
+import FastImage from 'react-native-fast-image';
 import constants from './Constants';
 import {connect} from 'react-redux';
 import {ADD_SCORE, ADD_LIFE, SUB_LIFE, PICKUP, RESTART,
@@ -99,6 +100,7 @@ class SpriteEngine extends Component {
                  hitpoints: mySpriteData.hitpoints
                });
             }
+            this.loadNeededSpriteGraphics(spriteGraphics);
             return sprites;
    }
 
@@ -709,6 +711,32 @@ class SpriteEngine extends Component {
         sprite.direction='down';
       }
     };
+
+    loadNeededSpriteGraphics = ()=>{
+        let names=[];
+        for(sprite in this.sprites){
+          names.push(sprite.spriteName);
+          if (sprite.generator!=null && sprite.generator!=''){
+            names.push(sprite.generator);
+          }
+        }
+        for( k of Object.keys(spriteGraphics)){
+          if (names.some(()=>{k.startWith(name) })){
+            this.loadImages(spriteGraphics[k]);
+          }
+        };
+
+    }
+
+    loadImages(images) {
+        let imageMap = {};
+        const uris = images.map( image=>
+           ({
+              uri: Image.resolveAssetSource(image).uri
+           }));
+           FastImage.preload(uris);
+           Console.log(images+" loaded");
+    }
 
     render(){
         if (this.props.restart){
