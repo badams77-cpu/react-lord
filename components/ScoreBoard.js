@@ -70,9 +70,9 @@ class ScoreBoard extends Component {
     this.setState({ modalVisible: bol});
   }
 
-  const rewarded = RewardedAd.createForAdRequest( Constants.ANDROID_REWARD_AD, {
+  rewarded = RewardedAd.createForAdRequest( Constants.ANDROID_REWARD_AD, {
     requestNonPersonalizedAdsOnly: false,
-    keywords: [games']
+    keywords: ['games']
   });
 
 
@@ -80,14 +80,14 @@ class ScoreBoard extends Component {
     // Display a rewarded ad
     const unsubscribeLoaded =  () => {
       this.state.setState({...this.state, adLoaded: true});
-    });
+    };
     const unsubscribeEarned = this.rewarded.addAdEventListener(
       RewardedAdEventType.EARNED_REWARD,
       reward => {
           this.props.onAddLife(constants.AD_EXTRA_LIFE);
           this.state.setState({ adLoaded: false});
           this.rewarded.load();
-      },
+      }
     );
     rewarded.load();
     rewarded.addAdEventListener(RewardedAdEventType.CLOSED, () => {

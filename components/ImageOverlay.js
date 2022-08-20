@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
+//import {ImagePropTypes} from 'deprecated-react-native-prop-types';
 import FastImage from 'react-native-fast-image';
 import {
   Dimensions,
@@ -47,15 +47,15 @@ export default class ImageOverlay extends Component {
 }
 
 
-ImageOverlay.propTypes = {
-  rounded: PropTypes.number,
-  source: Image.propTypes.source,
-  height: PropTypes.number,
-  width: PropTypes.number,
-  top: PropTypes.number,
-  left: PropTypes.number,
-  children: PropTypes.element
-};
+//ImageOverlay.propTypes = {
+//  rounded: PropTypes.number,
+//  source: Image.propTypes.source,
+//  height: PropTypes.number,
+//  width: PropTypes.number,
+//  top: PropTypes.number,
+//  left: PropTypes.number,
+//  children: PropTypes.element
+//};
 
 ImageOverlay.defaultProps = {
   height: 300,
