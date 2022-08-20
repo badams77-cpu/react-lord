@@ -39,5 +39,9 @@
       }
     }
 
+  },
+    "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-4790577348062750~6677817435",
+    "ios_app_id": "ca-app-pub-4790577348062750~4359663909"
   }
 }

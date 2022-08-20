@@ -6,14 +6,18 @@ import constants from "./Constants";
 import spriteData from './SpriteData';
 import ImageOverlay from './ImageOverlay';
 import spriteGraphics from './SpriteGraphics';
-import {AdMobBanner, AdMobRewarded} from 'expo-ads-admob';
+//import {AdMobBanner, AdMobRewarded} from 'expo-ads-admob';
+import mobileAds, { MaxAdContentRating, RewardedAd, RewardedAdEventType } from 'react-native-google-mobile-ads';
 import tips from './Tips';
 
 class ScoreBoard extends Component {
 
   constructor(props){
     super(props);
+
     this.state = {
+      adsInitalised: false,
+      adLoaded: false,
       tip: 0,
       interval: null,
       modalVisible: false
@@ -21,6 +25,31 @@ class ScoreBoard extends Component {
   }
 
     componentDidMount(){
+    mobileAds()
+                          .setRequestConfiguration({
+                            // Update all future requests suitable for parental guidance
+                            maxAdContentRating: MaxAdContentRating.PG,
+
+                            // Indicates that you want your content treated as child-directed for purposes of COPPA.
+                            tagForChildDirectedTreatment: true,
+
+                            // Indicates that you want the ad request to be handled in a
+                            // manner suitable for users under the age of consent.
+                            tagForUnderAgeOfConsent: true,
+
+                            // An array of test device IDs to allow.
+                          })
+                          .then(() => {
+                            // Request config successfully set!
+                          })  .initialize()
+                              .then(adapterStatuses => {
+                                      this.setState({...this.state, adsInitalised: true});
+                                          const adUnitID = Platform.select({
+                                            ios: constants.IOS_AD,
+                                            android: constants.ANDROID_AD
+                                          });
+                                          this.initRewardAds(adUnitID);
+        });
         this.state.interval = setInterval( ()=> this.nextTip(), constants.TIP_TIMEOUT);
     }
 
@@ -41,18 +70,31 @@ class ScoreBoard extends Component {
     this.setState({ modalVisible: bol});
   }
 
+  const rewarded = RewardedAd.createForAdRequest( Constants.ANDROID_REWARD_AD, {
+    requestNonPersonalizedAdsOnly: false,
+    keywords: [games']
+  });
+
+
   initRewardAds = async () => {
     // Display a rewarded ad
-    await AdMobRewarded.setAdUnitID(constants.ANDROID_REWARD_AD);
-    await AdMobRewarded.requestAdAsync();
-    AdMobRewarded.addEventListener("rewardedVideoDidRewardUser", () => {
-          this.props.onAddLife(constants.AD_EXTRA_LIFE);
+    const unsubscribeLoaded =  () => {
+      this.state.setState({...this.state, adLoaded: true});
     });
-    AdMobRewarded.addEventListener("rewardedVideoDidClose", () => {
+    const unsubscribeEarned = this.rewarded.addAdEventListener(
+      RewardedAdEventType.EARNED_REWARD,
+      reward => {
+          this.props.onAddLife(constants.AD_EXTRA_LIFE);
+          this.state.setState({ adLoaded: false});
+          this.rewarded.load();
+      },
+    );
+    rewarded.load();
+    rewarded.addAdEventListener(RewardedAdEventType.CLOSED, () => {
     			// if we close ads modal will close too
       this.setModalVisible(false);
     });
-    await AdMobRewarded.showAdAsync();
+
   };
 
   bannerError = (err)=>{
@@ -60,10 +102,7 @@ class ScoreBoard extends Component {
   }
 
   render(){
-    const adUnitID = Platform.select({
-      ios: constants.IOS_AD,
-      android: constants.ANDROID_AD
-    });
+
 //    console.log("adUnitID",adUnitID);
     const styles = StyleSheet.create({
       container: {
@@ -138,7 +177,10 @@ class ScoreBoard extends Component {
       {but}
       <TouchableOpacity                style={{ ...styles1.openButton, backgroundColor: "#2196F3" }}
                onPress={() => {
-                  this.setModalVisible(true);
+                  if (this.state.adLoaded){
+                    this.reward.show();
+                    this.setModalVisible(true);
+                  }
                }}
             >
             <Text style={styles1.textStyle}>View Ad and Gain Life</Text>
