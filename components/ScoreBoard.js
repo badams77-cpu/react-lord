@@ -12,16 +12,22 @@ import tips from './Tips';
 
 class ScoreBoard extends Component {
 
+  rewarded = null;
+
   constructor(props){
     super(props);
 
     this.state = {
-      adsInitalised: false,
+      adsInitialised: false,
       adLoaded: false,
       tip: 0,
       interval: null,
       modalVisible: false
     };
+    this.rewarded = RewardedAd.createForAdRequest( constants.ANDROID_REWARD_AD, {
+        requestNonPersonalizedAdsOnly: false,
+        keywords: ['games']
+      });
   }
 
     componentDidMount(){
@@ -37,20 +43,39 @@ class ScoreBoard extends Component {
                             // manner suitable for users under the age of consent.
                             tagForUnderAgeOfConsent: true,
 
+                            testDeviceIdentifiers: ['EMULATOR'],
+
                             // An array of test device IDs to allow.
                           })
                           .then(() => {
                             // Request config successfully set!
                           })  .initialize()
                               .then(adapterStatuses => {
-                                      this.setState({...this.state, adsInitalised: true});
-                                          const adUnitID = Platform.select({
-                                            ios: constants.IOS_AD,
-                                            android: constants.ANDROID_AD
-                                          });
-                                          this.initRewardAds(adUnitID);
+                                      this.setState({...this.state, adsInitialised: true});
+                                      const adUnitID = Platform.select({
+                                         ios: constants.IOS_AD,
+                                         android: constants.ANDROID_AD
+                                      });
+                                     this.initRewardAds(adUnitID);
         });
         this.state.interval = setInterval( ()=> this.nextTip(), constants.TIP_TIMEOUT);
+        const unsubscribeLoaded =  this.rewarded.addAdEventListener( RewardedAdEventType.LOADED, () => {
+           this.setState({...this.state, adLoaded: true});
+        });
+
+        const unsubscribeEarned = this.rewarded.addAdEventListener(
+            RewardedAdEventType.EARNED_REWARD,
+            reward => {
+                  this.props.onAddLife(constants.AD_EXTRA_LIFE);
+                  this.setState({ ...this.state, adLoaded: false});
+                  this.rewarded.load();
+              }
+        );
+//        this.rewarded.addAdEventListener(RewardedAdEventType.CLOSED, () => {
+          			// if we close ads modal will close too
+//          this.setModalVisible(false);
+
+//        });
     }
 
     componentWillUnmount(){
@@ -70,30 +95,14 @@ class ScoreBoard extends Component {
     this.setState({ modalVisible: bol});
   }
 
-  rewarded = RewardedAd.createForAdRequest( Constants.ANDROID_REWARD_AD, {
-    requestNonPersonalizedAdsOnly: false,
-    keywords: ['games']
-  });
+
 
 
   initRewardAds = async () => {
     // Display a rewarded ad
-    const unsubscribeLoaded =  () => {
-      this.state.setState({...this.state, adLoaded: true});
-    };
-    const unsubscribeEarned = this.rewarded.addAdEventListener(
-      RewardedAdEventType.EARNED_REWARD,
-      reward => {
-          this.props.onAddLife(constants.AD_EXTRA_LIFE);
-          this.state.setState({ adLoaded: false});
-          this.rewarded.load();
-      }
-    );
-    rewarded.load();
-    rewarded.addAdEventListener(RewardedAdEventType.CLOSED, () => {
-    			// if we close ads modal will close too
-      this.setModalVisible(false);
-    });
+
+    this.rewarded.load();
+
 
   };
 
@@ -178,7 +187,7 @@ class ScoreBoard extends Component {
       <TouchableOpacity                style={{ ...styles1.openButton, backgroundColor: "#2196F3" }}
                onPress={() => {
                   if (this.state.adLoaded){
-                    this.reward.show();
+                    this.rewarded.show();
                     this.setModalVisible(true);
                   }
                }}
