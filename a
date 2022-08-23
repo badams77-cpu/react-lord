@@ -1,0 +1,500 @@
+   94  git checkout -b testing
+   95  git reset
+   96  git checkout -b testing
+   97  git commit -m "develop test runs"
+   98  git add *.py
+   99  git commit -m "develop test runs"
+  100  rm -r .git
+  101  rm -rf .git
+  102  git init
+  103  git commit -m "develop test runs"
+  104  git *.py
+  105  git *.py
+  106  git add *.py
+  107  git commit -m "tetsing"
+  108  git push
+  109  git remote add badams77-cpu https://github.com/badams77-cpu/SuperBayesCat.git
+  110  git push
+  111  git remote add https://github.com/badams77-cpu/SuperBayesCat.git
+  112  git remote add badams77-cpy https://github.com/badams77-cpu/SuperBayesCat.git
+  113  git remote add badams77-cpu https://github.com/badams77-cpu/SuperBayesCat.git
+  114  git push
+  115  git push badams77-cpu https://github.com/badams77-cpu/SuperBayesCat.git
+  116  ls
+  117  cd ..
+  118  cp -r SuperBayerCat SuperBayesCat1
+  119  cp -r SuperBayesCat SuperBayesCat1
+  120  ls
+  121  mv SuperBayesCat SuperBayesCatOld
+  122  mv SuperBayesCat SuperBayesCatOld
+  123  git clone https://github.com/badams77-cpu/SuperBayesCat.git
+  124  ls
+  125  cd SuperBayesCat
+  126  ls
+  127  cd ..
+  128  cd SuperBayesCatOld
+  129  ls
+  130  cp *.py ../SuperBayesCat
+  131  cp *.py Reuter* ../SuperBayesCat
+  132  cp *.py Reuters21578-Apte-90Cat ../SuperBayesCat
+  133  cp -r Re* ../SuperBayesCat
+  134  cd ..
+  135  ls
+  136  cd SuperBayesCat
+  137  ls
+  138  git status
+  139  git add *.py
+  140  git Re*
+  141  git add Re*
+  142  git commit -m "master compiles and runs"
+  143  git status
+  144  git pushj
+  145  git push
+  146  git checkout develop
+  147  git pull origin master
+  148  git checkout master  superbayes.py
+  149  git checkout master  ParsedInputSources.py
+  150  git checkout master  BayesCategorizer.py
+  151  git commit -m "merge recovered master into develop"
+  152  git push
+  153  ls
+  154  ls -l
+  155  du -k
+  156    git status
+  157  git add Baye*
+  158  git add WordCount.py
+  159  git commit -m "develop debugging, 13.5%"
+  160  git push
+  161  git status
+  162  git add Bayes*
+  163  git commit -m "develop debug cat_document_count"
+  164  git push
+  165  git status
+  166  git add BayesCategorizer.py
+  167  git commit -m "develop debug word_document_count"
+  168  git push
+  169  git status
+  170  git add Bayes*
+  171  git commit -m "develop debug laplace estimator"
+  172  git push
+  173  git status
+  174  git add Bay*
+  175  git commit -m "develop fix test categories"
+  176  git push
+  177  git status
+  178  git add *.py
+  179  git commit -m "develop 64.6% accuracy"
+  180  git push
+  181  git checkout master
+  182  git pull origin develop
+  183  git push
+  184  git status
+  185  git checkout develop
+  186  git commit -m "develop, fix testparser 70%"
+  187  git add TextParser.py
+  188  git commit -m "develop, fix testparser 70%"
+  189  git push
+  190  ls -l
+  191  cd keys
+  192  cd keys
+  193  cd
+  194  cd src
+  195  cd
+  196  cd src
+  197  cd keys
+  198  ssh -i fdkey barry@192.168.1.74
+  199  ssh -i fdkey badams@192.168.1.74
+  200  ls -l
+  201  cd ssh
+  202  ls
+  203  cd src
+  204  ls
+  205  cd keys
+  206  ssh -i fdkey badams@192.168.1.74
+  207  cd src/keys
+  208  ssh -i fdkey badams@192.168.1.74
+  209  ssh -i fdkey badams@192.168.1.74
+  210  exit
+  211  ls
+  212  cd src
+  213  cd keys
+  214  ssh -i fdkey badams@192.168.1.74
+  215  ls
+  216  ls -a#
+  217  vi .bashrc
+  218  vi .bash_profile
+  219  ls
+  220  pw
+  221  pwd
+  222  vi .bash_profile
+  223  vi .bash_profile
+  224  exit
+  225  cd /c
+  226  ls
+  227  cd gradle
+  228  ls
+  229  cd bin
+  230  ls
+  231  ls -l
+  232  expo build:android -t app-bundle
+  233  ls
+  234  cd ..
+  235  ls
+  236  cd ..
+  237  ls
+  238  cd Pr*
+  239  cd "Program Files"
+  240  ls
+  241  cd java
+  242  dir
+  243  cd jdk*
+  244  ls
+  245  exit
+  246  echo $PATH
+  247  gradle
+  248  vi bash_profile
+  249  vi .bash_profile
+  250  exit
+  251  gradle
+  252  echo $PATH
+  253  ls /c/gradle
+  254  vi .bash_profile
+  255  exit
+  256  gradle
+  257  vi .bash_profile]
+  258  vi .bash_profile]
+  259  vi .bash_profile]=
+  260  vi .bash_profile
+  261  ls $JAVA_HOME
+  262  vi .bash_profile
+  263  exot
+  264  exit
+  265  graDLE
+  266  ls $JAVA_HOME
+  267  ls "$JAVA_HOME"
+  268  vi .bash_profile
+  269  exit
+  270  git status
+  271  ls
+  272  cd src
+  273  ls
+  274  cd agw
+  275  ls -l
+  276  git status
+  277  rm absorb.csv
+  278  rm absorb.csv
+  279  cd Downloads
+  280  cd Downloads
+  281  cd
+  282  ls
+  283  cd Down;oads
+  284  cd Downloads
+  285  cp SZ* /d/lp
+  286  mv SZ* /d/lp
+  287  mv GIO* /d/lp
+  288  mv GL* /d/lp
+  289  mv TW* /d/lp
+  290  mv XF* /d/lp
+  291  mv IV* /d/lp
+  292  mv YE* /d/lp
+  293  mv NF* /d/lp
+  294  mv NT* /d/lp
+  295  mv SQ* /d/lp
+  296  mv RS* /d/lp
+  297  cd d
+  298  cd /d
+  299  ls /f
+  300  cp lp/* /f/lp
+  301  cp lezp/* /f/lp
+  302  cp lezp /f
+  303  cp -r lezp /f
+  304  cd c
+  305  cd
+  306  cd Downloads
+  307  ls
+  308  mv fcp* /d/tain
+  309  mv la* /d/tain
+  310  mv ps* /d/tain
+  311  mv pia* /d/tain
+  312  mv vipissy* /d/vip
+  313  ls *.mpg
+  314  ls *.avi
+  315  ls *.avi
+  316  ls 
+  317  cp *.mp4 /f/lp
+  318  mv *.mp4 /c/lp
+  319  mv *.mp4 /d/lp
+  320  mkdir /d/miscp
+  321  ls *.avi
+  322  ls *.mpg
+  323  mv *.mpg /d/miscp
+  324  cd 
+  325  cd src
+  326  cd keys
+  327  ssh -i fdkey badams@192.168.1.75
+  328  ssh -i fdkey badams@192.168.1.75
+  329  ssh -i fdkey badams@192.168.1.75
+  330  cd ..
+  331  cd tex
+  332  pdflatex agw.ltx
+  333  pdflatex agw.ltx
+  334  pdflatex agw.ltx
+  335  pdflatex agw.ltx
+  336  -+
+  337  pdflatex agw.ltx
+  338  ls
+  339  cd src
+  340  ls
+  341  cd agw
+  342  cd ..
+  343  cd tex
+  344  pdflatex agw
+  345  cd 
+  346  cd src
+  347  cd workspace
+  348  ls
+  349  git status
+  350  git add DistillerTweeter
+  351  git status
+  352  git status
+  353  git commit -m "fdsync distiller tweeter print tweet"
+  354  git push
+  355  java -jar pepk.jar --keystore=tavern_cat.jks --alias=QGJhZGFtczc3L3RhdmVybl9jYXQ= --output=output.zip --include-cert --encryptionkey=ad7cbfcc85554f19a1c3a8b2b3222b60
+  356  cd ..
+  357  cd tex
+  358  ls
+  359  vi agw.ltx
+  360  ltx agw.ltx
+  361  pdflatex agw.ltx
+  362  vi agw_book.pdf
+  363  vi agw_book.ltx
+  364  pdflatex agw_book.ltx
+  365  ls -l
+  366  cd .m2
+  367  ls
+  368  cd r*
+  369  ls
+  370  cd
+  371  cd src/workspace
+  372  ls
+  373  cd DistillerTweeter
+  374  lks
+  375  ls
+  376  mvn dependency:copy-dependencies
+  377  sudo apt install maven
+  378   PATH=$PATH:/c/maven/apache-maven-3.8.5/bin
+  379  export PATH
+  380  FiercePC@DESKTOP-BH27EDD MINGW64 ~
+  381  $ ls -l
+  382  total 11655
+  383  drwxr-xr-x 1 FiercePC 197121       0 Sep 11  2020 '3D Objects'/
+  384  drwxr-xr-x 1 FiercePC 197121       0 Apr 28  2020  AndroidStudioProjects/
+  385  drwxr-xr-x 1 FiercePC 197121       0 Sep 18  2019  ansel/
+  386  drwxr-xr-x 1 FiercePC 197121       0 Sep 11  2020  AppData/
+  387  lrwxrwxrwx 1 FiercePC 197121      33 Sep 11  2020 'Application Data' -> /c/Users/FiercePC/AppData/Roaming/
+  388  drwxr-xr-x 1 FiercePC 197121       0 Sep 11  2020  Contacts/
+  389  lrwxrwxrwx 1 FiercePC 197121      61 Sep 11  2020  Cookies -> /c/Users/FiercePC/AppData/Local/Microsoft/Windows/INetCookies/
+  390  drwxr-xr-x 1 FiercePC 197121       0 May  6 02:56  Desktop/
+  391  drwxr-xr-x 1 FiercePC 197121       0 Mar 28 09:16  Documents/
+  392  drwxr-xr-x 1 FiercePC 197121       0 May 27 13:49  Downloads/
+  393  drwxr-xr-x 1 FiercePC 197121       0 Sep 11  2020  Favorites/
+  394  -rwxr-xr-x 1 FiercePC 197121    1051 Jun 20  2021 'FiercePC - Shortcut.lnk'*
+  395  drwxr-xr-x 1 FiercePC 197121       0 Sep 11  2020  Links/
+  396  lrwxrwxrwx 1 FiercePC 197121      31 Sep 11  2020 'Local Settings' -> /c/Users/FiercePC/AppData/Local/
+  397  drwxr-xr-x 1 FiercePC 197121       0 Jul 26  2019  MicrosoftEdgeBackups/
+  398  drwxr-xr-x 1 FiercePC 197121       0 Sep 11  2020  Music/
+  399  lrwxrwxrwx 1 FiercePC 197121      27 Sep 11  2020 'My Documents' -> /c/Users/FiercePC/Documents/
+  400  drwxr-xr-x 1 FiercePC 197121       0 Jan  6  2021  MyFirstGame/
+  401  lrwxrwxrwx 1 FiercePC 197121      69 Sep 11  2020  NetHood -> '/c/Users/FiercePC/AppData/Roaming/Microsoft/Windows/Network Shortcuts'/
+  402  drwxr-xr-x 1 FiercePC 197121       0 Jan 30  2021 'New folder'/
+  403  drwxr-xr-x 1 FiercePC 197121       0 May  2  2020  node_modules/
+  404  -rw-r--r-- 1 FiercePC 197121 6029312 May 26 09:06  ntuser.dat
+  405  -rw-r--r-- 1 FiercePC 197121 1114112 Sep 11  2020  ntuser.dat.log1
+  406  -rw-r--r-- 1 FiercePC 197121 1564672 Sep 11  2020  ntuser.dat.log2
+  407  -rw-r--r-- 1 FiercePC 197121   65536 Sep 11  2020  NTUSER.DAT{813af3e5-f457-11ea-a280-aa18bf6e7e9e}.TM.blf
+  408  -rw-r--r-- 1 FiercePC 197121  524288 Sep 11  2020  NTUSER.DAT{813af3e5-f457-11ea-a280-aa18bf6e7e9e}.TMContainer00000000000000000001.regtrans-ms
+  409  -rw-r--r-- 1 FiercePC 197121  524288 Sep 11  2020  NTUSER.DAT{813af3e5-f457-11ea-a280-aa18bf6e7e9e}.TMContainer00000000000000000002.regtrans-ms
+  410  -rw-r--r-- 1 FiercePC 197121   65536 Feb 20  2021  ntuser.dat{ab5cf139-73cf-11eb-a29e-00d8612f2ab0}.TM.blf
+  411  -rw-r--r-- 1 FiercePC 197121  524288 Feb 20  2021  ntuser.dat{ab5cf139-73cf-11eb-a29e-00d8612f2ab0}.TMContainer00000000000000000001.regtrans-ms
+  412  -rw-r--r-- 1 FiercePC 197121  524288 Feb 20  2021  ntuser.dat{ab5cf139-73cf-11eb-a29e-00d8612f2ab0}.TMContainer00000000000000000002.regtrans-ms
+  413  -rw-r--r-- 1 FiercePC 197121      20 Sep 11  2020  ntuser.ini
+  414  drwxr-xr-x 1 FiercePC 197121       0 Aug  9  2021  OneDrive/
+  415  -rw-r--r-- 1 FiercePC 197121   29049 May  2  2020  package-lock.json
+  416  -rw-r--r-- 1 FiercePC 197121  503111 Jun 13  2020  phone_virii_attack.png
+  417  drwxr-xr-x 1 FiercePC 197121       0 May  3 09:16  Pictures/
+  418  lrwxrwxrwx 1 FiercePC 197121      69 Sep 11  2020  PrintHood -> '/c/Users/FiercePC/AppData/Roaming/Microsoft/Windows/Printer Shortcuts'/
+  419  lrwxrwxrwx 1 FiercePC 197121      58 Sep 11  2020  Recent -> /c/Users/FiercePC/AppData/Roaming/Microsoft/Windows/Recent/
+  420  drwxr-xr-x 1 FiercePC 197121       0 Sep 28  2021 'Saved Games'/
+  421  drwxr-xr-x 1 FiercePC 197121       0 Sep 11  2020  Searches/
+  422  lrwxrwxrwx 1 FiercePC 197121      58 Sep 11  2020  SendTo -> /c/Users/FiercePC/AppData/Roaming/Microsoft/Windows/SendTo/
+  423  drwxr-xr-x 1 FiercePC 197121       0 May 10 21:19  src/
+  424  lrwxrwxrwx 1 FiercePC 197121      62 Sep 11  2020 'Start Menu' -> '/c/Users/FiercePC/AppData/Roaming/Microsoft/Windows/Start Menu'/
+  425  lrwxrwxrwx 1 FiercePC 197121      61 Sep 11  2020  Templates -> /c/Users/FiercePC/AppData/Roaming/Microsoft/Windows/Templates/
+  426  -rw-r--r-- 1 FiercePC 197121     204 Dec 26  2019  texput.log
+  427  -rw-r--r-- 1 FiercePC 197121      41 Jan  7  2021  token
+  428  drwxr-xr-x 1 FiercePC 197121       0 Jan 28  2021  Videos/
+  429  FiercePC@DESKTOP-BH27EDD MINGW64 ~
+  430  $ cd .m2
+  431  FiercePC@DESKTOP-BH27EDD MINGW64 ~/.m2
+  432  $ ls
+  433  repository/
+  434  FiercePC@DESKTOP-BH27EDD MINGW64 ~/.m2
+  435  $ cd r*
+  436  FiercePC@DESKTOP-BH27EDD MINGW64 ~/.m2/repository
+  437  $ ls
+  438  antlr/                     commons-codec/        dom4j/    net/
+  439  avalon-framework/          commons-collections/  https/    org/
+  440  backport-util-concurrent/  commons-dbutils/      io/       oro/
+  441  classworlds/               commons-digester/     jakarta/  sslext/
+  442  com/                       commons-io/           javax/    xerces/
+  443  commons-beanutils/         commons-lang/         junit/    xml-apis/
+  444  commons-chain/             commons-logging/      log4j/
+  445  commons-cli/               commons-validator/    logkit/
+  446  FiercePC@DESKTOP-BH27EDD MINGW64 ~/.m2/repository
+  447  $ cd
+  448  FiercePC@DESKTOP-BH27EDD MINGW64 ~
+  449  $ cd src/workspace
+  450  FiercePC@DESKTOP-BH27EDD MINGW64 ~/src/workspace (fdsync)
+  451  $ ls
+  452  BayesSuperCat/  DistillerCache/         DTests/   Rover/
+  453  BlogFinder/     DistillerEngine/        FDSync/   RSBridgeV2/
+  454  Chatroom/       DistillerTweet/         HEAD      SiteBridge/
+  455  config          DistillerTweeter/       hooks/    SiteSearch/
+  456  description     DistillerTweeter.class  info/     style.css
+  457  DiskCache/      DistllTweeter/          objects/  WebChat/
+  458  Distiller/      DTest/                  refs/
+  459  FiercePC@DESKTOP-BH27EDD MINGW64 ~/src/workspace (fdsync)
+  460  $ cd DistillerTweeter
+  461  FiercePC@DESKTOP-BH27EDD MINGW64 ~/src/workspace/DistillerTweeter (fdsync)
+  462  $ lks
+  463  bash: lks: command not found
+  464  FiercePC@DESKTOP-BH27EDD MINGW64 ~/src/workspace/DistillerTweeter (fdsync)
+  465  $ ls
+  466  pom.xml  src/  target/
+  467  FiercePC@DESKTOP-BH27EDD MINGW64 ~/src/workspace/DistillerTweeter (fdsync)
+  468  $ mvn dependency:copy-dependencies
+  469  bash: mvn: command not found
+  470  FiercePC@DESKTOP-BH27EDD MINGW64 ~/src/workspace/DistillerTweeter (fdsync)
+  471  $ sudo apt install maven
+  472  bash: sudo: command not found
+  473  FiercePC@DESKTOP-BH27EDD MINGW64 ~/src/workspace/DistillerTweeter (fdsync)
+  474  $  PATH=$PATH:/c/maven/apache-maven-3.8.5/bin
+  475  FiercePC@DESKTOP-BH27EDD MINGW64 ~/src/workspace/DistillerTweeter (fdsync)
+  476  $ export PATH
+  477  FiercePC@DESKTOP-BH27EDD MINGW64 ~/src/workspace/DistillerTweeter (fdsync)
+  478  $
+  479  cd src/keys
+  480  ssh -i fdrsa badams@192.168.1.75
+  481  cd 
+  482  cd Downloads
+  483  ls
+  484  rm *.jsp*
+  485  ls pia*
+  486  cp pia* /d/tain
+  487  ls /d/tain
+  488  cp pia* /d/tain
+  489  cp pia* /f/tain
+  490  mkdir /f/tain
+  491  cp -r /d/tain/* /f/tain
+  492  rm pia*
+  493  cp fcp* /c/tain
+  494  cp fcp* /d/tain
+  495  cp fcp* /f/tain
+  496  rm fcp*
+  497  cp *.mp4 /d/lp
+  498  cp *.mp4 /f/lp
+  499  rm *.mp4
+  500  exit
+  501  adb
+  502  cd
+  503  cd src
+  504  cd game1`
+  505  cd game1 
+  506  expo start
+  507  ls
+  508  ls
+  509  cd comp*
+  510  ls
+  511  mkdir old 
+  512  mv ImageOverlay.js old
+  513  git checkout sdk43 ImageOverlay.js
+  514  ls
+  515  cd ..
+  516  ls
+  517  expo start
+  518  expo start
+  519  expo start
+  520  expo start
+  521  expo start
+  522  expo start
+  523  expo start
+  524  expo start
+  525  expo start
+  526  expo start
+  527  expo start
+  528  expo start
+  529  expo start
+  530  expo start
+  531  git status
+  532  git add components
+  533  git add package*
+  534  git add         components/ImageOverlayFI.js
+  535  ls index.js
+  536  less index.js
+  537  git add index.js
+  538  git commit -m "sdk46 debug ads calls"
+  539  git push
+  540  expo start
+  541  expo start
+  542  expo r -c
+  543  expo r -c
+  544  expo r -c
+  545  expo start 
+  546  expo start 
+  547  expo start 
+  548  expo start 
+  549  expo start 
+  550  expo start 
+  551  expo start 
+  552  [A
+  553  expo start 
+  554  expo start 
+  555  expo start 
+  556  expo start
+  557  expo start
+  558  expo start
+  559  expo start
+  560  git status
+  561  gut add App.jks
+  562  gut add App.js
+  563  git add App.js
+  564  git add components
+  565  git commit "sdk46 add error boundary"
+  566  git commit -m "sdk46 add error boundary"
+  567  git push
+  568  s
+  569  ls
+  570  rm -r node_modules
+  571  ls
+  572  npm install expo-dev-client
+  573  expo install expo-dev-client
+  574  npm install
+  575  expo install expo-dev-client
+  576  ls
+  577  cd components
+  578  ls
+  579  mv ImageOverly.js ImageOverlayOld.js
+  580  mv ImageOverlay.js ImageOverlayOld.js
+  581  mv ImageOverlayFI.js ImageOverlay.js
+  582  cd ..
+  583  ls
+  584  git statuis
+  585  git status
+  586  git add app*
+  587  git add components*
+  588  git add package.json
+  589  git add package-lock.json
+  590  git commit -m "sdk46 ready for eas build"
+  591  git push
+  592  history
+  593  history >a
