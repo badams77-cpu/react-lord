@@ -22,7 +22,9 @@ class ScoreBoard extends Component {
       adLoaded: false,
       tip: 0,
       interval: null,
-      modalVisible: false
+      modalVisible: false,
+      hasError: false,
+      error: null
     };
     this.rewarded = RewardedAd.createForAdRequest( constants.ANDROID_REWARD_AD, {
         requestNonPersonalizedAdsOnly: false,
@@ -59,21 +61,8 @@ class ScoreBoard extends Component {
                                      this.initRewardAds(adUnitID);
         });
         this.state.interval = setInterval( ()=> this.nextTip(), constants.TIP_TIMEOUT);
-        const unsubscribeLoaded =  this.rewarded.addAdEventListener( RewardedAdEventType.LOADED, () => {
-           this.setState({...this.state, adLoaded: true});
-        });
 
-        const unsubscribeEarned = this.rewarded.addAdEventListener(
-            RewardedAdEventType.EARNED_REWARD,
-            reward => {
-                  this.props.onAddLife(constants.AD_EXTRA_LIFE);
-                  this.setState({ ...this.state, adLoaded: false});
-                  this.rewarded.load();
-              }
-        );
-//        this.rewarded.addAdEventListener(RewardedAdEventType.CLOSED, () => {
-          			// if we close ads modal will close too
-//          this.setModalVisible(false);
+
 
 //        });
     }
@@ -100,7 +89,21 @@ class ScoreBoard extends Component {
 
   initRewardAds = async () => {
     // Display a rewarded ad
+        const unsubscribeLoaded =  this.rewarded.addAdEventListener( RewardedAdEventType.LOADED, () => {
+           this.setState({...this.state, adLoaded: true});
+        });
 
+        const unsubscribeEarned = this.rewarded.addAdEventListener(
+            RewardedAdEventType.EARNED_REWARD,
+            reward => {
+                  this.props.onAddLife(constants.AD_EXTRA_LIFE);
+                  this.setState({ ...this.state, adLoaded: false});
+                  this.rewarded.load();
+              }
+        );
+        //        this.rewarded.addAdEventListener(RewardedAdEventType.CLOSED, () => {
+                  			// if we close ads modal will close too
+        //          this.setModalVisible(false);
     this.rewarded.load();
 
 
@@ -109,6 +112,7 @@ class ScoreBoard extends Component {
   bannerError = (err)=>{
     console.log(err);
   }
+
 
   render(){
 

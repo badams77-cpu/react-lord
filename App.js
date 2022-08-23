@@ -5,12 +5,15 @@ import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import scoreReducer from './reducers/ScoreReducer';
 import ScoreBoard from './components/ScoreBoard';
+import ErrorBoundary from './components/ErrorBoundary';
 
 
 export default function App() {
   const store = createStore(scoreReducer);
   return (
-    <Provider store={store}>
+        <Provider store={store}>
+  <ErrorBoundary>
+
     <View style={styles.container}>
       <View style={{textAlign: 'center'}}>
         <Text>________________Viri Attack_________________</Text>
@@ -18,7 +21,8 @@ export default function App() {
       <GameWorld/>
       <ScoreBoard/>
     </View>
-    </Provider>
+    </ErrorBoundary>
+        </Provider>
   );
 }
 
