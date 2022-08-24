@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Text} from 'react-native';
+import {Text, View} from 'react-native';
 
 type Props = {
   children: Node;
@@ -30,7 +30,14 @@ class ErrorBoundary extends React.Component {
 
   render() {
 //    console.log(this.props.children);
-    return this.state.error ? (<Text>Caught an error.</Text>) : this.props.children;
+    return this.state.error ? (
+    <View>
+    <Text>Caught an error.</Text>
+      { __DEV__ ? this.state.error.stack.split("\n").map( x => (<Text>{x}</Text>)) : ''}
+    </View>
+    )
+
+    : this.props.children;
   }
 }
 
