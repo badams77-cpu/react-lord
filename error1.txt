@@ -1,0 +1,23 @@
+_reactNativeGoogleMobileAds.default.initialize is not a function.
+
+[09:38:24] error caught in boundary , [TypeError: _reactNativeGoogleMobileAds.default.initialize is not a function. (In '_reactNativeGoogleMobileAds.default.initialize()', '_reactNativeGoogleMobileAds.default.initialize' is undefined)]
+at node_modules\expo\build\environment\react-native-logs.fx.js:null in warn
+at components\ErrorBoundary.js:null in componentDidCatch
+
+[09:38:24] TypeError: _reactNativeGoogleMobileAds.default.initialize is not a function. (In '_reactNativeGoogleMobileAds.default.initialize()', '_reactNativeGoogleMobileAds.default.initialize' is undefined)
+
+This error is located at:
+    in ScoreBoard (created by Connect(ScoreBoard))
+    in Connect(ScoreBoard) (created by App)
+    in RCTView (created by View)
+    in View (created by App)
+    in ErrorBoundary (created by App)
+    in Provider (created by App)
+    in App (created by ExpoRoot)
+    in ExpoRoot
+    in RCTView (created by View)
+    in View (created by AppContainer)
+    in RCTView (created by View)
+    in View (created by AppContainer)
+    in AppContainer
+    in main(RootComponent)

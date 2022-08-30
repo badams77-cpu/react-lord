@@ -7,7 +7,7 @@ import spriteData from './SpriteData';
 import ImageOverlay from './ImageOverlay';
 import spriteGraphics from './SpriteGraphics';
 //import {AdMobBanner, AdMobRewarded} from 'expo-ads-admob';
-import mobileAds, { MaxAdContentRating, RewardedAd, RewardedAdEventType } from 'react-native-google-mobile-ads';
+import mobileAds, { MaxAdContentRating, RewardedAd, RewardedAdEventType, AdEventType } from 'react-native-google-mobile-ads';
 import tips from './Tips';
 
 class ScoreBoard extends Component {
@@ -26,10 +26,14 @@ class ScoreBoard extends Component {
       hasError: false,
       error: null
     };
-    this.rewarded = RewardedAd.createForAdRequest( constants.ANDROID_REWARD_AD, {
-        requestNonPersonalizedAdsOnly: false,
-        keywords: ['games']
-      });
+    this.rewarded = this.createAd();
+  }
+
+  createAd(){
+    return RewardedAd.createForAdRequest( constants.ANDROID_REWARD_AD, {
+                   requestNonPersonalizedAdsOnly: false,
+                   keywords: ['games']
+                 });
   }
 
     componentDidMount(){
@@ -109,13 +113,17 @@ class ScoreBoard extends Component {
             reward => {
                   this.props.onAddLife(constants.AD_EXTRA_LIFE);
                   this.setState({ ...this.state, adLoaded: false});
-                  this.rewarded.load();
+                  this.rewarded = this.createAd();
+                  this.initRewardAds();
               }
         );
-        //        this.rewarded.addAdEventListener(RewardedAdEventType.CLOSED, () => {
+        const unsubscribeClosed = this.rewarded.addAdEventListener(AdEventType.CLOSED, () => {
+                          this.setState({ ...this.state, adLoaded: false});
+                          this.rewarded = this.createAd();
+                          this.initRewardAds();
+        });
                   			// if we close ads modal will close too
-        //          this.setModalVisible(false);
-    this.rewarded.load();
+        this.rewarded.load();
 
 
   };
@@ -203,7 +211,7 @@ class ScoreBoard extends Component {
                onPress={() => {
                   if (this.state.adLoaded){
                     this.rewarded.show();
-                    this.setModalVisible(true);
+ //                  this.setModalVisible(true);
                   }
                }}
             >
