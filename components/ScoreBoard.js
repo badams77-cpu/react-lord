@@ -13,11 +13,11 @@ import tips from './Tips';
 class ScoreBoard extends Component {
 
   rewarded = null;
-
+//  { mobileAds,  MaxAdContentRating, RewardedAd, RewardedAdEventType} = require('react-native-google-mobile-ads'); 
   constructor(props){
     super(props);
 
-    this.state = {
+	  this.state = {
       adsInitialised: false,
       adLoaded: false,
       tip: 0,
@@ -51,15 +51,26 @@ class ScoreBoard extends Component {
                           })
                           .then(() => {
                             // Request config successfully set!
-                          })  .initialize()
-                              .then(adapterStatuses => {
-                                      this.setState({...this.state, adsInitialised: true});
-                                      const adUnitID = Platform.select({
-                                         ios: constants.IOS_AD,
-                                         android: constants.ANDROID_AD
-                                      });
-                                     this.initRewardAds(adUnitID);
-        });
+                                        mobileAds().initialize()
+                                                      .then(adapterStatuses => {
+                                                           this.setState({...this.state, adsInitialised: true});
+                                                           const adUnitID = Platform.select({
+                                                              ios: constants.IOS_AD,
+                                                              android: constants.ANDROID_AD
+                                                           });
+                                                          this.initRewardAds(adUnitID);
+                                                      });
+                          });
+
+/*            mobileAds().initialize()
+                          .then(adapterStatuses => {
+                               this.setState({...this.state, adsInitialised: true});
+                               const adUnitID = Platform.select({
+                                  ios: constants.IOS_AD,
+                                  android: constants.ANDROID_AD
+                               });
+                              this.initRewardAds(adUnitID);
+                          }); */
         this.state.interval = setInterval( ()=> this.nextTip(), constants.TIP_TIMEOUT);
 
 
