@@ -30,10 +30,10 @@ class ErrorBoundary extends React.Component {
 
   render() {
 //    console.log(this.props.children);
-    return this.state.error ? (
+    return __DEV__ && this.state.error ? (
     <View>
     <Text>Caught an error.</Text>
-      { __DEV__ ? this.state.error.stack.split("\n").map( x => (<Text>{x}</Text>)) : ''}
+      { __DEV__ ? this.state.error.stack.split("\n").map( x => (<Text>{x}</Text>)) : 'Error'}
 	    
     </View>
     )
