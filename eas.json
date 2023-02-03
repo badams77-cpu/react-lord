@@ -5,7 +5,7 @@
   "build": {
     "development": {
       "ios": {"image": "latest",
-        "applicationArchivePath": "ios/build/*.ipa"
+        "applicationArchivePath": "/Users/barryadams/src/react-lord/ios/build/*.ipa"
       },
       "credentialsSource": "local",
       "developmentClient": true,
@@ -21,7 +21,7 @@
     },
     "production": {
       "ios": {"image": "latest",
-        "applicationArchivePath": "ios/build/*.ipa"
+        "applicationArchivePath": "/Users/barryadams/src/reac-lord/ios/build/*.ipa"
       },
        "credentialsSource": "local",
     }
