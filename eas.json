@@ -4,7 +4,9 @@
   },
   "build": {
     "development": {
-      "ios": {"image": "latest"},
+      "ios": {"image": "latest",
+        "applicationArchivePath": "ios/build/*.ipa"
+      },
       "credentialsSource": "local",
       "developmentClient": true,
       "distribution": "internal"
@@ -18,6 +20,9 @@
       }
     },
     "production": {
+      "ios": {"image": "latest",
+        "applicationArchivePath": "ios/build/*.ipa"
+      },
        "credentialsSource": "local",
     }
   },
