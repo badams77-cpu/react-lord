@@ -4,17 +4,22 @@
   },
   "build": {
     "development": {
+      "ios": {"image": "latest"},
+      "credentialsSource": "local",
       "developmentClient": true,
       "distribution": "internal"
     },
     "preview": {
       "distribution": "internal",
       "developmentClient": true,
+      "credentialsSource": "local",
       "android": {
         "buildType": "apk"
       }
     },
-    "production": {}
+    "production": {
+       "credentialsSource": "local",
+    }
   },
   "submit": {
     "production": {}
