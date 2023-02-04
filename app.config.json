@@ -37,9 +37,9 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "1.13.0",
+      "buildNumber": "1.13.1",
       "config": {
-        "googleMobileAdsAppId": "ca-app-pub-4790577348062750~4359663909"
+        "googleMobileAdsAppId": "ca-app-pub-4790577348062750~8803613741"
       },
       "bundleIdentifier": "com.axialforcegames.ViriiAttack"
     },
