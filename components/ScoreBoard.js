@@ -30,7 +30,11 @@ class ScoreBoard extends Component {
   }
 
   createAd(){
-    return RewardedAd.createForAdRequest( constants.ANDROID_REWARD_AD, {
+    const adUnitID = Platform.select({
+      ios: constants.IOS_REWARD_AD,
+      android: constants.ANDROID_REWARD_AD
+    });
+    return RewardedAd.createForAdRequest( adUnitID, {
                    requestNonPersonalizedAdsOnly: false,
                    keywords: ['games']
                  });
@@ -59,8 +63,8 @@ class ScoreBoard extends Component {
                                                       .then(adapterStatuses => {
                                                            this.setState({...this.state, adsInitialised: true});
                                                            const adUnitID = Platform.select({
-                                                              ios: constants.IOS_AD,
-                                                              android: constants.ANDROID_AD
+                                                              ios: constants.IOS_REWARD_AD,
+                                                              android: constants.ANDROID_REWARD_AD
                                                            });
                                                           this.initRewardAds(adUnitID);
                                                       });
